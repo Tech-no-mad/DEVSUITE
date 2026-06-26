@@ -46,12 +46,13 @@ const currentPath = Astro.url.pathname;
   <!-- JSON-LD Structured Data -->
   <script type="application/ld+json" set:html={JSON.stringify(toolName ? {
     "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
+    "@type": "WebApplication",
     "name": toolName,
     "url": fullCanonical,
     "description": toolDescription || description,
     "applicationCategory": "DeveloperApplication",
     "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript. Requires HTML5.",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
   } : {
     "@context": "https://schema.org",
@@ -89,8 +90,8 @@ const currentPath = Astro.url.pathname;
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
-  <!-- Google AdSense Auto-Ads Core Script Tag Goes Here -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+  <!-- Google AdSense Auto-Ads Core Script Tag -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_ADSENSE_PUBLISHER_ID" crossorigin="anonymous"></script>
 </head>
 <body>
   <noscript>

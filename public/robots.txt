@@ -1,5 +1,3 @@
-# DevSuite — robots.txt
 User-agent: *
 Allow: /
-
-Sitemap: https://devsuite.tools/sitemap.xml
+Sitemap: https://devsuite.tools/sitemap-index.xml

@@ -114,6 +114,18 @@ import MainLayout from '../layouts/MainLayout.astro';
 
         <h3>A Common Tailwind CSS & Bootstrap Workflow</h3>
         <p>Developers using utility-first frameworks like Tailwind CSS or Bootstrap frequently need to extend their configuration files with custom values. If your design system introduces a spacing scale based on a 4px grid (e.g., 4px, 8px, 12px, 16px), you should define these as REMs in your config (0.25rem, 0.5rem, 0.75rem, 1rem). Use our <strong>pixel to rem calculator</strong> to rapidly generate these configuration values without manual division.</p>
+        
+        <div class="faq-section" style="margin-top: 48px;">
+          <h2 style="font-size: 24px; font-weight: 700; margin-bottom: 24px;">Frequently Asked Questions</h2>
+          <details style="border-bottom: 1px solid var(--color-border); padding: 16px 0; cursor: pointer;">
+            <summary style="font-weight: 600; list-style: none; display: flex; justify-content: space-between; align-items: center;">What is a standard pixel resolution base value? <span style="opacity: 0.5;">+</span></summary>
+            <p style="margin-top: 12px; font-size: 15px; color: var(--color-text-secondary); line-height: 1.6;">By default, all modern web browsers (Chrome, Safari, Firefox, Edge) set their root font size to exactly 16 pixels. Therefore, unless explicitly overridden in the CSS <code>html</code> selector, the baseline calculation is 1rem = 16px.</p>
+          </details>
+          <details style="border-bottom: 1px solid var(--color-border); padding: 16px 0; cursor: pointer;">
+            <summary style="font-weight: 600; list-style: none; display: flex; justify-content: space-between; align-items: center;">Why not just use pixels for everything? <span style="opacity: 0.5;">+</span></summary>
+            <p style="margin-top: 12px; font-size: 15px; color: var(--color-text-secondary); line-height: 1.6;">Hardcoding pixels disables a browser's ability to natively scale font sizes up for visually impaired users. Using REM units allows your layouts and text to scale proportionally when a user increases their default font size, ensuring WCAG accessibility compliance.</p>
+          </details>
+        </div>
       </section>
     </div>
 
