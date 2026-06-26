@@ -382,6 +382,7 @@ body {
   transition: background-color var(--transition-normal), border-color var(--transition-normal);
 }
 .ad-workspace {
+  grid-column: 2;
   min-width: 0;
 }
 
@@ -917,6 +918,9 @@ textarea.input {
   }
   .ad-sidebar {
     display: none;
+  }
+  .ad-workspace {
+    grid-column: 1;
   }
 }
 @media (max-width: 768px) {
