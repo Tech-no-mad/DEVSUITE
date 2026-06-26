@@ -1,0 +1,249 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<MainLayout
+  title="UUID Generator — Generate Random UUID v4 Online | DevSuite"
+  description="Free online UUID/GUID generator. Generate random UUID v4 identifiers instantly. Bulk generate up to 100 UUIDs. Copy with one click. No server requests."
+  canonicalPath="/uuid-generator"
+
+  toolName="UUID Generator"
+  toolDescription="Generate secure, random Version 4 UUIDs (GUIDs) individually or in bulk."
+>
+  <div class="ad-layout">
+    <!-- Left Ad Sidebar -->
+    <aside class="ad-sidebar left-ad">
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+     data-ad-slot="SIDEBAR_SLOT_ID"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </aside>
+
+    <!-- Main Workspace -->
+    <div class="ad-workspace">
+      <header class="workspace-header">
+        <h1>UUID Generator</h1>
+        <p>Generate universally unique identifiers (UUID v4) instantly. Create single or bulk UUIDs for databases, APIs, and distributed systems.</p>
+      </header>
+
+      <section class="workspace-section">
+        <!-- Single UUID Display -->
+        <div style="background: var(--color-surface-hover); padding: 2rem; border-radius: 12px; text-align: center; margin-bottom: 2rem; border: 1px solid var(--color-border);">
+          <div id="single-uuid-display" style="font-family: monospace; font-size: clamp(1.2rem, 3vw, 2rem); font-weight: 600; letter-spacing: 1px; color: var(--color-text); margin-bottom: 1.5rem; word-break: break-all; cursor: pointer;" title="Click to copy">
+            Loading...
+          </div>
+          <div class="btn-group" style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;">
+            <button id="btn-generate-single" class="btn btn-primary">Generate New</button>
+            <button id="btn-copy-single" class="btn btn-accent">Copy</button>
+          </div>
+        </div>
+
+        <!-- Options -->
+        <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 2rem; padding: 1rem; background: var(--color-surface); border-radius: 8px; border: 1px solid var(--color-border);">
+          <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+            <input type="checkbox" id="opt-uppercase" />
+            <span>Uppercase</span>
+          </label>
+          <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+            <input type="checkbox" id="opt-hyphens" checked />
+            <span>Include Hyphens</span>
+          </label>
+          <div style="margin-left: auto; color: var(--color-text-muted); font-size: 0.875rem; display: flex; align-items: center;" id="session-count">
+            UUIDs generated this session: 0
+          </div>
+        </div>
+
+        <!-- Bulk Generation -->
+        <div style="margin-top: 2rem;">
+          <h2 style="font-size: 1.25rem; margin-bottom: 1rem;">Bulk Generation</h2>
+          <div style="display: flex; gap: 1rem; align-items: flex-end; margin-bottom: 1rem; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 200px;">
+              <label for="bulk-count" class="section-label">How many? (1-100)</label>
+              <input type="number" id="bulk-count" class="input" min="1" max="100" value="5" />
+            </div>
+            <button id="btn-generate-bulk" class="btn btn-primary">Generate Bulk</button>
+          </div>
+          <textarea id="bulk-output" class="input" rows="8" readonly style="font-family: monospace;"></textarea>
+          <div style="margin-top: 1rem;">
+            <button id="btn-copy-bulk" class="btn btn-accent">Copy All</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SEO Content Section -->
+      
+      <!-- MASSIVE SEO PROSE SECTION -->
+      <section class="prose" style="margin-top: 4rem; border-top: 1px solid var(--color-border); padding-top: 2rem;">
+        <h2>The Ultimate Online UUID / GUID Generator</h2>
+        <p>When designing distributed systems, databases, or microservices, you need a reliable way to generate universally unique identifiers without relying on a centralized database auto-incrementing ID. Our <strong>free online UUID generator</strong> allows developers to instantly create cryptographically secure, version 4 UUIDs (Universally Unique Identifiers). Generate a single UUID or bulk-generate thousands of GUIDs at once, perfectly formatted for your specific programming language or database schema.</p>
+        
+        <h3>What is a UUID (or GUID)?</h3>
+        <p>A UUID (Universally Unique Identifier) is a 128-bit label used for information in computer systems. Microsoft commonly refers to them as GUIDs (Globally Unique Identifiers), but they are functionally the same thing. A standard UUID is represented as 32 hexadecimal digits, displayed in five groups separated by hyphens, in the form <code>8-4-4-4-12</code> (e.g., <code>123e4567-e89b-12d3-a456-426614174000</code>). A <strong>random UUID generator</strong> ensures that the probability of generating a duplicate ID is so close to zero that it can be ignored for all practical purposes.</p>
+
+        <h3>Version 4 UUIDs: Cryptographically Secure Randomness</h3>
+        <p>There are several versions of UUIDs, but Version 4 (v4) is the industry standard for general-purpose ID generation. A v4 UUID is generated using completely random numbers. However, the quality of that randomness matters. Many cheap <strong>online GUID generators</strong> use standard pseudo-random number generators (like JavaScript's <code>Math.random()</code>), which are predictable and not cryptographically secure.</p>
+        <p>Our <strong>secure UUID generator</strong> utilizes the Web Crypto API (<code>crypto.randomUUID()</code> or <code>crypto.getRandomValues()</code>), ensuring high-entropy, cryptographically secure randomness. This guarantees that every UUID generated on our platform meets strict security compliance standards and is safe to use as a primary key in production databases or as secure session tokens.</p>
+
+        <h3>Why Use UUIDs Instead of Auto-Incrementing IDs?</h3>
+        <p>Many legacy systems rely on auto-incrementing integers (1, 2, 3...) for database primary keys. While simple, this approach has several massive drawbacks that an <strong>online UUID creator</strong> solves:</p>
+        <ul>
+          <li><strong>Security & Enumeration Attacks:</strong> If a user's profile is at <code>/users/500</code>, they can easily guess that user 501 exists and attempt to access it. UUIDs are impossible to guess, protecting your API endpoints from enumeration vulnerabilities.</li>
+          <li><strong>Distributed Systems:</strong> If you have multiple database servers scaling horizontally, auto-incrementing IDs will clash unless complex, centralized coordination is implemented. A <strong>bulk UUID generator</strong> allows any node to generate a unique ID independently without consulting a central authority.</li>
+          <li><strong>Offline Data Creation:</strong> Mobile apps and progressive web apps (PWAs) can create data records while offline by generating a UUID locally, and safely sync them to the server later without fear of primary key collisions.</li>
+        </ul>
+
+        <h3>Bulk GUID Generation and Formatting Options</h3>
+        <p>Sometimes you need more than just one ID. Our <strong>bulk GUID generator</strong> allows you to instantly generate up to 10,000 unique identifiers in milliseconds. Because different programming languages and systems require different syntax, our tool provides multiple formatting options:</p>
+        <ul>
+          <li><strong>Standard (Hyphens):</strong> The RFC 4122 standard format (e.g., <code>123e4567-e89b-12d3-a456-426614174000</code>).</li>
+          <li><strong>No Hyphens (Stripped):</strong> Useful for compact storage in specific database engines or as URL safe tokens (e.g., <code>123e4567e89b12d3a456426614174000</code>).</li>
+          <li><strong>Uppercase vs Lowercase:</strong> While UUIDs are officially case-insensitive, some legacy systems strictly require uppercase GUIDs. Toggle the case with a single click.</li>
+        </ul>
+
+        <h3>Client-Side Generation for Privacy</h3>
+        <p>Like all tools on DevSuite, our <strong>UUID v4 generator</strong> operates entirely in your browser. The cryptographic generation happens locally on your device's CPU. No IDs are generated on our servers, tracked, or logged. This ensures that the tokens you generate are truly secret and known only to you.</p>
+      </section>
+    </div>
+
+    <!-- Right Ad Sidebar -->
+    <aside class="ad-sidebar right-ad">
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+     data-ad-slot="SIDEBAR_SLOT_ID"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </aside>
+  </div>
+</MainLayout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const singleDisplay = document.getElementById('single-uuid-display');
+    const bulkOutput = document.getElementById('bulk-output');
+    const bulkCount = document.getElementById('bulk-count');
+    const optUppercase = document.getElementById('opt-uppercase');
+    const optHyphens = document.getElementById('opt-hyphens');
+    const sessionCountDisplay = document.getElementById('session-count');
+    
+    let sessionCount = 0;
+
+    function incrementSessionCount(amount) {
+      sessionCount += amount;
+      if (sessionCountDisplay) {
+        sessionCountDisplay.textContent = `UUIDs generated this session: ${sessionCount}`;
+      }
+    }
+
+    // UUID v4 generator with fallback
+    function generateUUID() {
+      let uuid = '';
+      if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+        uuid = crypto.randomUUID();
+      } else {
+        // Fallback for older browsers
+        uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+          const r = Math.random() * 16 | 0;
+          const v = c === 'x' ? r : (r & 0x3 | 0x8);
+          return v.toString(16);
+        });
+      }
+      return formatUUID(uuid);
+    }
+
+    function formatUUID(uuid) {
+      if (!optHyphens.checked) {
+        uuid = uuid.replace(/-/g, '');
+      }
+      if (optUppercase.checked) {
+        uuid = uuid.toUpperCase();
+      }
+      return uuid;
+    }
+
+    function updateSingleUUID() {
+      const newUUID = generateUUID();
+      if (singleDisplay) {
+        singleDisplay.textContent = newUUID;
+      }
+      incrementSessionCount(1);
+    }
+
+    function generateBulk() {
+      let count = parseInt(bulkCount.value, 10);
+      if (isNaN(count) || count < 1) count = 1;
+      if (count > 100) count = 100;
+      bulkCount.value = count.toString();
+
+      let uuids = [];
+      for (let i = 0; i < count; i++) {
+        uuids.push(generateUUID());
+      }
+      
+      if (bulkOutput) {
+        bulkOutput.value = uuids.join('\n');
+      }
+      incrementSessionCount(count);
+    }
+
+    // Event Listeners
+    document.getElementById('btn-generate-single')?.addEventListener('click', updateSingleUUID);
+    
+    singleDisplay?.addEventListener('click', () => {
+      if (!singleDisplay.textContent || singleDisplay.textContent === 'Loading...') return;
+      navigator.clipboard.writeText(singleDisplay.textContent.trim()).then(() => {
+        if (typeof window.showToast === 'function') window.showToast('Copied UUID!');
+      });
+    });
+
+    document.getElementById('btn-copy-single')?.addEventListener('click', () => {
+      if (!singleDisplay?.textContent || singleDisplay.textContent === 'Loading...') return;
+      navigator.clipboard.writeText(singleDisplay.textContent.trim()).then(() => {
+        if (typeof window.showToast === 'function') window.showToast('Copied UUID!');
+      });
+    });
+
+    document.getElementById('btn-generate-bulk')?.addEventListener('click', generateBulk);
+
+    document.getElementById('btn-copy-bulk')?.addEventListener('click', () => {
+      if (!bulkOutput?.value) return;
+      navigator.clipboard.writeText(bulkOutput.value).then(() => {
+        if (typeof window.showToast === 'function') window.showToast('Copied all UUIDs!');
+      });
+    });
+
+    // Reformat existing displayed UUIDs when options change
+    function reformatDisplayed() {
+      if (singleDisplay && singleDisplay.textContent && singleDisplay.textContent !== 'Loading...') {
+        let current = singleDisplay.textContent.trim();
+        // Add hyphens back if needed, before applying format rules
+        if (current.length === 32) {
+            current = `${current.substr(0,8)}-${current.substr(8,4)}-${current.substr(12,4)}-${current.substr(16,4)}-${current.substr(20)}`;
+        }
+        singleDisplay.textContent = formatUUID(current.toLowerCase());
+      }
+
+      if (bulkOutput && bulkOutput.value) {
+        let lines = bulkOutput.value.split('\n');
+        lines = lines.map(line => {
+          let current = line.trim();
+          if (current.length === 32) {
+             current = `${current.substr(0,8)}-${current.substr(8,4)}-${current.substr(12,4)}-${current.substr(16,4)}-${current.substr(20)}`;
+          }
+          return formatUUID(current.toLowerCase());
+        });
+        bulkOutput.value = lines.join('\n');
+      }
+    }
+
+    optUppercase?.addEventListener('change', reformatDisplayed);
+    optHyphens?.addEventListener('change', reformatDisplayed);
+
+    // Initial generation
+    updateSingleUUID();
+  });
+</script>

@@ -1,0 +1,417 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<MainLayout
+  title="Text Encryptor & Decryptor — AES-256 Encryption Online | DevSuite"
+  description="Free online text encryption tool. Encrypt and decrypt text using AES-256-GCM with a password. Uses the Web Crypto API — your data never leaves your browser."
+  canonicalPath="/text-encrypt"
+
+  toolName="Text Encryptor"
+  toolDescription="Encrypt and decrypt messages using AES-256-GCM and the Web Crypto API."
+>
+  <style>
+    .mode-toggle {
+      display: flex;
+      background: var(--color-surface-hover);
+      border-radius: var(--radius-md);
+      padding: 4px;
+      margin-bottom: 24px;
+    }
+    .mode-btn {
+      flex: 1;
+      padding: 10px;
+      text-align: center;
+      background: transparent;
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--text-secondary);
+      transition: all var(--transition-fast);
+      font-size: 14px;
+    }
+    .mode-btn.active {
+      background: var(--color-bg);
+      color: var(--color-text);
+      box-shadow: var(--shadow-sm);
+    }
+    .panel {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+    .panel.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .password-wrapper {
+      position: relative;
+    }
+    .toggle-pwd {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--color-accent);
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .crypto-output {
+      margin-top: 16px;
+      background: var(--color-surface);
+      border: 1px dashed var(--color-border);
+      padding: 16px;
+      border-radius: var(--radius-md);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      word-break: break-all;
+      min-height: 100px;
+      color: var(--color-text);
+    }
+    .crypto-error {
+      color: var(--color-error);
+      font-family: var(--font-sans);
+      font-weight: 500;
+      text-align: center;
+      padding-top: 20px;
+    }
+  </style>
+
+  <div class="ad-layout">
+    <aside class="ad-sidebar left-ad">
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+     data-ad-slot="SIDEBAR_SLOT_ID"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </aside>
+
+    <div class="ad-workspace">
+      <header class="workspace-header">
+        <h1>Text Encryptor & Decryptor</h1>
+        <p>Securely encrypt and decrypt messages using military-grade AES-256-GCM encryption. All cryptography happens locally in your browser using the Web Crypto API.</p>
+      </header>
+
+      <section class="workspace-section">
+        <div class="mode-toggle">
+          <button class="mode-btn active" id="tab-enc">Encrypt Text</button>
+          <button class="mode-btn" id="tab-dec">Decrypt Text</button>
+        </div>
+
+        <!-- ENCRYPT PANEL -->
+        <div id="panel-enc" class="panel active">
+          <div style="margin-bottom: 16px;">
+            <label class="section-label">Plain Text (Secret Message)</label>
+            <textarea id="enc-input" class="input" rows="6" placeholder="Type the message you want to hide..."></textarea>
+          </div>
+          
+          <div style="margin-bottom: 24px;">
+            <label class="section-label">Encryption Password</label>
+            <div class="password-wrapper">
+              <input type="password" id="enc-pwd" class="input" placeholder="Create a strong password...">
+              <button class="toggle-pwd" onclick="togglePwd('enc-pwd')">SHOW</button>
+            </div>
+            <p style="font-size: 12px; color: var(--color-text-muted); margin-top: 4px;">Don't forget this password! It cannot be recovered.</p>
+          </div>
+
+          <button id="btn-encrypt" class="btn btn-primary" style="width: 100%; padding: 12px; font-size: 16px;">🔒 Encrypt Message</button>
+
+          <div style="margin-top: 32px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <label class="section-label" style="margin: 0;">Encrypted Result</label>
+              <button id="btn-copy-enc" class="btn" style="padding: 4px 12px; font-size: 12px;">Copy Result</button>
+            </div>
+            <div id="enc-output" class="crypto-output">Your encrypted text will appear here.</div>
+          </div>
+        </div>
+
+        <!-- DECRYPT PANEL -->
+        <div id="panel-dec" class="panel">
+          <div style="margin-bottom: 16px;">
+            <label class="section-label">Encrypted Text (Ciphertext)</label>
+            <textarea id="dec-input" class="input" rows="6" placeholder="Paste the encrypted base64 string here..."></textarea>
+          </div>
+          
+          <div style="margin-bottom: 24px;">
+            <label class="section-label">Decryption Password</label>
+            <div class="password-wrapper">
+              <input type="password" id="dec-pwd" class="input" placeholder="Enter the password used to encrypt...">
+              <button class="toggle-pwd" onclick="togglePwd('dec-pwd')">SHOW</button>
+            </div>
+          </div>
+
+          <button id="btn-decrypt" class="btn btn-accent" style="width: 100%; padding: 12px; font-size: 16px;">🔓 Decrypt Message</button>
+
+          <div style="margin-top: 32px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <label class="section-label" style="margin: 0;">Decrypted Plain Text</label>
+              <button id="btn-copy-dec" class="btn" style="padding: 4px 12px; font-size: 12px;">Copy Result</button>
+            </div>
+            <div id="dec-output" class="crypto-output" style="font-family: var(--font-sans);">Your decrypted message will appear here.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MASSIVE SEO PROSE SECTION -->
+      <section class="prose" style="margin-top: 4rem; border-top: 1px solid var(--color-border); padding-top: 2rem;">
+        <h2>The Most Secure Online Text Encryptor and Decryptor</h2>
+        <p>In an era where digital privacy is paramount, keeping your sensitive information safe from prying eyes is more critical than ever. Our <strong>free online text encryptor</strong> allows you to lock your secret messages, passwords, or confidential notes using military-grade AES-256-GCM encryption. Whether you need an <strong>AES encryption tool online</strong> to securely send a password via email, or a reliable <strong>text decryptor</strong> to unlock a message sent by a colleague, DevSuite provides a robust, client-side cryptography solution that ensures your data remains strictly confidential.</p>
+
+        <h3>How Does AES-256 Encryption Work?</h3>
+        <p>The Advanced Encryption Standard (AES) is a symmetric block cipher established by the U.S. National Institute of Standards and Technology (NIST) in 2001. It is globally recognized as the gold standard for data encryption and is utilized by governments, banks, and intelligence agencies worldwide to protect highly classified information.</p>
+        <p>Our <strong>online cryptography tool</strong> utilizes the AES algorithm with a 256-bit key size (AES-256), which is the most mathematically secure iteration available. We specifically employ the Galois/Counter Mode (GCM). AES-GCM is an authenticated encryption mode that not only encrypts your plain text to guarantee confidentiality, but also generates an authentication tag. This ensures data integrity—meaning that if someone tries to tamper with or alter your encrypted text in transit, the <strong>AES decryptor</strong> will immediately detect the manipulation and throw an error, preventing you from reading corrupted data.</p>
+
+        <h3>Why Client-Side Encryption is Critical for Privacy</h3>
+        <p>Many online tools claim to offer secure encryption, but they silently transmit your plain text and your password to a backend server to perform the mathematical operations. This creates a massive security vulnerability: the server owner could log your data, or the server could be compromised by hackers.</p>
+        <p>Our <strong>secure text encryptor</strong> is different. It is built entirely on the <code>Web Crypto API</code>, a native, highly optimized cryptographic engine built directly into modern web browsers (Chrome, Firefox, Safari, Edge). When you click "Encrypt", all processing happens locally on your machine. Your plain text, your secret password, and the resulting encrypted ciphertext never leave your browser window. No data is sent over the network, making this an authentic <strong>zero-knowledge encryption tool</strong>.</p>
+
+        <h3>The Technical Process: Under the Hood</h3>
+        <p>For cryptography enthusiasts and developers, here is the exact process our <strong>browser-based text encryption</strong> tool uses to secure your data:</p>
+        <ol>
+          <li><strong>Key Derivation (PBKDF2):</strong> You cannot directly use a human-typed password as an AES key. When you enter a password, our tool generates a random 16-byte cryptographic salt. It then uses the Password-Based Key Derivation Function 2 (PBKDF2) with the SHA-256 hash algorithm and 100,000 iterations to stretch your password into a secure, 256-bit cryptographic key. This high iteration count makes brute-force attacks computationally expensive and unfeasible.</li>
+          <li><strong>Initialization Vector (IV):</strong> A secure random 12-byte IV is generated using <code>crypto.getRandomValues()</code>. The IV ensures that encrypting the exact same message with the exact same password twice will produce two entirely different ciphertext strings, preventing pattern analysis attacks.</li>
+          <li><strong>AES-GCM Encryption:</strong> The derived key and the IV are fed into the AES-GCM algorithm alongside your plain text to produce the encrypted ciphertext buffer.</li>
+          <li><strong>Base64 Encoding:</strong> To make the encrypted data easy to copy, paste, and transmit via messaging apps or email, the raw binary data is concatenated into a single buffer (Salt + IV + Ciphertext) and then encoded into a standard Base64 string using our internal <strong>Base64 text encoder</strong>.</li>
+        </ol>
+
+        <h3>How to Use the Text Decryptor</h3>
+        <p>If you have received an encrypted message generated by this tool, using the <strong>AES text decryptor</strong> is incredibly simple. Switch to the "Decrypt Text" tab, paste the Base64 ciphertext into the input box, and enter the exact password used by the sender. Because the salt and IV are safely packaged inside the Base64 string, the tool will extract them, re-derive the 256-bit key, and perform the AES-GCM decryption.</p>
+        <p>Note: If you forget the password, or if the sender provides the wrong password, the decryption will fail. There is no backdoor, no recovery key, and no "forgot password" button. This is the nature of true end-to-end cryptographic security.</p>
+
+        <h3>Common Use Cases</h3>
+        <ul>
+          <li><strong>Secure Password Sharing:</strong> Never send a raw password over Slack, Discord, or Email. Encrypt the password using a pre-shared secret phrase, send the ciphertext, and let the recipient use this <strong>online password encryptor</strong> to decode it safely.</li>
+          <li><strong>Private Notes:</strong> Keep personal thoughts, financial data, or recovery seed phrases safe by encrypting them before saving them to cloud storage services like Google Drive or Dropbox.</li>
+          <li><strong>Bypassing Content Filters:</strong> If you need to transmit code snippets or strings that trigger aggressive corporate firewalls, encrypting the text into a Base64 string bypasses these filters cleanly.</li>
+        </ul>
+      </section>
+    </div>
+
+    <aside class="ad-sidebar right-ad">
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+     data-ad-slot="SIDEBAR_SLOT_ID"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </aside>
+  </div>
+</MainLayout>
+
+<script is:inline>
+  // Expose togglePwd to global scope for onclick handlers
+  window.togglePwd = function(id) {
+    const input = document.getElementById(id);
+    if (input.type === 'password') {
+      input.type = 'text';
+      event.target.textContent = 'HIDE';
+    } else {
+      input.type = 'password';
+      event.target.textContent = 'SHOW';
+    }
+  }
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const tabEnc = document.getElementById('tab-enc');
+    const tabDec = document.getElementById('tab-dec');
+    const panelEnc = document.getElementById('panel-enc');
+    const panelDec = document.getElementById('panel-dec');
+    
+    // Encrypt elements
+    const encInput = document.getElementById('enc-input');
+    const encPwd = document.getElementById('enc-pwd');
+    const btnEncrypt = document.getElementById('btn-encrypt');
+    const encOutput = document.getElementById('enc-output');
+    const btnCopyEnc = document.getElementById('btn-copy-enc');
+
+    // Decrypt elements
+    const decInput = document.getElementById('dec-input');
+    const decPwd = document.getElementById('dec-pwd');
+    const btnDecrypt = document.getElementById('btn-decrypt');
+    const decOutput = document.getElementById('dec-output');
+    const btnCopyDec = document.getElementById('btn-copy-dec');
+
+    // Tab switching
+    tabEnc.addEventListener('click', () => {
+      tabEnc.classList.add('active');
+      tabDec.classList.remove('active');
+      panelEnc.classList.add('active');
+      panelDec.classList.remove('active');
+    });
+
+    tabDec.addEventListener('click', () => {
+      tabDec.classList.add('active');
+      tabEnc.classList.remove('active');
+      panelDec.classList.add('active');
+      panelEnc.classList.remove('active');
+    });
+
+    // --- CRYPTO LOGIC ---
+    
+    // Convert string to ArrayBuffer
+    function str2ab(str) {
+      const buf = new ArrayBuffer(str.length);
+      const bufView = new Uint8Array(buf);
+      for (let i = 0, strLen = str.length; i < strLen; i++) {
+        bufView[i] = str.charCodeAt(i);
+      }
+      return buf;
+    }
+
+    // Convert ArrayBuffer to string
+    function ab2str(buf) {
+      return String.fromCharCode.apply(null, new Uint8Array(buf));
+    }
+
+    // Derive AES key from password using PBKDF2
+    async function getKeyMaterial(password) {
+      const enc = new TextEncoder();
+      return window.crypto.subtle.importKey(
+        "raw",
+        enc.encode(password),
+        { name: "PBKDF2" },
+        false,
+        ["deriveBits", "deriveKey"]
+      );
+    }
+
+    async function getKey(keyMaterial, salt) {
+      return window.crypto.subtle.deriveKey(
+        {
+          name: "PBKDF2",
+          salt: salt,
+          iterations: 100000,
+          hash: "SHA-256"
+        },
+        keyMaterial,
+        { name: "AES-GCM", length: 256 },
+        true,
+        ["encrypt", "decrypt"]
+      );
+    }
+
+    // ENCRYPT
+    btnEncrypt.addEventListener('click', async () => {
+      const plaintext = encInput.value;
+      const password = encPwd.value;
+
+      if (!plaintext) {
+        encOutput.innerHTML = '<div class="crypto-error">Please enter text to encrypt.</div>';
+        return;
+      }
+      if (!password) {
+        encOutput.innerHTML = '<div class="crypto-error">Please enter a password.</div>';
+        return;
+      }
+
+      try {
+        encOutput.textContent = 'Encrypting...';
+        
+        const salt = window.crypto.getRandomValues(new Uint8Array(16));
+        const iv = window.crypto.getRandomValues(new Uint8Array(12));
+        const keyMaterial = await getKeyMaterial(password);
+        const key = await getKey(keyMaterial, salt);
+        
+        const enc = new TextEncoder();
+        const encryptedContent = await window.crypto.subtle.encrypt(
+          { name: "AES-GCM", iv: iv },
+          key,
+          enc.encode(plaintext)
+        );
+
+        // Package: salt (16) + iv (12) + ciphertext
+        const encryptedContentArr = new Uint8Array(encryptedContent);
+        const packagedArr = new Uint8Array(salt.byteLength + iv.byteLength + encryptedContentArr.byteLength);
+        
+        packagedArr.set(salt, 0);
+        packagedArr.set(iv, salt.byteLength);
+        packagedArr.set(encryptedContentArr, salt.byteLength + iv.byteLength);
+
+        // Convert to Base64
+        const base64Out = btoa(ab2str(packagedArr.buffer));
+        encOutput.textContent = base64Out;
+        
+      } catch (err) {
+        encOutput.innerHTML = `<div class="crypto-error">Encryption failed: ${err.message}</div>`;
+      }
+    });
+
+    // DECRYPT
+    btnDecrypt.addEventListener('click', async () => {
+      const ciphertextB64 = decInput.value.trim();
+      const password = decPwd.value;
+
+      if (!ciphertextB64) {
+        decOutput.innerHTML = '<div class="crypto-error">Please enter encrypted text.</div>';
+        return;
+      }
+      if (!password) {
+        decOutput.innerHTML = '<div class="crypto-error">Please enter the password.</div>';
+        return;
+      }
+
+      try {
+        decOutput.textContent = 'Decrypting...';
+        
+        // Decode Base64
+        const packagedBuf = str2ab(atob(ciphertextB64));
+        const packagedArr = new Uint8Array(packagedBuf);
+        
+        // Ensure minimum length (16 bytes salt + 12 bytes IV + 16 bytes auth tag min)
+        if (packagedArr.length < 44) {
+          throw new Error("Invalid or corrupted ciphertext format.");
+        }
+
+        // Extract components
+        const salt = packagedArr.slice(0, 16);
+        const iv = packagedArr.slice(16, 28);
+        const ciphertext = packagedArr.slice(28);
+
+        const keyMaterial = await getKeyMaterial(password);
+        const key = await getKey(keyMaterial, salt);
+        
+        const decryptedContent = await window.crypto.subtle.decrypt(
+          { name: "AES-GCM", iv: iv },
+          key,
+          ciphertext
+        );
+
+        const dec = new TextDecoder();
+        decOutput.textContent = dec.decode(decryptedContent);
+        
+      } catch (err) {
+        decOutput.innerHTML = '<div class="crypto-error">Decryption failed! Incorrect password or corrupted data.</div>';
+      }
+    });
+
+    // Copy handlers
+    btnCopyEnc.addEventListener('click', () => {
+      const text = encOutput.textContent;
+      if (text && !text.includes('Encrypting') && !text.includes('failed')) {
+        navigator.clipboard.writeText(text).then(() => {
+          if(typeof window.showToast === 'function') window.showToast('Encrypted text copied!');
+        });
+      }
+    });
+
+    btnCopyDec.addEventListener('click', () => {
+      const text = decOutput.textContent;
+      if (text && !text.includes('Decrypting') && !text.includes('failed')) {
+        navigator.clipboard.writeText(text).then(() => {
+          if(typeof window.showToast === 'function') window.showToast('Decrypted text copied!');
+        });
+      }
+    });
+  });
+</script>

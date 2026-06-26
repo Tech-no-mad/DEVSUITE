@@ -1,0 +1,483 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<MainLayout
+  title="CSS Box Shadow Generator — Create & Preview Box Shadows Online | DevSuite"
+  description="Free CSS box shadow generator. Create beautiful box shadows with a visual editor. Adjust offset, blur, spread, color, and opacity. Multiple layers supported. Copy CSS instantly."
+  canonicalPath="/box-shadow"
+
+  toolName="Box Shadow Generator"
+  toolDescription="Generate perfect CSS drop shadows with multiple layer support."
+>
+  <style>
+    .shadow-workspace {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    @media (min-width: 900px) {
+      .shadow-workspace {
+        flex-direction: row;
+      }
+    }
+    .preview-panel {
+      flex: 1;
+      background: var(--color-surface-hover);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 300px;
+      padding: 32px;
+      background-image: radial-gradient(var(--color-border) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+    .preview-box {
+      width: 200px;
+      height: 200px;
+      background: var(--color-bg);
+      border-radius: var(--radius-md);
+      transition: box-shadow 0.1s ease;
+    }
+    .controls-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .control-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .control-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-text);
+    }
+    .control-value {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-secondary);
+      background: var(--color-surface);
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid var(--color-border);
+    }
+    input[type=range] {
+      -webkit-appearance: none;
+      width: 100%;
+      background: transparent;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      height: 16px;
+      width: 16px;
+      border-radius: 50%;
+      background: var(--color-accent);
+      cursor: pointer;
+      margin-top: -6px;
+    }
+    input[type=range]::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 4px;
+      cursor: pointer;
+      background: var(--color-border);
+      border-radius: 2px;
+    }
+    .color-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .css-output {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--color-text);
+      word-break: break-all;
+    }
+    .layer-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .layer-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 12px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      cursor: pointer;
+    }
+    .layer-item.active {
+      border-color: var(--color-accent);
+      background: color-mix(in srgb, var(--color-accent) 10%, transparent);
+    }
+    .btn-delete-layer {
+      background: none;
+      border: none;
+      color: var(--color-error);
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 1;
+      padding: 4px;
+    }
+  </style>
+
+  <div class="ad-layout">
+    <aside class="ad-sidebar left-ad">
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+     data-ad-slot="SIDEBAR_SLOT_ID"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </aside>
+
+    <div class="ad-workspace">
+      <header class="workspace-header">
+        <h1>CSS Box Shadow Generator</h1>
+        <p>Visually create, adjust, and layer beautiful CSS box shadows. Copy the generated CSS code instantly for your web projects.</p>
+      </header>
+
+      <section class="workspace-section">
+        <div class="shadow-workspace">
+          <div class="preview-panel">
+            <div class="preview-box" id="preview-box"></div>
+          </div>
+
+          <div class="controls-panel">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <h3 style="margin: 0; font-size: 14px; text-transform: uppercase;">Layers</h3>
+              <button id="btn-add-layer" class="btn btn-accent" style="padding: 4px 12px; font-size: 12px;">+ Add Shadow</button>
+            </div>
+            
+            <div class="layer-list" id="layer-list">
+              <!-- Layers rendered by JS -->
+            </div>
+
+            <hr style="border: 0; border-top: 1px solid var(--color-border); margin: 8px 0;" />
+
+            <div class="control-group">
+              <div class="control-header">
+                <span class="control-label">Horizontal Offset</span>
+                <span class="control-value" id="val-x">0px</span>
+              </div>
+              <input type="range" id="inp-x" min="-50" max="50" value="0">
+            </div>
+
+            <div class="control-group">
+              <div class="control-header">
+                <span class="control-label">Vertical Offset</span>
+                <span class="control-value" id="val-y">10px</span>
+              </div>
+              <input type="range" id="inp-y" min="-50" max="50" value="10">
+            </div>
+
+            <div class="control-group">
+              <div class="control-header">
+                <span class="control-label">Blur Radius</span>
+                <span class="control-value" id="val-blur">20px</span>
+              </div>
+              <input type="range" id="inp-blur" min="0" max="100" value="20">
+            </div>
+
+            <div class="control-group">
+              <div class="control-header">
+                <span class="control-label">Spread Radius</span>
+                <span class="control-value" id="val-spread">0px</span>
+              </div>
+              <input type="range" id="inp-spread" min="-50" max="50" value="0">
+            </div>
+
+            <div class="color-row">
+              <div class="control-group" style="flex: 1;">
+                <span class="control-label">Shadow Color</span>
+                <input type="color" id="inp-color" value="#000000" style="width: 100%; height: 36px; cursor: pointer; padding: 0; border: 1px solid var(--color-border); border-radius: var(--radius-sm);">
+              </div>
+              <div class="control-group" style="flex: 2;">
+                <div class="control-header">
+                  <span class="control-label">Opacity</span>
+                  <span class="control-value" id="val-opacity">0.15</span>
+                </div>
+                <input type="range" id="inp-opacity" min="0" max="1" step="0.01" value="0.15">
+              </div>
+            </div>
+
+            <label class="checkbox-row">
+              <input type="checkbox" id="inp-inset">
+              <span>Inset (Inner Shadow)</span>
+            </label>
+          </div>
+        </div>
+
+        <div style="margin-top: 24px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <span class="section-label" style="margin: 0;">CSS Output</span>
+            <button id="btn-copy-css" class="btn btn-primary" style="padding: 4px 12px; font-size: 12px;">Copy CSS</button>
+          </div>
+          <div class="css-output" id="css-output">box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.15);</div>
+        </div>
+        
+        <div style="margin-top: 24px;">
+          <h3 style="font-size: 14px; text-transform: uppercase; margin-bottom: 12px;">Presets</h3>
+          <div class="btn-group">
+            <button class="btn preset-btn" data-preset='[{"x":0,"y":4,"blur":12,"spread":0,"color":"#000000","opacity":0.08,"inset":false}]'>Subtle</button>
+            <button class="btn preset-btn" data-preset='[{"x":0,"y":20,"blur":25,"spread":-5,"color":"#000000","opacity":0.1,"inset":false},{"x":0,"y":10,"blur":10,"spread":-5,"color":"#000000","opacity":0.04,"inset":false}]'>Layered Float</button>
+            <button class="btn preset-btn" data-preset='[{"x":0,"y":0,"blur":0,"spread":4,"color":"#3291ff","opacity":0.3,"inset":false}]'>Focus Ring</button>
+            <button class="btn preset-btn" data-preset='[{"x":-10,"y":-10,"blur":20,"spread":0,"color":"#ffffff","opacity":0.8,"inset":false},{"x":10,"y":10,"blur":20,"spread":0,"color":"#000000","opacity":0.1,"inset":false}]'>Neumorphism</button>
+            <button class="btn preset-btn" data-preset='[{"x":0,"y":2,"blur":4,"spread":0,"color":"#000000","opacity":0.2,"inset":true}]'>Inner Depressed</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- MASSIVE SEO PROSE SECTION -->
+      <section class="prose" style="margin-top: 4rem; border-top: 1px solid var(--color-border); padding-top: 2rem;">
+        <h2>The Ultimate CSS Box Shadow Generator</h2>
+        <p>Creating the perfect shadow for web elements can be a tedious process of trial and error when writing CSS manually. Our <strong>free CSS box shadow generator</strong> provides a visual, intuitive interface to help you craft beautiful, realistic shadows instantly. Whether you are building a modern glassmorphic UI, implementing Google's Material Design specifications, or exploring the trendy neumorphism aesthetic, this <strong>CSS drop shadow tool</strong> allows you to perfectly tune your designs and export the exact CSS code with one click.</p>
+        
+        <h3>Understanding the box-shadow CSS Property</h3>
+        <p>The <code>box-shadow</code> property in CSS attaches one or more shadows to an element. It is one of the most powerful visual tools in web design, allowing developers to create depth, elevation, and hierarchy on a flat screen. The syntax can be complex because it accepts multiple values. Our <strong>CSS shadow maker</strong> simplifies this by automatically formatting the syntax for you.</p>
+        
+        <p>A standard <code>box-shadow</code> declaration looks like this: <code>box-shadow: [horizontal offset] [vertical offset] [blur radius] [spread radius] [color] [inset];</code>. Let's break down what each of these parameters does in our <strong>visual CSS editor</strong>:</p>
+        <ul>
+          <li><strong>Horizontal Offset (X):</strong> Controls the shadow's position on the X-axis. A positive value pushes the shadow to the right of the element, while a negative value pushes it to the left.</li>
+          <li><strong>Vertical Offset (Y):</strong> Controls the shadow's position on the Y-axis. A positive value pushes the shadow below the element (which is the most common use case to simulate a light source from above), while a negative value pushes it above the element.</li>
+          <li><strong>Blur Radius:</strong> Determines how soft or sharp the shadow's edge will be. A value of <code>0px</code> creates a hard, solid shadow. Higher values create a softer, more diffused gradient effect. Negative values are not allowed.</li>
+          <li><strong>Spread Radius:</strong> Determines the size of the shadow. A positive value causes the shadow to expand and grow larger than the element itself. A negative value causes the shadow to shrink, which is often used in combination with a high vertical offset to create a realistic "floating" effect.</li>
+          <li><strong>Color and Opacity:</strong> Sets the color of the shadow. Our generator automatically converts the HEX color and opacity slider into an <code>rgba()</code> format (Red, Green, Blue, Alpha), which is the industry standard for creating transparent shadows that blend naturally with the background behind them.</li>
+          <li><strong>Inset:</strong> By default, shadows are rendered outside the element (drop shadows). Checking the <strong>inset shadow</strong> option moves the shadow inside the element's border, creating an illusion that the element is pressed or sunken into the page.</li>
+        </ul>
+
+        <h3>The Secret to Realistic Shadows: Multiple Layers</h3>
+        <p>In the real world, shadows cast by physical objects are rarely a single, uniform gradient. They are composed of a dark, sharp umbra close to the object, and a lighter, softer penumbra that spreads outward. To achieve photorealistic elevation in web design, professional UI developers use layered box shadows.</p>
+        <p>Our <strong>multi-layer CSS shadow generator</strong> allows you to add multiple shadows to a single element. By clicking the "+ Add Shadow" button, you can stack shadows on top of each other. A common technique is to use one tight, dark shadow to anchor the element (e.g., <code>0px 1px 2px rgba(0,0,0,0.1)</code>), combined with a larger, softer shadow to simulate the ambient light spread (e.g., <code>0px 8px 16px rgba(0,0,0,0.05)</code>). Our tool generates the comma-separated CSS string required for this advanced technique seamlessly.</p>
+
+        <h3>Popular CSS Shadow Styles</h3>
+        <p>If you are looking for inspiration, our <strong>CSS shadow maker online</strong> includes a presets library to get you started quickly. Here are some of the most popular UI design trends that rely heavily on the <code>box-shadow</code> property:</p>
+        
+        <h4>Material Design Shadows</h4>
+        <p>Google's Material Design system relies on shadows to convey physical elevation (z-axis). Elements that sit higher off the page cast larger, softer shadows. You can easily replicate Material Design elevation values using our sliders to create distinct visual layers for cards, dialog boxes, and floating action buttons (FABs).</p>
+        
+        <h4>Neumorphism (Soft UI)</h4>
+        <p>Neumorphism is a design trend that makes elements appear as though they are extruded from the background material. This is achieved by applying two distinct shadows to the same element: a light shadow (white or a very light tint) in the top-left, and a dark shadow in the bottom-right. You can use our tool to create perfect <strong>neumorphic CSS shadows</strong> by utilizing the multi-layer feature.</p>
+
+        <h4>Focus Rings and Glowing Elements</h4>
+        <p>Shadows aren't just for darkness! By setting the blur and spread radius high, and changing the color to a vibrant blue, neon pink, or glowing green, you can use <code>box-shadow</code> to create focus rings for accessibility, or glowing neon effects for modern dark-mode web applications.</p>
+
+        <h3>Browser Compatibility and Performance</h3>
+        <p>The <code>box-shadow</code> property is universally supported across all modern browsers (Chrome, Firefox, Safari, Edge) and mobile devices. However, rendering massive, heavily blurred shadows on dozens of elements can impact scroll performance on lower-end devices. Our <strong>CSS snippet generator</strong> ensures you get clean, optimized code. We highly recommend using `rgba()` rather than hexadecimal colors for shadows to ensure maximum compatibility and proper alpha-channel blending.</p>
+      </section>
+    </div>
+
+    <aside class="ad-sidebar right-ad">
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+     data-ad-slot="SIDEBAR_SLOT_ID"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </aside>
+  </div>
+</MainLayout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    let layers = [
+      { x: 0, y: 10, blur: 20, spread: 0, color: '#000000', opacity: 0.15, inset: false }
+    ];
+    let activeLayerIndex = 0;
+
+    const previewBox = document.getElementById('preview-box');
+    const cssOutput = document.getElementById('css-output');
+    const layerList = document.getElementById('layer-list');
+    
+    // Inputs
+    const inpX = document.getElementById('inp-x');
+    const valX = document.getElementById('val-x');
+    
+    const inpY = document.getElementById('inp-y');
+    const valY = document.getElementById('val-y');
+    
+    const inpBlur = document.getElementById('inp-blur');
+    const valBlur = document.getElementById('val-blur');
+    
+    const inpSpread = document.getElementById('inp-spread');
+    const valSpread = document.getElementById('val-spread');
+    
+    const inpColor = document.getElementById('inp-color');
+    const inpOpacity = document.getElementById('inp-opacity');
+    const valOpacity = document.getElementById('val-opacity');
+    
+    const inpInset = document.getElementById('inp-inset');
+
+    // Buttons
+    const btnAddLayer = document.getElementById('btn-add-layer');
+    const btnCopyCss = document.getElementById('btn-copy-css');
+    const presetBtns = document.querySelectorAll('.preset-btn');
+
+    function hexToRgba(hex, alpha) {
+      hex = hex.replace('#', '');
+      const r = parseInt(hex.substring(0, 2), 16);
+      const g = parseInt(hex.substring(2, 4), 16);
+      const b = parseInt(hex.substring(4, 6), 16);
+      return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    }
+
+    function generateCssString() {
+      const shadowStrings = layers.map(layer => {
+        const insetStr = layer.inset ? 'inset ' : '';
+        const rgbaStr = hexToRgba(layer.color, layer.opacity);
+        return `${insetStr}${layer.x}px ${layer.y}px ${layer.blur}px ${layer.spread}px ${rgbaStr}`;
+      });
+      return shadowStrings.join(',\n  ');
+    }
+
+    function renderPreview() {
+      const cssVal = generateCssString();
+      previewBox.style.boxShadow = cssVal.replace(/\n  /g, ' ');
+      cssOutput.textContent = `box-shadow: ${cssVal};`;
+      renderLayerList();
+    }
+
+    function renderLayerList() {
+      layerList.innerHTML = '';
+      layers.forEach((layer, index) => {
+        const item = document.createElement('div');
+        item.className = `layer-item ${index === activeLayerIndex ? 'active' : ''}`;
+        
+        const text = document.createElement('span');
+        text.textContent = `Layer ${index + 1} ${layer.inset ? '(Inset)' : ''}`;
+        
+        const deleteBtn = document.createElement('button');
+        deleteBtn.className = 'btn-delete-layer';
+        deleteBtn.innerHTML = '×';
+        deleteBtn.title = "Delete Layer";
+        deleteBtn.onclick = (e) => {
+          e.stopPropagation();
+          if (layers.length === 1) {
+            if(typeof window.showToast === 'function') window.showToast('Must have at least one layer');
+            return;
+          }
+          layers.splice(index, 1);
+          if (activeLayerIndex >= layers.length) activeLayerIndex = layers.length - 1;
+          loadLayerIntoControls();
+          renderPreview();
+        };
+
+        item.onclick = () => {
+          activeLayerIndex = index;
+          loadLayerIntoControls();
+          renderLayerList();
+        };
+
+        item.appendChild(text);
+        item.appendChild(deleteBtn);
+        layerList.appendChild(item);
+      });
+    }
+
+    function loadLayerIntoControls() {
+      const active = layers[activeLayerIndex];
+      inpX.value = active.x;
+      valX.textContent = `${active.x}px`;
+      
+      inpY.value = active.y;
+      valY.textContent = `${active.y}px`;
+      
+      inpBlur.value = active.blur;
+      valBlur.textContent = `${active.blur}px`;
+      
+      inpSpread.value = active.spread;
+      valSpread.textContent = `${active.spread}px`;
+      
+      inpColor.value = active.color;
+      
+      inpOpacity.value = active.opacity;
+      valOpacity.textContent = active.opacity;
+      
+      inpInset.checked = active.inset;
+    }
+
+    function updateActiveLayer() {
+      const active = layers[activeLayerIndex];
+      active.x = parseInt(inpX.value);
+      valX.textContent = `${active.x}px`;
+      
+      active.y = parseInt(inpY.value);
+      valY.textContent = `${active.y}px`;
+      
+      active.blur = parseInt(inpBlur.value);
+      valBlur.textContent = `${active.blur}px`;
+      
+      active.spread = parseInt(inpSpread.value);
+      valSpread.textContent = `${active.spread}px`;
+      
+      active.color = inpColor.value;
+      
+      active.opacity = parseFloat(inpOpacity.value);
+      valOpacity.textContent = active.opacity;
+      
+      active.inset = inpInset.checked;
+      
+      renderPreview();
+    }
+
+    // Attach listeners
+    [inpX, inpY, inpBlur, inpSpread, inpColor, inpOpacity].forEach(el => {
+      el.addEventListener('input', updateActiveLayer);
+    });
+    inpInset.addEventListener('change', updateActiveLayer);
+
+    btnAddLayer.addEventListener('click', () => {
+      layers.push({ x: 0, y: 10, blur: 20, spread: 0, color: '#000000', opacity: 0.15, inset: false });
+      activeLayerIndex = layers.length - 1;
+      loadLayerIntoControls();
+      renderPreview();
+    });
+
+    btnCopyCss.addEventListener('click', () => {
+      const css = `box-shadow: ${generateCssString()};`;
+      navigator.clipboard.writeText(css).then(() => {
+        if(typeof window.showToast === 'function') window.showToast('CSS copied to clipboard!');
+      });
+    });
+
+    presetBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const preset = JSON.parse(btn.getAttribute('data-preset'));
+        layers = preset;
+        activeLayerIndex = 0;
+        loadLayerIntoControls();
+        renderPreview();
+      });
+    });
+
+    // Initialize
+    loadLayerIntoControls();
+    renderPreview();
+  });
+</script>

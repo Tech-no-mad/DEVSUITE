@@ -1,0 +1,72 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<MainLayout
+  title="Contact Us — DevSuite"
+  description="Get in touch with the DevSuite team. Report bugs, suggest features, or ask questions."
+  canonicalPath="/contact"
+>
+  <article class="prose">
+    <h1>Contact Us</h1>
+    <p>Have a question, suggestion, or found a bug? We'd love to hear from you.</p>
+
+    <h2>Get in Touch</h2>
+    <p>You can reach us at: <strong>hello@devsuite.tools</strong></p>
+    <p>We typically respond within 48 hours during business days.</p>
+
+    <h2>Send a Message</h2>
+    <p>Or email us directly: <a href="mailto:hello@devsuite.tools">hello@devsuite.tools</a></p>
+      <form class="contact-form" id="contact-form">
+      <div class="form-group">
+        <label class="input-label" for="contact-name">Name</label>
+        <input class="input" type="text" id="contact-name" name="name" placeholder="Your name" required />
+      </div>
+      <div class="form-group">
+        <label class="input-label" for="contact-email">Email</label>
+        <input class="input" type="email" id="contact-email" name="email" placeholder="your@email.com" required />
+      </div>
+      <div class="form-group">
+        <label class="input-label" for="contact-subject">Subject</label>
+        <input class="input" type="text" id="contact-subject" name="subject" placeholder="Bug report, feature request, question..." />
+      </div>
+      <div class="form-group">
+        <label class="input-label" for="contact-message">Message</label>
+        <textarea class="input" id="contact-message" name="message" rows="6" placeholder="Tell us what's on your mind..." required></textarea>
+      </div>
+      <button class="btn btn-primary" type="submit">Send Message</button>
+    </form>
+  </article>
+
+  <script>
+    document.getElementById('contact-form')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const data = new FormData(form);
+  const btn = form.querySelector('button[type="submit"]');
+  
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+  
+  try {
+    const res = await fetch('https://formspree.io/f/REPLACE_WITH_YOUR_FORMSPREE_ID', {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+    
+    if (res.ok) {
+      form.reset();
+      window.showToast?.('Message sent! We\'ll reply within 48 hours.');
+      btn.textContent = 'Message Sent ✓';
+    } else {
+      throw new Error('Form submission failed');
+    }
+  } catch {
+    window.showToast?.('Something went wrong. Email us at hello@devsuite.tools');
+    btn.textContent = 'Send Message';
+    btn.disabled = false;
+  }
+});
+</script>
+</MainLayout>

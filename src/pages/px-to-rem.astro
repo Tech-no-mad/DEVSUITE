@@ -1,0 +1,226 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<MainLayout
+  title="PX to REM Converter — Pixel Unit Calculator | DevSuite"
+  description="Free PX to REM converter with configurable base font size. Instantly convert pixels to REM, EM, VW, VH, and percentage units."
+  canonicalPath="/px-to-rem"
+
+  toolName="PX to REM Converter"
+  toolDescription="Convert pixels to REM or EM units for accessible responsive design."
+>
+  <div class="ad-layout">
+    <aside class="ad-sidebar" aria-hidden="true">
+      AdSense Unit | Responsive Vertical Skyscraper
+    </aside>
+
+    <div class="ad-workspace">
+      <div class="workspace-header">
+        <h1>PX ↔ REM Converter</h1>
+        <p>Convert between pixels and REM units instantly. Adjust the base font size to match your project.</p>
+      </div>
+
+      <div class="workspace-section">
+        <div style="display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-end;">
+          <div style="flex: 1; min-width: 200px;">
+            <label class="input-label" for="px-input">Pixels (px)</label>
+            <input class="input" type="number" id="px-input" value="16" step="any" min="0" />
+          </div>
+          <div style="flex: 1; min-width: 200px;">
+            <label class="input-label" for="rem-input">REM</label>
+            <input class="input" type="number" id="rem-input" value="1" step="any" min="0" />
+          </div>
+          <div style="min-width: 160px;">
+            <label class="input-label" for="base-input">Base Font Size (px)</label>
+            <input class="input" type="number" id="base-input" value="16" step="1" min="1" max="100" />
+          </div>
+        </div>
+      </div>
+
+      <div class="workspace-section">
+        <div class="section-label">Live Conversions</div>
+        <div class="output-grid" id="output-grid">
+          <div class="output-card">
+            <div class="output-label">REM</div>
+            <div class="output-value" id="out-rem">1</div>
+          </div>
+          <div class="output-card">
+            <div class="output-label">EM</div>
+            <div class="output-value" id="out-em">1</div>
+          </div>
+          <div class="output-card">
+            <div class="output-label">VW (1920)</div>
+            <div class="output-value" id="out-vw">0.833</div>
+          </div>
+          <div class="output-card">
+            <div class="output-label">VH (1080)</div>
+            <div class="output-value" id="out-vh">1.481</div>
+          </div>
+          <div class="output-card">
+            <div class="output-label">%</div>
+            <div class="output-value" id="out-pct">100%</div>
+          </div>
+          <div class="output-card">
+            <div class="output-label">PT</div>
+            <div class="output-value" id="out-pt">12</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-group" style="margin-bottom: 32px;">
+        <button class="btn btn-primary" id="btn-copy-rem" type="button">Copy REM Value</button>
+        <button class="btn" id="btn-copy-all" type="button">Copy All Values</button>
+      </div>
+
+      <div class="workspace-section">
+        <div class="section-label">Quick Reference Table</div>
+        <div style="overflow-x: auto; border: 1px solid var(--color-border); border-radius: var(--radius-md);">
+          <table class="conversion-table" id="ref-table">
+            <thead>
+              <tr>
+                <th>PX</th>
+                <th>REM</th>
+                <th>EM</th>
+                <th>PT</th>
+              </tr>
+            </thead>
+            <tbody id="ref-table-body">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    
+      <!-- MASSIVE SEO PROSE SECTION -->
+      <section class="prose" style="margin-top: 4rem; border-top: 1px solid var(--color-border); padding-top: 2rem;">
+        <h2>The Ultimate PX to REM Converter for Web Developers</h2>
+        <p>Modern web development requires responsive, accessible typography. Hardcoding pixel (px) values into your CSS is considered an outdated practice because it prevents users from scaling text via their browser preferences. Our <strong>free online PX to REM converter</strong> makes the transition to relative units effortless. Instantly calculate REM and EM values based on your project's base font size, ensuring your websites are perfectly scaled and fully accessible.</p>
+        
+        <h3>What is a REM Unit?</h3>
+        <p>REM stands for "Root EM". It is a relative CSS unit that scales proportionally to the root <code>&lt;html&gt;</code> element's font size (which defaults to 16px in all modern browsers). When you set a paragraph to <code>1rem</code>, it equals 16px. If you set it to <code>2rem</code>, it equals 32px. Using a <strong>rem calculator</strong> ensures you map your designer's pixel values to correct CSS relative units.</p>
+
+        <h3>Why Use REM instead of PX?</h3>
+        <p>There is a single, critical reason to use REM units: <strong>Accessibility</strong>. Many visually impaired users change their browser's default font size from 16px to 24px or higher. If you define your font sizes in pixels (e.g., <code>font-size: 16px;</code>), the browser cannot override it, and the text remains tiny for that user. If you use REMs (e.g., <code>font-size: 1rem;</code>), the text automatically scales up relative to the user's base preference. Our <strong>px to rem converter</strong> helps you maintain pixel-perfect designs while adhering strictly to WCAG accessibility standards.</p>
+
+        <h3>How to Convert PX to REM</h3>
+        <p>The mathematical formula for converting pixels to REM is simple: <strong>REM = Target PX / Base Font Size</strong>. However, doing this math in your head or pulling out a calculator for every single padding, margin, and font-size declaration is tedious. Our <strong>CSS unit converter</strong> automates this. Simply set your base font size (usually 16px) and start typing your pixel values to get instant REM equivalents.</p>
+
+        <h3>REM vs EM: What's the Difference?</h3>
+        <p>While both are relative units, they behave differently in CSS cascades:</p>
+        <ul>
+          <li><strong>REM (Root EM):</strong> Always relative to the root <code>&lt;html&gt;</code> font size. It is predictable and immune to compounding nesting issues.</li>
+          <li><strong>EM:</strong> Relative to the font size of its direct parent element. This is useful for scaling components (like a button's padding relative to its font size) but can cause unexpected "compounding" if deeply nested. Our tool also functions as a <strong>px to em converter</strong> for these specific component-level calculations.</li>
+        </ul>
+
+        <h3>A Common Tailwind CSS & Bootstrap Workflow</h3>
+        <p>Developers using utility-first frameworks like Tailwind CSS or Bootstrap frequently need to extend their configuration files with custom values. If your design system introduces a spacing scale based on a 4px grid (e.g., 4px, 8px, 12px, 16px), you should define these as REMs in your config (0.25rem, 0.5rem, 0.75rem, 1rem). Use our <strong>pixel to rem calculator</strong> to rapidly generate these configuration values without manual division.</p>
+      </section>
+    </div>
+
+    <aside class="ad-sidebar" aria-hidden="true">
+      AdSense Unit | Responsive Vertical Skyscraper
+    </aside>
+  </div>
+
+  <script>
+    const pxInput = document.getElementById('px-input');
+    const remInput = document.getElementById('rem-input');
+    const baseInput = document.getElementById('base-input');
+
+    const outRem = document.getElementById('out-rem');
+    const outEm = document.getElementById('out-em');
+    const outVw = document.getElementById('out-vw');
+    const outVh = document.getElementById('out-vh');
+    const outPct = document.getElementById('out-pct');
+    const outPt = document.getElementById('out-pt');
+
+    const refTableBody = document.getElementById('ref-table-body');
+    const commonSizes = [4, 8, 10, 12, 14, 16, 18, 20, 24, 28, 32, 36, 40, 48, 56, 64, 72, 80, 96];
+
+    function round(val, dec = 4) {
+      return parseFloat(val.toFixed(dec));
+    }
+
+    function getBase() {
+      return parseFloat(baseInput.value) || 16;
+    }
+
+    function updateFromPx() {
+      const px = parseFloat(pxInput.value) || 0;
+      const base = getBase();
+      const rem = px / base;
+      remInput.value = round(rem);
+      updateOutputs(px, base);
+    }
+
+    function updateFromRem() {
+      const rem = parseFloat(remInput.value) || 0;
+      const base = getBase();
+      const px = rem * base;
+      pxInput.value = round(px);
+      updateOutputs(px, base);
+    }
+
+    function updateOutputs(px, base) {
+      const rem = px / base;
+      outRem.textContent = round(rem);
+      outEm.textContent = round(rem);
+      outVw.textContent = round((px / 1920) * 100);
+      outVh.textContent = round((px / 1080) * 100);
+      outPct.textContent = round((px / base) * 100) + '%';
+      outPt.textContent = round(px * 0.75);
+    }
+
+    function buildRefTable() {
+      const base = getBase();
+      let html = '';
+      for (const px of commonSizes) {
+        const rem = round(px / base);
+        const em = rem;
+        const pt = round(px * 0.75);
+        html += `<tr><td>${px}px</td><td>${rem}rem</td><td>${em}em</td><td>${pt}pt</td></tr>`;
+      }
+      refTableBody.innerHTML = html;
+    }
+
+    pxInput.addEventListener('input', updateFromPx);
+    remInput.addEventListener('input', updateFromRem);
+    baseInput.addEventListener('input', () => {
+      updateFromPx();
+      buildRefTable();
+    });
+
+    // Copy buttons
+    document.getElementById('btn-copy-rem').addEventListener('click', async () => {
+      const val = outRem.textContent + 'rem';
+      try {
+        await navigator.clipboard.writeText(val);
+        window.showToast?.('Copied: ' + val);
+      } catch {
+        window.showToast?.('Failed to copy');
+      }
+    });
+
+    document.getElementById('btn-copy-all').addEventListener('click', async () => {
+      const values = [
+        `PX: ${pxInput.value}px`,
+        `REM: ${outRem.textContent}rem`,
+        `EM: ${outEm.textContent}em`,
+        `VW: ${outVw.textContent}vw`,
+        `VH: ${outVh.textContent}vh`,
+        `%: ${outPct.textContent}`,
+        `PT: ${outPt.textContent}pt`
+      ].join('\n');
+      try {
+        await navigator.clipboard.writeText(values);
+        window.showToast?.('All values copied!');
+      } catch {
+        window.showToast?.('Failed to copy');
+      }
+    });
+
+    // Init
+    updateFromPx();
+    buildRefTable();
+  </script>
+</MainLayout>

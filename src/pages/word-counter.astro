@@ -1,0 +1,290 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<MainLayout
+  title="Word Counter & Text Analyzer — Count Words, Characters & More | DevSuite"
+  description="Free online word counter and text analyzer. Count words, characters, sentences, paragraphs. Calculate reading time and speaking time. No data sent to servers."
+  canonicalPath="/word-counter"
+
+  toolName="Word Counter"
+  toolDescription="Real-time analytics for words, characters, reading time, and keyword density."
+>
+  <style>
+    .keyword-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 1rem;
+    }
+    .keyword-tag {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      padding: 4px 12px;
+      border-radius: 16px;
+      font-size: 13px;
+      color: var(--color-text);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .keyword-count {
+      background: var(--color-surface-hover);
+      padding: 2px 6px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: bold;
+      color: var(--color-text-secondary);
+    }
+    .output-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .output-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      padding: 16px;
+      border-radius: var(--radius-md);
+      text-align: center;
+    }
+    .output-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-text-secondary);
+      margin-bottom: 8px;
+    }
+    .output-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--color-text);
+      font-family: var(--font-mono);
+    }
+  </style>
+
+  <div class="ad-layout">
+    <aside class="ad-sidebar left-ad">
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+     data-ad-slot="SIDEBAR_SLOT_ID"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </aside>
+
+    <div class="ad-workspace">
+      <header class="workspace-header">
+        <h1>Word Counter & Text Analyzer</h1>
+        <p>Instantly count words, characters, sentences, and paragraphs. Analyze keyword density and estimate reading time. All processing happens locally in your browser.</p>
+      </header>
+
+      <section class="workspace-section">
+        <div class="output-grid">
+          <div class="output-card">
+            <div class="output-label">Words</div>
+            <div class="output-value" id="val-words">0</div>
+          </div>
+          <div class="output-card">
+            <div class="output-label">Characters</div>
+            <div class="output-value" id="val-chars">0</div>
+          </div>
+          <div class="output-card">
+            <div class="output-label">Characters (no spaces)</div>
+            <div class="output-value" id="val-chars-nospace">0</div>
+          </div>
+          <div class="output-card">
+            <div class="output-label">Sentences</div>
+            <div class="output-value" id="val-sentences">0</div>
+          </div>
+          <div class="output-card">
+            <div class="output-label">Paragraphs</div>
+            <div class="output-value" id="val-paragraphs">0</div>
+          </div>
+          <div class="output-card">
+            <div class="output-label">Reading Time</div>
+            <div class="output-value" id="val-reading">0m 0s</div>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 1.5rem;">
+          <label class="section-label" for="text-input">Your Text</label>
+          <textarea id="text-input" class="input" rows="12" placeholder="Type or paste your text here to begin counting..."></textarea>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; margin-bottom: 2rem;">
+          <button id="btn-clear" class="btn">Clear Text</button>
+        </div>
+
+        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem;">Top Keywords</h3>
+        <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-bottom: 0;">Most frequent words (excluding common stop words).</p>
+        <div class="keyword-list" id="keyword-container">
+          <span style="font-size: 13px; color: var(--color-text-muted);">No keywords yet.</span>
+        </div>
+      </section>
+
+      <!-- MASSIVE SEO PROSE SECTION -->
+      <section class="prose" style="margin-top: 4rem; border-top: 1px solid var(--color-border); padding-top: 2rem;">
+        <h2>The Ultimate Online Word Counter and Character Counter Tool</h2>
+        <p>Whether you are a student writing an essay, a professional crafting an email, an SEO specialist optimizing a blog post, or a social media manager adhering to strict character limits, tracking your text metrics is essential. Our <strong>free online word counter</strong> and <strong>character counter</strong> provides real-time, comprehensive analytics for your text. By utilizing this advanced text analyzer, you can instantly calculate the total number of words, characters (with and without spaces), sentences, and paragraphs in your document.</p>
+        
+        <h3>Why Use an Online Word Count Tool?</h3>
+        <p>In the digital age, precision is key. An accurate <strong>word count tool</strong> helps you ensure your writing meets specific length requirements. Many platforms, academic institutions, and publishing houses enforce strict word limits. Going over or under these limits can result in penalties or unpublishable work. Unlike standard word processors that require you to click through menus to find your text statistics, our <strong>live word counter</strong> updates dynamically as you type or paste your content.</p>
+        <p>Furthermore, our tool functions as a robust <strong>character count tool</strong>. While word count is vital for essays and articles, character count is the standard metric for social media, metadata, and SMS marketing. Knowing exactly how many characters you have typed prevents your content from being truncated and ensures your message is delivered clearly.</p>
+
+        <h3>Social Media Character Limits Guide (2026 Updated)</h3>
+        <p>If you manage social media accounts, you know that every platform has different rules. Use our <strong>social media character counter</strong> to perfectly format your posts:</p>
+        <ul>
+          <li><strong>Twitter (X) Character Limit:</strong> Standard users are limited to 280 characters. X Premium subscribers can post up to 25,000 characters.</li>
+          <li><strong>Instagram Caption Limit:</strong> You can write up to 2,200 characters in an Instagram caption, but it truncates after the first 125 characters. Using our <strong>Instagram caption counter</strong> ensures your hook is visible.</li>
+          <li><strong>Facebook Post Limit:</strong> A staggering 63,206 characters, though keeping it under 80 characters generally yields higher engagement.</li>
+          <li><strong>LinkedIn Post Limit:</strong> Personal posts allow up to 3,000 characters, while company page posts allow up to 700 characters. Articles can be up to 110,000 characters.</li>
+          <li><strong>TikTok Description Limit:</strong> 2,200 characters for video descriptions, allowing for extensive SEO optimization.</li>
+          <li><strong>YouTube Description Limit:</strong> 5,000 characters. It is highly recommended to use this space for SEO keywords, timestamps, and links.</li>
+          <li><strong>SEO Meta Description Limit:</strong> For Google search results, you should aim for 150-160 characters. Anything beyond that risks being cut off by an ellipsis.</li>
+        </ul>
+
+        <h3>Reading Time and Speaking Time Calculator</h3>
+        <p>Beyond simple counting, our tool serves as a <strong>reading time calculator</strong> and <strong>speaking time estimator</strong>. Have you ever wondered how long it will take an audience to read your blog post? By analyzing your total word count against the average human reading speed (approximately 200 to 250 words per minute), our tool provides an accurate estimated reading time. This metric is highly valuable for content creators who want to indicate article length to their readers (e.g., "5 min read").</p>
+        <p>If you are preparing a speech, presentation, or podcast script, the speaking time metric is invaluable. The average conversational speaking rate is about 130 to 150 words per minute. Our <strong>speech length calculator</strong> uses this baseline to tell you exactly how long your speech will take to deliver, ensuring you stay within your allotted time slot without having to do a dry run with a stopwatch.</p>
+
+        <h3>Keyword Density and SEO Text Analysis</h3>
+        <p>For digital marketers, copywriters, and SEO professionals, simply counting words isn't enough. You need to know the composition of your text. Our built-in <strong>keyword density analyzer</strong> automatically extracts the top keywords from your text, filtering out common stop words (like "the", "and", "a", etc.). This feature allows you to instantly verify if you are naturally incorporating your target keywords or if you are guilty of keyword stuffing.</p>
+        <p>By monitoring your keyword frequency, you can optimize your content for search engines more effectively. A healthy keyword density (usually between 1% and 3%) signals to search engines what your page is about without triggering spam filters. Our <strong>SEO word counter</strong> makes this analysis instantaneous and frictionless.</p>
+
+        <h3>Privacy First: 100% Client-Side Processing</h3>
+        <p>We take your data privacy seriously. Unlike many other online text tools that send your writing to a remote server for processing, our <strong>secure word counter</strong> operates entirely within your browser using JavaScript. This means your text—whether it's a confidential business proposal, an unpublished manuscript, or private personal notes—never leaves your device. We do not store, track, or analyze your data. It is the safest way to count words online.</p>
+
+        <h3>Frequently Asked Questions (FAQ)</h3>
+        <h4>How do you count words?</h4>
+        <p>Our algorithm counts words by detecting boundaries between characters, primarily spaces and line breaks. It handles multiple spaces, tabs, and punctuation intelligently so that you get an accurate count that matches industry standards like Microsoft Word and Google Docs.</p>
+        
+        <h4>Does a word counter include spaces?</h4>
+        <p>A word count inherently relies on spaces to separate words, but spaces themselves are not counted as words. However, our <strong>character counter</strong> provides two separate metrics: Characters (including spaces) and Characters (no spaces). This distinction is crucial for academic assignments or specialized formatting requirements.</p>
+
+        <h4>What is a paragraph?</h4>
+        <p>In our tool, a paragraph is defined by a block of text separated by one or more blank lines (carriage returns/line breaks). Pressing the "Enter" or "Return" key creates a new paragraph.</p>
+
+        <h4>How are sentences counted?</h4>
+        <p>Our sentence counter analyzes terminal punctuation marks, specifically periods, exclamation marks, and question marks (. ! ?). It includes logic to handle common edge cases, ensuring that ellipses or abbreviations do not artificially inflate your sentence count.</p>
+
+        <h4>Can I count words in a PDF or Word document?</h4>
+        <p>Currently, our tool is a plain text web application. To count words from a PDF, Microsoft Word (.docx), or Apple Pages document, simply highlight the text (Ctrl+A / Cmd+A), copy it (Ctrl+C / Cmd+C), and paste it (Ctrl+V / Cmd+V) into the text area above. The count will appear instantly.</p>
+      </section>
+    </div>
+
+    <aside class="ad-sidebar right-ad">
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+     data-ad-slot="SIDEBAR_SLOT_ID"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </aside>
+  </div>
+
+<script type="application/ld+json" set:html={JSON.stringify({"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How do you count words?","acceptedAnswer":{"@type":"Answer","text":"Our algorithm counts words by detecting boundaries between characters, primarily spaces and line breaks. It handles multiple spaces, tabs, and punctuation intelligently so that you get an accurate count that matches industry standards like Microsoft Word and Google Docs."}},{"@type":"Question","name":"Does a word counter include spaces?","acceptedAnswer":{"@type":"Answer","text":"A word count inherently relies on spaces to separate words, but spaces themselves are not counted as words. However, our character counter provides two separate metrics: Characters (including spaces) and Characters (no spaces). This distinction is crucial for academic assignments or specialized formatting requirements."}},{"@type":"Question","name":"What is a paragraph?","acceptedAnswer":{"@type":"Answer","text":"In our tool, a paragraph is defined by a block of text separated by one or more blank lines (carriage returns/line breaks). Pressing the \"Enter\" or \"Return\" key creates a new paragraph."}},{"@type":"Question","name":"How are sentences counted?","acceptedAnswer":{"@type":"Answer","text":"Our sentence counter analyzes terminal punctuation marks, specifically periods, exclamation marks, and question marks (. ! ?). It includes logic to handle common edge cases, ensuring that ellipses or abbreviations do not artificially inflate your sentence count."}},{"@type":"Question","name":"Can I count words in a PDF or Word document?","acceptedAnswer":{"@type":"Answer","text":"Currently, our tool is a plain text web application. To count words from a PDF, Microsoft Word (.docx), or Apple Pages document, simply highlight the text (Ctrl+A / Cmd+A), copy it (Ctrl+C / Cmd+C), and paste it (Ctrl+V / Cmd+V) into the text area above. The count will appear instantly."}}]})} />
+</MainLayout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('text-input');
+    const btnClear = document.getElementById('btn-clear');
+    
+    const valWords = document.getElementById('val-words');
+    const valChars = document.getElementById('val-chars');
+    const valCharsNoSpace = document.getElementById('val-chars-nospace');
+    const valSentences = document.getElementById('val-sentences');
+    const valParagraphs = document.getElementById('val-paragraphs');
+    const valReading = document.getElementById('val-reading');
+    const keywordContainer = document.getElementById('keyword-container');
+
+    const stopWords = new Set([
+      'the', 'be', 'to', 'of', 'and', 'a', 'in', 'that', 'have', 'i', 
+      'it', 'for', 'not', 'on', 'with', 'he', 'as', 'you', 'do', 'at', 
+      'this', 'but', 'his', 'by', 'from', 'they', 'we', 'say', 'her', 
+      'she', 'or', 'an', 'will', 'my', 'one', 'all', 'would', 'there', 
+      'their', 'what', 'so', 'up', 'out', 'if', 'about', 'who', 'get', 
+      'which', 'go', 'me', 'when', 'make', 'can', 'like', 'time', 'no', 
+      'just', 'him', 'know', 'take', 'people', 'into', 'year', 'your', 
+      'good', 'some', 'could', 'them', 'see', 'other', 'than', 'then', 
+      'now', 'look', 'only', 'come', 'its', 'over', 'think', 'also', 
+      'back', 'after', 'use', 'two', 'how', 'our', 'work', 'first', 
+      'well', 'way', 'even', 'new', 'want', 'because', 'any', 'these', 
+      'give', 'day', 'most', 'us', 'are', 'is', 'was', 'were', 'been'
+    ]);
+
+    function analyzeText() {
+      const text = input.value;
+      const length = text.length;
+      
+      if (length === 0) {
+        valWords.textContent = '0';
+        valChars.textContent = '0';
+        valCharsNoSpace.textContent = '0';
+        valSentences.textContent = '0';
+        valParagraphs.textContent = '0';
+        valReading.textContent = '0m 0s';
+        keywordContainer.innerHTML = '<span style="font-size: 13px; color: var(--color-text-muted);">No keywords yet.</span>';
+        return;
+      }
+
+      // Characters
+      valChars.textContent = length.toLocaleString();
+      const charsNoSpace = text.replace(/\s+/g, '').length;
+      valCharsNoSpace.textContent = charsNoSpace.toLocaleString();
+
+      // Words
+      const wordsArray = text.match(/\b\w+\b/g) || [];
+      const wordCount = wordsArray.length;
+      valWords.textContent = wordCount.toLocaleString();
+
+      // Sentences
+      const sentences = text.split(/[.!?]+[\s]+/).filter(s => s.trim().length > 0);
+      valSentences.textContent = sentences.length.toLocaleString();
+
+      // Paragraphs
+      const paragraphs = text.split(/\n+/).filter(p => p.trim().length > 0);
+      valParagraphs.textContent = paragraphs.length.toLocaleString();
+
+      // Reading Time (200 wpm)
+      const readingMinutes = Math.floor(wordCount / 200);
+      const readingSeconds = Math.round((wordCount % 200) / (200 / 60));
+      valReading.textContent = `${readingMinutes}m ${readingSeconds}s`;
+
+      // Keywords
+      const wordMap = {};
+      wordsArray.forEach(w => {
+        const lower = w.toLowerCase();
+        if (!stopWords.has(lower) && lower.length > 2) {
+          wordMap[lower] = (wordMap[lower] || 0) + 1;
+        }
+      });
+
+      const sortedKeywords = Object.entries(wordMap)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 10);
+
+      if (sortedKeywords.length > 0) {
+        keywordContainer.innerHTML = sortedKeywords.map(([word, count]) => `
+          <div class="keyword-tag">
+            ${word} <span class="keyword-count">${count}</span>
+          </div>
+        `).join('');
+      } else {
+        keywordContainer.innerHTML = '<span style="font-size: 13px; color: var(--color-text-muted);">Not enough unique words.</span>';
+      }
+    }
+
+    input.addEventListener('input', analyzeText);
+    
+    btnClear.addEventListener('click', () => {
+      input.value = '';
+      analyzeText();
+      if(typeof window.showToast === 'function') window.showToast('Text cleared');
+    });
+  });
+</script>

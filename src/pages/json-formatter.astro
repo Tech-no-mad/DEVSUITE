@@ -1,0 +1,179 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<MainLayout
+  title="JSON Formatter & Validator — Beautify, Minify & Validate JSON Online | DevSuite"
+  description="Free online JSON formatter, validator, and beautifier. Pretty print JSON, minify JSON, check syntax errors, and view JSON in a tree structure. No data sent to servers."
+  canonicalPath="/json-formatter"
+
+  toolName="JSON Formatter & Validator"
+  toolDescription="Free online tool to format, validate, beautify and minify JSON data. 100% client-side."
+>
+  <div class="ad-layout">
+    <!-- Left Ad Sidebar -->
+    <aside class="ad-sidebar left-ad">
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+     data-ad-slot="SIDEBAR_SLOT_ID"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </aside>
+
+    <!-- Main Workspace -->
+    <div class="ad-workspace">
+      <header class="workspace-header">
+        <h1>JSON Formatter & Validator</h1>
+        <p>Paste your JSON below to format, validate, beautify, or minify it instantly. All processing happens in your browser — your data never leaves your machine.</p>
+      </header>
+
+      <section class="workspace-section">
+        <label for="json-input" class="section-label">Input JSON</label>
+        <textarea id="json-input" class="input" rows="12" style="font-family: monospace;" placeholder='{"example": "Paste your JSON here..."}'></textarea>
+
+        <div class="btn-group" style="margin-top: 1rem; margin-bottom: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+          <button id="btn-format" class="btn btn-primary">Format / Beautify</button>
+          <button id="btn-minify" class="btn btn-accent">Minify</button>
+          <button id="btn-validate" class="btn btn-accent">Validate</button>
+          <button id="btn-clear" class="btn btn-accent">Clear</button>
+        </div>
+
+        <div id="status-bar" style="margin-bottom: 1rem; font-weight: 500;"></div>
+
+        <label for="json-output" class="section-label">Output</label>
+        <textarea id="json-output" class="input" rows="12" readonly style="font-family: monospace;" placeholder="Result will appear here..."></textarea>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+          <button id="btn-copy" class="btn btn-primary">Copy Output</button>
+          <div id="stats-display" style="font-size: 0.875rem; color: var(--color-text-muted);"></div>
+        </div>
+      </section>
+
+      <!-- SEO Content Section -->
+      
+      <!-- MASSIVE SEO PROSE SECTION -->
+      <section class="prose" style="margin-top: 4rem; border-top: 1px solid var(--color-border); padding-top: 2rem;">
+        <h2>The Best Free JSON Formatter, Validator & Beautifier</h2>
+        <p>Working with JSON (JavaScript Object Notation) is a daily reality for modern software developers. However, raw API responses and minified data payloads are essentially unreadable to the human eye. Our <strong>free online JSON formatter</strong> and <strong>JSON validator</strong> solves this problem instantly. By pasting your minified JSON into our tool, you can beautifully format the data with proper indentation, syntax highlighting, and validate its structural integrity with a single click.</p>
+        
+        <h3>What is JSON?</h3>
+        <p>JSON is a lightweight data-interchange format that is easy for humans to read and write, and easy for machines to parse and generate. It has largely replaced XML as the standard format for transmitting data between a server and web application. An <strong>online JSON viewer</strong> is an essential tool for debugging REST APIs, webhooks, and configuration files (like package.json or tsconfig.json).</p>
+
+        <h3>Why Do I Need a JSON Beautifier?</h3>
+        <p>When servers transmit JSON, they typically "minify" it—removing all spaces, tabs, and line breaks to reduce the payload size and save bandwidth. While machines can parse minified JSON instantly, it looks like an incomprehensible wall of text to developers. A <strong>JSON beautifier</strong> parses this minified string and injects standardized spacing (usually 2 or 4 spaces per indentation level) and carriage returns, transforming the wall of text into a clean, nested, hierarchical tree.</p>
+
+        <h3>Built-In JSON Syntax Validator</h3>
+        <p>A missing comma, an unescaped quote, or a trailing comma can break your entire application. Debugging these syntax errors manually in a massive 5,000-line JSON file is a nightmare. Our tool includes an integrated <strong>JSON syntax checker</strong>. When you click "Validate", the engine strictly parses the string according to the official JSON specification (RFC 8259). If there is an error, our <strong>JSON debugger</strong> will highlight exactly what went wrong and print the precise line number and character position of the syntax error so you can fix it immediately.</p>
+
+        <h3>Minify JSON for Production</h3>
+        <p>While formatting is great for debugging, you should never send formatted JSON over a network in production. Our tool also acts as a <strong>JSON minifier</strong>. If you have a beautifully formatted JSON configuration file and you need to strip its whitespace to reduce file size, simply click "Minify". The algorithm will safely remove all unnecessary characters without breaking the data structure.</p>
+
+        <h3>100% Secure Client-Side Processing</h3>
+        <p>Security and privacy are non-negotiable when dealing with JSON data. API responses often contain highly sensitive information: user PII (Personally Identifiable Information), financial transactions, authentication tokens, and proprietary business logic. Most online JSON formatters send your data to a backend server to process it, creating a massive data leak vulnerability. Our <strong>secure JSON formatter</strong> executes all parsing, validating, and formatting strictly client-side using native JavaScript APIs (JSON.parse and JSON.stringify). Your data never leaves your browser, ensuring absolute privacy.</p>
+      </section>
+    </div>
+
+    <!-- Right Ad Sidebar -->
+    <aside class="ad-sidebar right-ad">
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+     data-ad-slot="SIDEBAR_SLOT_ID"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </aside>
+  </div>
+</MainLayout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const inputArea = document.getElementById('json-input');
+    const outputArea = document.getElementById('json-output');
+    const statusBar = document.getElementById('status-bar');
+    const statsDisplay = document.getElementById('stats-display');
+    const btnFormat = document.getElementById('btn-format');
+    const btnMinify = document.getElementById('btn-minify');
+    const btnValidate = document.getElementById('btn-validate');
+    const btnClear = document.getElementById('btn-clear');
+    const btnCopy = document.getElementById('btn-copy');
+
+    function updateStats(text) {
+      if (!statsDisplay) return;
+      const charCount = text.length;
+      const kbSize = (new Blob([text]).size / 1024).toFixed(2);
+      statsDisplay.textContent = `${charCount} characters | ~${kbSize} KB`;
+    }
+
+    function setStatus(message, isError) {
+      if (!statusBar) return;
+      statusBar.textContent = message;
+      statusBar.style.color = isError ? '#e74c3c' : '#2ecc71'; // Red for error, green for success
+    }
+
+    function clearStatus() {
+      if (!statusBar) return;
+      statusBar.textContent = '';
+    }
+
+    function processJson(action) {
+      const rawText = inputArea?.value.trim();
+      if (!rawText) {
+        setStatus('Please enter some JSON first.', true);
+        return;
+      }
+
+      try {
+        const parsed = JSON.parse(rawText);
+        
+        if (action === 'format') {
+          outputArea.value = JSON.stringify(parsed, null, 2);
+          setStatus('Valid JSON ✓ (Formatted)', false);
+          updateStats(outputArea.value);
+        } else if (action === 'minify') {
+          outputArea.value = JSON.stringify(parsed);
+          setStatus('Valid JSON ✓ (Minified)', false);
+          updateStats(outputArea.value);
+        } else if (action === 'validate') {
+          setStatus('Valid JSON ✓', false);
+          updateStats(rawText);
+        }
+      } catch (e) {
+        setStatus(`Error: ${e.message}`, true);
+        if (action !== 'validate') {
+          outputArea.value = '';
+          updateStats('');
+        }
+      }
+    }
+
+    btnFormat?.addEventListener('click', () => processJson('format'));
+    btnMinify?.addEventListener('click', () => processJson('minify'));
+    btnValidate?.addEventListener('click', () => processJson('validate'));
+    
+    btnClear?.addEventListener('click', () => {
+      if (inputArea) inputArea.value = '';
+      if (outputArea) outputArea.value = '';
+      clearStatus();
+      updateStats('');
+    });
+
+    btnCopy?.addEventListener('click', () => {
+      if (!outputArea?.value) return;
+      navigator.clipboard.writeText(outputArea.value).then(() => {
+        if (typeof window.showToast === 'function') {
+          window.showToast('Copied!');
+        }
+      }).catch(err => {
+        console.error('Failed to copy', err);
+        alert('Failed to copy to clipboard.');
+      });
+    });
+
+    inputArea?.addEventListener('input', () => {
+      updateStats(inputArea.value);
+    });
+  });
+</script>

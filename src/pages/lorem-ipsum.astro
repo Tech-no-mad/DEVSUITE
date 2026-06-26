@@ -1,0 +1,277 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<MainLayout
+  title="Lorem Ipsum Generator — Generate Placeholder Text Online | DevSuite"
+  description="Free Lorem Ipsum generator. Generate placeholder text by paragraphs, sentences, or words. Copy with one click for use in designs, mockups, and development."
+  canonicalPath="/lorem-ipsum"
+
+  toolName="Lorem Ipsum Generator"
+  toolDescription="Generate professional placeholder text by paragraph, sentence, or word."
+>
+  <div class="ad-layout">
+    <!-- Left Ad Sidebar -->
+    <aside class="ad-sidebar left-ad">
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+     data-ad-slot="SIDEBAR_SLOT_ID"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </aside>
+
+    <!-- Main Workspace -->
+    <div class="ad-workspace">
+      <header class="workspace-header">
+        <h1>Lorem Ipsum Generator</h1>
+        <p>Generate placeholder text for your designs, mockups, and development projects. Choose the format and amount you need.</p>
+      </header>
+
+      <section class="workspace-section">
+        <!-- Controls -->
+        <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; padding: 1rem; background: var(--color-surface); border-radius: 8px; border: 1px solid var(--color-border); align-items: flex-end;">
+          <div style="flex: 1; min-width: 120px;">
+            <label for="amount-input" class="section-label">Amount</label>
+            <input type="number" id="amount-input" class="input" min="1" max="1000" value="5" />
+          </div>
+          <div style="flex: 2; min-width: 150px;">
+            <label for="type-select" class="section-label">Type</label>
+            <select id="type-select" class="input" style="cursor: pointer;">
+              <option value="paragraphs">Paragraphs</option>
+              <option value="sentences">Sentences</option>
+              <option value="words">Words</option>
+            </select>
+          </div>
+          <div style="flex: 3; min-width: 250px; display: flex; align-items: center; padding-bottom: 0.75rem;">
+            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+              <input type="checkbox" id="start-with-lorem" checked />
+              <span>Start with 'Lorem ipsum dolor sit amet...'</span>
+            </label>
+          </div>
+          <div style="padding-bottom: 0.25rem;">
+            <button id="btn-generate" class="btn btn-primary">Generate</button>
+          </div>
+        </div>
+
+        <!-- Output -->
+        <textarea id="lorem-output" class="input" rows="14" readonly style="line-height: 1.6; padding: 1rem;"></textarea>
+
+        <!-- Stats and Actions -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+          <div class="btn-group" style="display: flex; gap: 0.5rem;">
+            <button id="btn-copy" class="btn btn-accent">Copy Text</button>
+            <button id="btn-download" class="btn btn-accent">Download as .txt</button>
+          </div>
+          <div id="lorem-stats" style="font-size: 0.875rem; color: var(--color-text-muted); display: flex; gap: 1rem;">
+            <span>Words: 0</span>
+            <span>Characters: 0</span>
+            <span>Paragraphs: 0</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SEO Content Section -->
+      
+      <!-- MASSIVE SEO PROSE SECTION -->
+      <section class="prose" style="margin-top: 4rem; border-top: 1px solid var(--color-border); padding-top: 2rem;">
+        <h2>The Best Online Lorem Ipsum Generator</h2>
+        <p>When designing a website, testing a database, or mocking up a user interface, you rarely have the final copywriting available. Waiting for content can stall the entire design process. Our <strong>free online Lorem Ipsum generator</strong> solves this by instantly producing high-quality placeholder text. Whether you need a few words for a button label or dozens of paragraphs for a blog template, this <strong>dummy text generator</strong> provides properly formatted, natural-looking copy in milliseconds.</p>
+
+        <h3>What is Lorem Ipsum?</h3>
+        <p>Lorem Ipsum is dummy text used by the typesetting and printing industry. It has been the industry standard placeholder text since the 1500s. The text is derived from sections of "De finibus bonorum et malorum" (The Extremes of Good and Evil), a classical Latin work by Cicero written in 45 BC. A <strong>placeholder text generator</strong> uses a scrambled version of this text because it has a more-or-less normal distribution of letters, making it look like readable English.</p>
+
+        <h3>Why Not Just Use "Test test test"?</h3>
+        <p>Many novice developers fill mockups with repetitive text like "Test text here test text here." This is a poor practice because it creates unnatural visual patterns. It doesn't accurately represent how real words wrap at the end of lines, how varying word lengths affect typography, or how paragraphs look en masse. Using a professional <strong>Lorem Ipsum tool</strong> provides text that perfectly mimics the visual weight and flow of actual content, allowing designers to focus on typography, spacing, and layout.</p>
+
+        <h3>Customizable Dummy Text Generation</h3>
+        <p>Different UI elements require different amounts of text. Our <strong>random text generator</strong> provides granular control over your output:</p>
+        <ul>
+          <li><strong>Paragraphs:</strong> Perfect for simulating blog posts, article bodies, and long-form content areas. Generating 3 to 5 paragraphs gives you a great sense of vertical rhythm and line-height.</li>
+          <li><strong>Sentences:</strong> Ideal for product descriptions, hero section subtitles, or review quotes.</li>
+          <li><strong>Words:</strong> Need a fake username, a navigation link label, or a button CTA? Generating 1 to 3 words provides the exact micro-copy placeholder you need.</li>
+        </ul>
+
+        <h3>A Tool for Web Designers and Developers</h3>
+        <p>If you are building themes for WordPress, Shopify, or Ghost, you must populate your templates with sample data before submitting them for review or sale. Our <strong>website placeholder text generator</strong> outputs clean, unformatted text that can easily be wrapped in HTML tags. Simply specify the amount of text you need, click generate, and hit the "Copy" button to transfer the text directly into your IDE or design software like Figma, Sketch, or Adobe XD.</p>
+
+        <h3>Lightning Fast Client-Side Generation</h3>
+        <p>Most online text generators rely on backend servers to process the request, which introduces latency and requires an internet connection. Our <strong>JavaScript Lorem Ipsum generator</strong> is built entirely with client-side logic. The Latin vocabulary dictionary is stored locally, and the randomization algorithms execute in your browser. This means you can generate thousands of words of dummy text instantaneously, without ever making a network request.</p>
+      </section>
+    </div>
+
+    <!-- Right Ad Sidebar -->
+    <aside class="ad-sidebar right-ad">
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+     data-ad-slot="SIDEBAR_SLOT_ID"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </aside>
+  </div>
+</MainLayout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const amountInput = document.getElementById('amount-input');
+    const typeSelect = document.getElementById('type-select');
+    const startWithLorem = document.getElementById('start-with-lorem');
+    const btnGenerate = document.getElementById('btn-generate');
+    const btnCopy = document.getElementById('btn-copy');
+    const btnDownload = document.getElementById('btn-download');
+    const outputTextarea = document.getElementById('lorem-output');
+    const statsDisplay = document.getElementById('lorem-stats');
+
+    const CLASSIC_LOREM = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
+
+    const SENTENCES = [
+      "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+      "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "Curabitur pretium tincidunt lacus.",
+      "Nulla gravida orci a odio.",
+      "Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris.",
+      "Integer in mauris eu nibh euismod gravida.",
+      "Duis ac tellus et risus vulputate vehicula.",
+      "Donec lobortis risus a elit.",
+      "Etiam tempor.",
+      "Ut ullamcorper, ligula eu tempor congue, eros est euismod turpis, id tincidunt sapien risus a quam.",
+      "Maecenas fermentum consequat mi.",
+      "Donec fermentum.",
+      "Pellentesque malesuada nulla a mi.",
+      "Duis sapien sem, aliquet nec, commodo eget, consequat quis, neque.",
+      "Aliquam faucibus, elit ut dictum aliquet, felis nisl adipiscing sapien, sed malesuada diam lacus eget erat.",
+      "Cras mollis scelerisque nunc.",
+      "Nullam arcu.",
+      "Aliquam consequat.",
+      "Curabitur augue lorem, dapibus quis, laoreet et, pretium ac, nisi.",
+      "Aenean magna nisl, mollis quis, molestie eu, feugiat in, nisi.",
+      "Cleque volutpat.",
+      "Mauris ac quam.",
+      "Proin dictum imperdiet erat.",
+      "Quisque interdum.",
+      "Vestibulum id leo.",
+      "Nunc elementum.",
+      "In tristique interdum leo.",
+      "Vivamus suscipit tortor eget felis porttitor volutpat.",
+      "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae.",
+      "Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus."
+    ];
+
+    function getRandomSentence() {
+      return SENTENCES[Math.floor(Math.random() * SENTENCES.length)];
+    }
+
+    function generateSentences(count, useClassicStart) {
+      let result = [];
+      if (useClassicStart && count > 0) {
+        result.push(CLASSIC_LOREM);
+        count--;
+      }
+      for (let i = 0; i < count; i++) {
+        result.push(getRandomSentence());
+      }
+      return result;
+    }
+
+    function generateParagraphs(count, useClassicStart) {
+      let paragraphs = [];
+      for (let i = 0; i < count; i++) {
+        // Random paragraph length between 4 and 8 sentences
+        let numSentences = Math.floor(Math.random() * 5) + 4;
+        let isFirstParagraph = (i === 0);
+        let sentences = generateSentences(numSentences, isFirstParagraph && useClassicStart);
+        paragraphs.push(sentences.join(' '));
+      }
+      return paragraphs.join('\n\n');
+    }
+
+    function generateWords(count, useClassicStart) {
+      let allWords = [];
+      if (useClassicStart) {
+        // Remove punctuation for clean word generation
+        let classicWords = CLASSIC_LOREM.replace(/[.,]/g, '').toLowerCase().split(' ');
+        // Capitalize first word
+        classicWords[0] = classicWords[0].charAt(0).toUpperCase() + classicWords[0].slice(1);
+        allWords = allWords.concat(classicWords);
+      }
+      
+      while (allWords.length < count) {
+        let sentenceWords = getRandomSentence().replace(/[.,]/g, '').toLowerCase().split(' ');
+        allWords = allWords.concat(sentenceWords);
+      }
+
+      allWords = allWords.slice(0, count);
+      // Capitalize first word if not already done
+      if (allWords.length > 0 && !useClassicStart) {
+         allWords[0] = allWords[0].charAt(0).toUpperCase() + allWords[0].slice(1);
+      }
+      // Add period to the end
+      if (allWords.length > 0) {
+        return allWords.join(' ') + '.';
+      }
+      return '';
+    }
+
+    function generateText() {
+      let amount = parseInt(amountInput.value, 10);
+      if (isNaN(amount) || amount < 1) amount = 1;
+      
+      let type = typeSelect.value;
+      let useClassicStart = startWithLorem.checked;
+      let outputText = "";
+
+      if (type === 'paragraphs') {
+        outputText = generateParagraphs(amount, useClassicStart);
+      } else if (type === 'sentences') {
+        outputText = generateSentences(amount, useClassicStart).join(' ');
+      } else if (type === 'words') {
+        outputText = generateWords(amount, useClassicStart);
+      }
+
+      outputTextarea.value = outputText;
+      updateStats(outputText);
+    }
+
+    function updateStats(text) {
+      if (!text) {
+         statsDisplay.innerHTML = `<span>Words: 0</span><span>Characters: 0</span><span>Paragraphs: 0</span>`;
+         return;
+      }
+      const words = text.trim().split(/\s+/).filter(w => w.length > 0).length;
+      const chars = text.length;
+      const paragraphs = text.split(/\n\n/).filter(p => p.trim().length > 0).length;
+      
+      statsDisplay.innerHTML = `<span>Words: ${words}</span><span>Characters: ${chars}</span><span>Paragraphs: ${paragraphs}</span>`;
+    }
+
+    btnGenerate?.addEventListener('click', generateText);
+
+    btnCopy?.addEventListener('click', () => {
+      if (!outputTextarea.value) return;
+      navigator.clipboard.writeText(outputTextarea.value).then(() => {
+        if (typeof window.showToast === 'function') window.showToast('Copied text!');
+      });
+    });
+
+    btnDownload?.addEventListener('click', () => {
+      if (!outputTextarea.value) return;
+      const blob = new Blob([outputTextarea.value], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'lorem-ipsum.txt';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+
+    // Initial generate
+    generateText();
+  });
+</script>

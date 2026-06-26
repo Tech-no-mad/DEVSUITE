@@ -1,0 +1,472 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<MainLayout
+  title="Regex Tester — Test Regular Expressions Online with Highlighting | DevSuite"
+  description="Free online regex tester and debugger. Test regular expressions against sample text with real-time match highlighting, capture groups, and flag options. JavaScript regex engine."
+  canonicalPath="/regex-tester"
+
+  toolName="Regex Tester"
+  toolDescription="Test and debug regular expressions with live visual match highlighting."
+>
+  <style>
+    .regex-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .regex-input-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      font-family: monospace;
+      font-size: 1.125rem;
+      flex-wrap: wrap;
+    }
+    .regex-input-wrapper input[type="text"] {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--color-text);
+      font-family: inherit;
+      font-size: inherit;
+      min-width: 200px;
+    }
+    .regex-flags {
+      display: flex;
+      gap: 0.5rem;
+      border-left: 1px solid var(--color-border);
+      padding-left: 1rem;
+      color: var(--color-text-muted);
+    }
+    .regex-flags label {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      cursor: pointer;
+      font-size: 0.875rem;
+    }
+    .regex-flags input[type="checkbox"] {
+      cursor: pointer;
+    }
+    .highlight-box {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 1rem;
+      font-family: monospace;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      min-height: 140px;
+      line-height: 1.5;
+    }
+    mark.match-0 {
+      background-color: #ffd54f;
+      color: #000;
+      border-radius: 2px;
+    }
+    mark.match-1 {
+      background-color: #64b5f6;
+      color: #000;
+      border-radius: 2px;
+    }
+    .match-results {
+      max-height: 300px;
+      overflow-y: auto;
+      background: var(--color-surface-hover);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+    }
+    .match-item {
+      padding: 1rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .match-item:last-child {
+      border-bottom: none;
+    }
+    .match-meta {
+      font-size: 0.75rem;
+      color: var(--color-text-muted);
+      margin-bottom: 0.25rem;
+    }
+    .match-text {
+      font-family: monospace;
+      font-weight: bold;
+      background: var(--color-surface);
+      padding: 0.25rem;
+      border-radius: 4px;
+      display: inline-block;
+      word-break: break-all;
+    }
+    .capture-group {
+      margin-top: 0.5rem;
+      font-size: 0.875rem;
+      padding-left: 1rem;
+      border-left: 2px solid var(--color-border);
+    }
+  </style>
+
+  <div class="ad-layout">
+    <aside class="ad-sidebar left-ad">
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+     data-ad-slot="SIDEBAR_SLOT_ID"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </aside>
+
+    <div class="ad-workspace">
+      <header class="workspace-header">
+        <h1>Regex Tester & Debugger</h1>
+        <p>Test your regular expressions in real time. See matches highlighted instantly, inspect capture groups, and experiment with flags. Uses the JavaScript RegExp engine.</p>
+      </header>
+
+      <section class="workspace-section regex-container">
+        <!-- Quick Inserts -->
+        <div>
+          <label class="section-label">Quick Patterns</label>
+          <div class="btn-group" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <button class="btn btn-accent btn-quick" data-regex="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}">Email</button>
+            <button class="btn btn-accent btn-quick" data-regex="https?://[^\s]+">URL</button>
+            <button class="btn btn-accent btn-quick" data-regex="\+?[\d\s\-().]{7,15}">Phone</button>
+            <button class="btn btn-accent btn-quick" data-regex="\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b">IP Address</button>
+            <button class="btn btn-accent btn-quick" data-regex="\d{4}-\d{2}-\d{2}">Date (YYYY-MM-DD)</button>
+          </div>
+        </div>
+
+        <!-- Regex Input -->
+        <div>
+          <label class="section-label">Regular Expression</label>
+          <div class="regex-input-wrapper">
+            <span style="color: var(--color-text-muted);">/</span>
+            <input type="text" id="regex-input" placeholder="Enter regex pattern here..." value="([a-zA-Z0-9._%+-]+)@([a-zA-Z0-9.-]+\.[a-zA-Z]{2,})" />
+            <span style="color: var(--color-text-muted);">/</span>
+            <div class="regex-flags">
+              <label><input type="checkbox" id="flag-g" checked> g</label>
+              <label><input type="checkbox" id="flag-i" checked> i</label>
+              <label><input type="checkbox" id="flag-m"> m</label>
+              <label><input type="checkbox" id="flag-s"> s</label>
+              <label><input type="checkbox" id="flag-u"> u</label>
+            </div>
+          </div>
+          <div id="regex-error" style="color: #e74c3c; font-size: 0.875rem; margin-top: 0.5rem; display: none;"></div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr; gap: 1.5rem;">
+          <!-- Test String Input -->
+          <div>
+            <label class="section-label">Test String</label>
+            <textarea id="test-string" class="input" rows="6" placeholder="Paste your test text here...">Contact us at support@example.com or sales@devsuite.tools. Alternatively, you can reach out to john.doe123@sub.domain.co.uk.</textarea>
+          </div>
+
+          <!-- Highlight Output -->
+          <div>
+            <label class="section-label">Highlighted Matches</label>
+            <div id="highlight-output" class="highlight-box"></div>
+          </div>
+        </div>
+
+        <!-- Results Panel -->
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <label class="section-label" style="margin: 0;">Match Results (<span id="match-count">0</span>)</label>
+            <div class="btn-group">
+              <button id="btn-copy-regex" class="btn btn-accent" style="padding: 0.25rem 0.5rem; font-size: 0.875rem;">Copy Regex</button>
+              <button id="btn-copy-matches" class="btn btn-accent" style="padding: 0.25rem 0.5rem; font-size: 0.875rem;">Copy Matches</button>
+            </div>
+          </div>
+          <div id="match-results" class="match-results">
+            <!-- Populated via JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- SEO Content Section -->
+      <section class="prose" style="margin-top: 3rem;">
+        <h2>What are Regular Expressions?</h2>
+        <p>
+          A Regular Expression (often abbreviated as <strong>regex</strong> or regexp) is a sequence of characters that specifies a search pattern. Usually such patterns are used by string-searching algorithms for "find" or "find and replace" operations on strings, or for input validation. Our <strong>regex tester online</strong> uses the JavaScript regex engine to help you build and debug these patterns instantly.
+        </p>
+        <h3>Common Use Cases</h3>
+        <ul>
+          <li><strong>Form Validation:</strong> Ensuring user input (like emails, phone numbers, or passwords) matches a required format.</li>
+          <li><strong>Search-and-Replace:</strong> Finding specific word patterns in large documents and replacing them dynamically.</li>
+          <li><strong>Log Parsing:</strong> Extracting IP addresses, error codes, or timestamps from server log files.</li>
+          <li><strong>Data Extraction:</strong> Web scraping specific data like prices, URLs, or HTML tags.</li>
+        </ul>
+        <h3>Basic Syntax Overview</h3>
+        <p>
+          While powerful, regex syntax can be confusing. Here's a quick cheat sheet:
+        </p>
+        <ul>
+          <li><code>.</code> : Matches any single character except line terminators.</li>
+          <li><code>*</code> : Matches the preceding item 0 or more times.</li>
+          <li><code>+</code> : Matches the preceding item 1 or more times.</li>
+          <li><code>?</code> : Matches the preceding item 0 or 1 time (makes it optional).</li>
+          <li><code>[abc]</code> : Matches any character inside the brackets.</li>
+          <li><code>(abc)</code> : Capturing group. Matches the exact sequence and extracts it.</li>
+          <li><code>^</code> and <code>$</code> : Matches the start and end of the string, respectively.</li>
+        </ul>
+        <h3>Regex Flags Explained</h3>
+        <p>
+          Flags change how the expression is evaluated. The most common are <code>g</code> (global) which searches for all matches rather than stopping after the first, <code>i</code> (case-insensitive) which ignores uppercase/lowercase differences, and <code>m</code> (multiline) which makes <code>^</code> and <code>$</code> match the start and end of lines instead of the whole string.
+        </p>
+        <p>
+          Mastering regex is a superpower for any developer. If you need a comprehensive <strong>regex validator</strong> and reference, we recommend consulting the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions" target="_blank" rel="noopener noreferrer">MDN Web Docs on Regular Expressions</a>.
+        </p>
+      </section>
+    
+      <!-- MASSIVE SEO PROSE SECTION -->
+      <section class="prose" style="margin-top: 4rem; border-top: 1px solid var(--color-border); padding-top: 2rem;">
+        <h2>The Ultimate Regex Tester and Debugger</h2>
+        <p>Regular expressions (regex or regexp) are incredibly powerful, but notoriously difficult to write, read, and debug. A single misplaced character can cause a pattern to fail silently or match the wrong data. Our <strong>free online regex tester</strong> is a visual debugging tool designed to help developers write, test, and troubleshoot complex regular expressions in real-time. With live syntax highlighting and match extraction, this <strong>regexp debugger</strong> is an essential tool for any software engineer's utility belt.</p>
+
+        <h3>What is a Regular Expression?</h3>
+        <p>A regular expression is a sequence of characters that specifies a search pattern. It is commonly used by string-searching algorithms for "find" or "find and replace" operations on text, or for input validation. Whether you are validating an email address in JavaScript, parsing logs in Python, or searching a massive database, regex is the universal language of text manipulation. An <strong>online regex builder</strong> helps you construct these patterns interactively.</p>
+
+        <h3>Why Use a Visual Regex Debugger?</h3>
+        <p>Writing regex purely in code often leads to a cycle of guessing, compiling, running the code, and failing. A <strong>live regex editor</strong> breaks this cycle by providing an interactive scratchpad. You provide a sample text string, type your regular expression, and the tool immediately highlights exactly what is matching. If a capture group fails, or if a greedy quantifier eats too much of the string, you see the visual failure instantly.</p>
+
+        <h3>Understanding Regex Flags</h3>
+        <p>Our <strong>regex evaluator</strong> supports standard JavaScript regex flags (modifiers) which drastically alter how your pattern behaves:</p>
+        <ul>
+          <li><strong>Global (g):</strong> By default, a regex engine stops after finding the first match. The <code>g</code> flag tells the engine to continue searching and return <em>all</em> matches in the string.</li>
+          <li><strong>Case Insensitive (i):</strong> Makes the pattern ignore letter casing. A pattern of <code>/apple/i</code> will match "Apple", "APPLE", and "aPpLe".</li>
+          <li><strong>Multiline (m):</strong> Changes the behavior of the <code>^</code> (start of string) and <code>$</code> (end of string) anchors so they match the start and end of <em>each line</em>, rather than just the start and end of the entire string block.</li>
+        </ul>
+
+        <h3>Common Regex Patterns and Use Cases</h3>
+        <p>If you are using our <strong>regex checker</strong>, you might be trying to solve one of these common text processing challenges:</p>
+        <h4>Email Validation</h4>
+        <p>Validating an email address perfectly according to RFC 5322 is extremely complex, but a practical, commonly used regex is: <code>{`/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/`}</code>. You can paste this into our tool to test it against various valid and invalid email addresses.</p>
+        
+        <h4>Phone Number Extraction</h4>
+        <p>To extract North American phone numbers from a block of unstructured text, a pattern like <code>{`/\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}/g`}</code> can be used to match formats like (555) 123-4567 or 555.123.4567.</p>
+        
+        <h4>Password Strength Validation</h4>
+        <p>Often used in form validation, a pattern like <code>{`/^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$/`}</code> ensures a password is at least eight characters long and contains at least one letter and one number.</p>
+
+        <h3>The JavaScript Regex Engine</h3>
+        <p>Because DevSuite operates 100% locally in your browser, this tool functions as a <strong>JavaScript regex tester</strong>. It uses the V8 engine's native <code>RegExp</code> object to evaluate your patterns. This means the behavior, syntax, and performance perfectly mirror what will happen when you deploy your code in Node.js or a modern web browser. It fully supports advanced ECMAScript regex features, including lookaheads <code>(?=...)</code>, lookbehinds <code>(?&lt;=...)</code>, and named capture groups <code>(?&lt;name&gt;...)</code>.</p>
+      </section>
+    </div>
+
+    <aside class="ad-sidebar right-ad">
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+     data-ad-slot="SIDEBAR_SLOT_ID"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </aside>
+  </div>
+</MainLayout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const regexInput = document.getElementById('regex-input');
+    const testString = document.getElementById('test-string');
+    const highlightOutput = document.getElementById('highlight-output');
+    const matchResults = document.getElementById('match-results');
+    const matchCountDisplay = document.getElementById('match-count');
+    const errorDisplay = document.getElementById('regex-error');
+    
+    const flags = {
+      g: document.getElementById('flag-g'),
+      i: document.getElementById('flag-i'),
+      m: document.getElementById('flag-m'),
+      s: document.getElementById('flag-s'),
+      u: document.getElementById('flag-u')
+    };
+
+    let currentMatches = [];
+    let currentRegexString = '';
+
+    function escapeHTML(str) {
+      if (!str) return '';
+      return str.replace(/[&<>"']/g, function(m) {
+        return {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#39;'
+        }[m];
+      });
+    }
+
+    function getFlagsString() {
+      let f = '';
+      if (flags.g.checked) f += 'g';
+      if (flags.i.checked) f += 'i';
+      if (flags.m.checked) f += 'm';
+      if (flags.s.checked) f += 's';
+      if (flags.u.checked) f += 'u';
+      return f;
+    }
+
+    function processRegex() {
+      const pattern = regexInput.value;
+      const text = testString.value;
+      const flagStr = getFlagsString();
+      
+      currentRegexString = `/${pattern}/${flagStr}`;
+      
+      errorDisplay.style.display = 'none';
+      highlightOutput.innerHTML = '';
+      matchResults.innerHTML = '';
+      matchCountDisplay.textContent = '0';
+      currentMatches = [];
+
+      if (!pattern) {
+        highlightOutput.innerHTML = escapeHTML(text);
+        return;
+      }
+
+      let regex;
+      try {
+        regex = new RegExp(pattern, flagStr);
+      } catch (e) {
+        errorDisplay.textContent = e.message;
+        errorDisplay.style.display = 'block';
+        highlightOutput.innerHTML = escapeHTML(text);
+        return;
+      }
+
+      let match;
+      let lastIndex = 0;
+      let highlightedHTML = '';
+      let matchIndex = 0;
+
+      // Reset lastIndex for global regex just in case
+      regex.lastIndex = 0;
+
+      // To prevent infinite loops with zero-length matches (e.g. ^ or .*)
+      let lastMatchStart = -1;
+
+      while ((match = regex.exec(text)) !== null) {
+        // Infinite loop prevention for zero-width matches
+        if (match.index === regex.lastIndex) {
+          regex.lastIndex++;
+        }
+        
+        if (match[0].length === 0 && match.index === lastMatchStart) {
+            // Force break if we are stuck on the same zero-width match
+            break;
+        }
+        lastMatchStart = match.index;
+
+        currentMatches.push(match);
+
+        // Highlight
+        const beforeMatch = text.substring(lastIndex, match.index);
+        const matchText = match[0];
+        
+        highlightedHTML += escapeHTML(beforeMatch);
+        if (matchText.length > 0) {
+           highlightedHTML += `<mark class="match-${matchIndex % 2}">${escapeHTML(matchText)}</mark>`;
+        } else {
+           // Zero-width match visual indicator
+           highlightedHTML += `<mark class="match-${matchIndex % 2}" style="border-left: 2px solid red; margin: 0 -1px; padding: 0;"></mark>`;
+        }
+
+        lastIndex = match.index + matchText.length;
+
+        // Results panel
+        const matchDiv = document.createElement('div');
+        matchDiv.className = 'match-item';
+        
+        let groupsHTML = '';
+        if (match.length > 1) {
+          for (let i = 1; i < match.length; i++) {
+            if (match[i] !== undefined) {
+               groupsHTML += `<div class="capture-group"><strong>Group ${i}:</strong> ${escapeHTML(match[i])}</div>`;
+            }
+          }
+        }
+
+        matchDiv.innerHTML = `
+          <div class="match-meta">Match ${matchIndex + 1} &middot; Index: ${match.index}–${match.index + matchText.length}</div>
+          <div class="match-text">${escapeHTML(matchText) || '<em>(zero-width match)</em>'}</div>
+          ${groupsHTML}
+        `;
+        matchResults.appendChild(matchDiv);
+
+        matchIndex++;
+
+        // Stop if not global to prevent infinite loop of the same match
+        if (!regex.global) break;
+        
+        // Sanity limit to prevent browser crash on huge texts
+        if (matchIndex > 1000) {
+            const warning = document.createElement('div');
+            warning.className = 'match-item';
+            warning.innerHTML = `<div class="match-meta" style="color: orange;">Warning: Match limit reached (1000+).</div>`;
+            matchResults.appendChild(warning);
+            break;
+        }
+      }
+
+      highlightedHTML += escapeHTML(text.substring(lastIndex));
+      highlightOutput.innerHTML = highlightedHTML || '<em>(no text)</em>';
+      matchCountDisplay.textContent = matchIndex;
+
+      if (matchIndex === 0 && text) {
+         matchResults.innerHTML = '<div class="match-item" style="color: var(--color-text-muted);">No matches found.</div>';
+      }
+    }
+
+    // Event Listeners
+    regexInput.addEventListener('input', processRegex);
+    testString.addEventListener('input', processRegex);
+    
+    Object.values(flags).forEach(checkbox => {
+      checkbox.addEventListener('change', processRegex);
+    });
+
+    document.querySelectorAll('.btn-quick').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const pattern = e.target.getAttribute('data-regex');
+        if (pattern) {
+          regexInput.value = pattern;
+          // default flags for quick inserts
+          flags.g.checked = true;
+          flags.i.checked = true;
+          flags.m.checked = false;
+          flags.s.checked = false;
+          flags.u.checked = false;
+          processRegex();
+        }
+      });
+    });
+
+    document.getElementById('btn-copy-regex')?.addEventListener('click', () => {
+      navigator.clipboard.writeText(currentRegexString).then(() => {
+        if (typeof window.showToast === 'function') window.showToast('Copied regex!');
+      });
+    });
+
+    document.getElementById('btn-copy-matches')?.addEventListener('click', () => {
+      if (currentMatches.length === 0) {
+         if (typeof window.showToast === 'function') window.showToast('No matches to copy.');
+         return;
+      }
+      const matchesText = currentMatches.map(m => m[0]).join('\n');
+      navigator.clipboard.writeText(matchesText).then(() => {
+        if (typeof window.showToast === 'function') window.showToast(`Copied ${currentMatches.length} matches!`);
+      });
+    });
+
+    // Initial run
+    processRegex();
+  });
+</script>

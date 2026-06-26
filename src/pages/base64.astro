@@ -1,0 +1,214 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<MainLayout
+  title="Base64 Encoder & Decoder — Encode and Decode Base64 Online | DevSuite"
+  description="Free online Base64 encoder and decoder. Convert text to Base64 and Base64 to text instantly. Supports UTF-8. No data sent to servers — 100% client-side."
+  canonicalPath="/base64"
+
+  toolName="Base64 Encoder / Decoder"
+  toolDescription="Encode text to Base64 or decode Base64 strings safely in your browser."
+>
+  <div class="ad-layout">
+    <!-- Left Ad Sidebar -->
+    <aside class="ad-sidebar left-ad">
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+     data-ad-slot="SIDEBAR_SLOT_ID"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </aside>
+
+    <!-- Main Workspace -->
+    <div class="ad-workspace">
+      <header class="workspace-header">
+        <h1>Base64 Encoder & Decoder</h1>
+        <p>Encode text to Base64 or decode Base64 strings back to plain text. Supports UTF-8 characters. All processing happens locally in your browser.</p>
+      </header>
+
+      <section class="workspace-section">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;" id="base64-grid">
+          <div>
+            <label for="text-input" class="section-label">Plain Text</label>
+            <textarea id="text-input" class="input" rows="10" placeholder="Type or paste plain text here..."></textarea>
+            <div id="text-stats" style="font-size: 0.875rem; color: var(--color-text-muted); margin-top: 0.5rem; text-align: right;">0 bytes</div>
+          </div>
+          <div>
+            <label for="base64-input" class="section-label">Base64 Encoded</label>
+            <textarea id="base64-input" class="input" rows="10" style="font-family: monospace;" placeholder="Type or paste Base64 here..."></textarea>
+            <div id="base64-error" style="color: #e74c3c; font-size: 0.875rem; margin-top: 0.5rem; display: none;">Invalid Base64 string</div>
+            <div id="base64-stats" style="font-size: 0.875rem; color: var(--color-text-muted); margin-top: 0.5rem; text-align: right;">0 bytes</div>
+          </div>
+        </div>
+
+        <div class="btn-group" style="display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center;">
+          <button id="btn-encode" class="btn btn-primary">Encode &rarr;</button>
+          <button id="btn-decode" class="btn btn-primary">&larr; Decode</button>
+          <button id="btn-copy-encoded" class="btn btn-accent">Copy Encoded</button>
+          <button id="btn-copy-decoded" class="btn btn-accent">Copy Decoded</button>
+          <button id="btn-clear" class="btn btn-accent">Clear All</button>
+        </div>
+        
+        <div id="ratio-stats" style="text-align: center; font-size: 0.875rem; color: var(--color-text-muted); margin-top: 1rem;"></div>
+      </section>
+
+      <!-- SEO Content Section -->
+      
+      <!-- MASSIVE SEO PROSE SECTION -->
+      <section class="prose" style="margin-top: 4rem; border-top: 1px solid var(--color-border); padding-top: 2rem;">
+        <h2>Free Online Base64 Encoder and Decoder</h2>
+        <p>Whether you need to embed an image directly into CSS, encode an authentication token, or transmit binary data across text-only protocols, Base64 is the universal standard. Our <strong>free online Base64 encoder and decoder</strong> is a robust, developer-friendly utility that allows you to instantly convert plain text strings to Base64 ciphertext, and safely decode Base64 back to human-readable text. It fully supports UTF-8 character encoding, ensuring emojis, foreign languages, and special characters are handled flawlessly.</p>
+        
+        <h3>What is Base64 Encoding?</h3>
+        <p>Base64 is a binary-to-text encoding scheme. It is designed to represent arbitrary binary data as an ASCII string format by translating it into a radix-64 representation. The Base64 alphabet consists of 64 characters: A-Z, a-z, 0-9, plus the '+' and '/' symbols (and '=' for padding). An <strong>online Base64 encoder</strong> is primarily used when there is a need to encode binary data that needs to be stored and transferred over media that are designed to deal with textual data. This ensures that the data remains intact without modification during transport.</p>
+
+        <h3>Common Use Cases for a Base64 Decoder/Encoder</h3>
+        <p>Developers rely on a <strong>Base64 converter</strong> daily for various technical tasks:</p>
+        <ul>
+          <li><strong>Data URIs:</strong> Instead of making an HTTP request for a small icon or image, developers can encode the image file into a Base64 string and embed it directly into the HTML <code>&lt;img src="data:image/png;base64,..."&gt;</code> or CSS background property.</li>
+          <li><strong>Basic Authentication:</strong> In HTTP Basic Auth, credentials are transmitted as a Base64 encoded string containing the username and password joined by a colon (e.g., <code>Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=</code>). Our <strong>Base64 text encoder</strong> is perfect for generating these headers for API testing.</li>
+          <li><strong>JSON Web Tokens (JWT):</strong> The header and payload of a JWT are Base64Url encoded. While we have a dedicated JWT Decoder tool, a standard <strong>Base64 decoder</strong> can also be used to inspect these payloads.</li>
+          <li><strong>Email Attachments:</strong> The MIME standard uses Base64 to encode binary attachments (like PDFs and JPEGs) so they can be transmitted safely over SMTP email protocols.</li>
+        </ul>
+
+        <h3>UTF-8 and Unicode Support</h3>
+        <p>A common issue with poorly built <strong>Base64 translators</strong> is that they break when confronted with non-ASCII characters (like emojis 🚀, or Japanese Kanji). Native JavaScript functions (btoa and atob) only support 8-bit ASCII. If you try to encode a Unicode string natively, it throws an InvalidCharacterError. Our tool implements a robust UTF-8 text encoder/decoder layer before the Base64 conversion, ensuring 100% accurate translation of all global character sets.</p>
+
+        <h3>Is Base64 Encryption?</h3>
+        <p>This is a critical security distinction: <strong>Base64 is NOT encryption.</strong> It is merely encoding. There is no cryptographic key involved, and anyone with access to the Base64 string can instantly decode it back to the original data using a <strong>free Base64 decoder</strong> like ours. Never use Base64 to secure sensitive data or passwords. If you need true security, use our AES-256 Text Encryptor tool instead.</p>
+
+        <h3>Zero-Data Retention Policy</h3>
+        <p>Because Base64 strings often contain sensitive API keys or credentials, sending them to a third-party server is a severe security risk. Our tool is a <strong>secure, client-side Base64 converter</strong>. All encoding and decoding algorithms are executed locally inside your web browser. No network requests are made, and your data is never logged, stored, or transmitted to any server.</p>
+      </section>
+    </div>
+
+    <!-- Right Ad Sidebar -->
+    <aside class="ad-sidebar right-ad">
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+     data-ad-slot="SIDEBAR_SLOT_ID"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </aside>
+  </div>
+</MainLayout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const textInput = document.getElementById('text-input');
+    const base64Input = document.getElementById('base64-input');
+    const errorMsg = document.getElementById('base64-error');
+    const textStats = document.getElementById('text-stats');
+    const base64Stats = document.getElementById('base64-stats');
+    const ratioStats = document.getElementById('ratio-stats');
+    const gridContainer = document.getElementById('base64-grid');
+
+    // UTF-8 friendly Base64 encode
+    function encodeUTF8(str) {
+      const bytes = new TextEncoder().encode(str);
+      const binString = Array.from(bytes, (byte) => String.fromCodePoint(byte)).join('');
+      return btoa(binString);
+    }
+
+    // UTF-8 friendly Base64 decode
+    function decodeUTF8(b64) {
+      const binString = atob(b64);
+      const bytes = Uint8Array.from(binString, (m) => m.codePointAt(0));
+      return new TextDecoder().decode(bytes);
+    }
+
+    function updateStats() {
+      const textBytes = new TextEncoder().encode(textInput.value).length;
+      const b64Bytes = new TextEncoder().encode(base64Input.value).length;
+      
+      if (textStats) textStats.textContent = `${textBytes} bytes`;
+      if (base64Stats) base64Stats.textContent = `${b64Bytes} bytes`;
+      
+      if (ratioStats) {
+        if (textBytes > 0) {
+          const ratio = ((b64Bytes / textBytes) * 100).toFixed(1);
+          ratioStats.textContent = `Size ratio: Base64 is ${ratio}% of original size`;
+        } else {
+          ratioStats.textContent = '';
+        }
+      }
+    }
+
+    function doEncode() {
+      try {
+        if (errorMsg) errorMsg.style.display = 'none';
+        const result = encodeUTF8(textInput.value);
+        base64Input.value = result;
+        updateStats();
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    function doDecode() {
+      try {
+        if (errorMsg) errorMsg.style.display = 'none';
+        // Basic validation for base64 characters
+        const b64 = base64Input.value.replace(/\s/g, ''); // ignore whitespace
+        if (!b64) {
+          textInput.value = '';
+          updateStats();
+          return;
+        }
+        const result = decodeUTF8(b64);
+        textInput.value = result;
+        updateStats();
+      } catch (e) {
+        if (errorMsg) errorMsg.style.display = 'block';
+      }
+    }
+
+    // Bidirectional live updating
+    textInput?.addEventListener('input', doEncode);
+    base64Input?.addEventListener('input', doDecode);
+
+    // Buttons
+    document.getElementById('btn-encode')?.addEventListener('click', doEncode);
+    document.getElementById('btn-decode')?.addEventListener('click', doDecode);
+
+    document.getElementById('btn-clear')?.addEventListener('click', () => {
+      textInput.value = '';
+      base64Input.value = '';
+      if (errorMsg) errorMsg.style.display = 'none';
+      updateStats();
+    });
+
+    document.getElementById('btn-copy-encoded')?.addEventListener('click', () => {
+      if (!base64Input.value) return;
+      navigator.clipboard.writeText(base64Input.value).then(() => {
+        if (typeof window.showToast === 'function') window.showToast('Copied Base64!');
+      });
+    });
+
+    document.getElementById('btn-copy-decoded')?.addEventListener('click', () => {
+      if (!textInput.value) return;
+      navigator.clipboard.writeText(textInput.value).then(() => {
+        if (typeof window.showToast === 'function') window.showToast('Copied plain text!');
+      });
+    });
+    
+    // Support mobile stacking
+    const mq = window.matchMedia('(max-width: 768px)');
+    function handleResize(e) {
+      if (gridContainer) {
+        if (e.matches) {
+          gridContainer.style.gridTemplateColumns = '1fr';
+        } else {
+          gridContainer.style.gridTemplateColumns = '1fr 1fr';
+        }
+      }
+    }
+    mq.addListener(handleResize);
+    handleResize(mq);
+  });
+</script>

@@ -1,0 +1,327 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<MainLayout
+  title="Color Converter & Picker — HEX, RGB, HSL Converter Online | DevSuite"
+  description="Free online color converter. Convert between HEX, RGB, HSL, and HSB color formats instantly. Includes a visual color picker and one-click copy for CSS values."
+  canonicalPath="/color-converter"
+
+  toolName="Color Converter"
+  toolDescription="Convert seamlessly between HEX, RGB, HSL, and select colors visually."
+>
+  <div class="ad-layout">
+    <!-- Left Ad Sidebar -->
+    <aside class="ad-sidebar left-ad">
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+     data-ad-slot="SIDEBAR_SLOT_ID"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </aside>
+
+    <!-- Main Workspace -->
+    <div class="ad-workspace">
+      <header class="workspace-header">
+        <h1>Color Converter & Picker</h1>
+        <p>Pick a color or enter a value in any format. Instantly convert between HEX, RGB, HSL, and HSB with live preview and CSS-ready output.</p>
+      </header>
+
+      <section class="workspace-section">
+        <div style="display: grid; grid-template-columns: minmax(auto, 200px) 1fr; gap: 2rem; margin-bottom: 2rem;" id="color-layout">
+          <!-- Left: Preview & Native Picker -->
+          <div style="display: flex; flex-direction: column; gap: 1rem; align-items: center;">
+            <div id="color-preview" style="width: 100%; aspect-ratio: 1; border-radius: 12px; background-color: #ff5733; border: 1px solid var(--color-border); box-shadow: 0 4px 6px rgba(0,0,0,0.1);"></div>
+            <label style="display: flex; flex-direction: column; width: 100%; gap: 0.5rem; text-align: center; font-size: 0.875rem; font-weight: 500;">
+              Choose Color
+              <input type="color" id="native-picker" value="#ff5733" style="width: 100%; height: 40px; cursor: pointer; border: none; padding: 0; background: none;" />
+            </label>
+          </div>
+
+          <!-- Right: Inputs -->
+          <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+            <!-- HEX -->
+            <div>
+              <label for="hex-input" class="section-label">HEX</label>
+              <input type="text" id="hex-input" class="input" value="#ff5733" style="font-family: monospace;" maxlength="7" />
+            </div>
+            
+            <!-- RGB -->
+            <div>
+              <label class="section-label">RGB (0-255)</label>
+              <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem;">
+                <input type="number" id="rgb-r" class="input" min="0" max="255" value="255" placeholder="R" />
+                <input type="number" id="rgb-g" class="input" min="0" max="255" value="87" placeholder="G" />
+                <input type="number" id="rgb-b" class="input" min="0" max="255" value="51" placeholder="B" />
+              </div>
+            </div>
+
+            <!-- HSL -->
+            <div>
+              <label class="section-label">HSL (H 0-360, S/L 0-100%)</label>
+              <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem;">
+                <input type="number" id="hsl-h" class="input" min="0" max="360" value="11" placeholder="H" />
+                <input type="number" id="hsl-s" class="input" min="0" max="100" value="100" placeholder="S" />
+                <input type="number" id="hsl-l" class="input" min="0" max="100" value="60" placeholder="L" />
+              </div>
+            </div>
+
+            <!-- Alpha Slider -->
+            <div>
+              <div style="display: flex; justify-content: space-between;">
+                <label for="alpha-slider" class="section-label">Opacity / Alpha</label>
+                <span id="alpha-val" style="font-size: 0.875rem; font-weight: bold;">1.0</span>
+              </div>
+              <input type="range" id="alpha-slider" min="0" max="1" step="0.01" value="1" style="width: 100%; cursor: pointer;" />
+            </div>
+          </div>
+        </div>
+
+        <h3 class="section-label" style="margin-top: 3rem;">CSS Output Values</h3>
+        <div class="output-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+          <div class="output-card" style="cursor: pointer; background: var(--color-surface); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--color-border); position: relative;" onclick="copyCSS('out-hex')">
+            <div class="output-label" style="font-size: 0.75rem; text-transform: uppercase; font-weight: 600; color: var(--color-text-muted); margin-bottom: 0.5rem;">HEX</div>
+            <div class="output-value" id="out-hex" style="font-family: monospace; font-size: 1.125rem;">#ff5733</div>
+            <div style="position: absolute; top: 0.5rem; right: 0.5rem; font-size: 0.75rem; color: var(--color-text-muted);">Copy</div>
+          </div>
+          <div class="output-card" style="cursor: pointer; background: var(--color-surface); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--color-border); position: relative;" onclick="copyCSS('out-rgb')">
+            <div class="output-label" style="font-size: 0.75rem; text-transform: uppercase; font-weight: 600; color: var(--color-text-muted); margin-bottom: 0.5rem;">RGB</div>
+            <div class="output-value" id="out-rgb" style="font-family: monospace; font-size: 1.125rem;">rgb(255, 87, 51)</div>
+            <div style="position: absolute; top: 0.5rem; right: 0.5rem; font-size: 0.75rem; color: var(--color-text-muted);">Copy</div>
+          </div>
+          <div class="output-card" style="cursor: pointer; background: var(--color-surface); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--color-border); position: relative;" onclick="copyCSS('out-hsl')">
+            <div class="output-label" style="font-size: 0.75rem; text-transform: uppercase; font-weight: 600; color: var(--color-text-muted); margin-bottom: 0.5rem;">HSL</div>
+            <div class="output-value" id="out-hsl" style="font-family: monospace; font-size: 1.125rem;">hsl(11, 100%, 60%)</div>
+            <div style="position: absolute; top: 0.5rem; right: 0.5rem; font-size: 0.75rem; color: var(--color-text-muted);">Copy</div>
+          </div>
+          <div class="output-card" style="cursor: pointer; background: var(--color-surface); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--color-border); position: relative;" onclick="copyCSS('out-rgba')">
+            <div class="output-label" style="font-size: 0.75rem; text-transform: uppercase; font-weight: 600; color: var(--color-text-muted); margin-bottom: 0.5rem;">RGBA</div>
+            <div class="output-value" id="out-rgba" style="font-family: monospace; font-size: 1.125rem;">rgba(255, 87, 51, 1)</div>
+            <div style="position: absolute; top: 0.5rem; right: 0.5rem; font-size: 0.75rem; color: var(--color-text-muted);">Copy</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SEO Content Section -->
+      
+      <!-- MASSIVE SEO PROSE SECTION -->
+      <section class="prose" style="margin-top: 4rem; border-top: 1px solid var(--color-border); padding-top: 2rem;">
+        <h2>The Ultimate CSS Color Converter and Picker</h2>
+        <p>Web designers and front-end developers work with multiple color formats every day. A brand guidelines document might provide colors in HEX, but your CSS animation requires RGB, and your Tailwind configuration is based on HSL. Our <strong>free online color converter</strong> acts as a universal bridge, instantly translating any color into all major web formats. With a built-in visual color picker and real-time conversion, this <strong>CSS color tool</strong> is an essential utility for modern UI development.</p>
+
+        <h3>Why We Need Multiple Color Formats</h3>
+        <p>The web supports various ways to declare a color, and a reliable <strong>color format translator</strong> is necessary because each format serves a unique purpose:</p>
+        
+        <h4>HEX (Hexadecimal)</h4>
+        <p>HEX codes (e.g., <code>#FF5733</code>) are the most common way to define solid colors in CSS. They are concise, easy to copy-paste, and widely supported. However, they are not human-readable—it is mathematically difficult for a human to look at a HEX code and know how to make it 10% darker. Our <strong>hex to rgb converter</strong> helps bridge this gap.</p>
+        
+        <h4>RGB and RGBA (Red, Green, Blue, Alpha)</h4>
+        <p>RGB (e.g., <code>rgb(255, 87, 51)</code>) represents colors based on light emission. The true power of this format is RGBA, which introduces the alpha channel for transparency. If you have a HEX code and need to apply 50% opacity, you must use an <strong>hex to rgba converter</strong> to translate it so you can write <code>rgba(255, 87, 51, 0.5)</code>.</p>
+        
+        <h4>HSL (Hue, Saturation, Lightness)</h4>
+        <p>HSL (e.g., <code>hsl(11, 100%, 60%)</code>) is the most human-friendly color format. The Hue is a degree on the color wheel (0-360), Saturation is a percentage, and Lightness is a percentage. If you want to create a hover state that is 10% darker, you simply reduce the Lightness value. Many modern CSS frameworks use HSL for their theming engines. Our <strong>hex to hsl converter</strong> makes setting up these design systems effortless.</p>
+        
+        <h4>CMYK (Cyan, Magenta, Yellow, Key/Black)</h4>
+        <p>While the web uses RGB, the print industry uses CMYK. If a graphic designer hands you print assets, you will need a <strong>cmyk to rgb converter</strong> to translate those ink-based colors into screen-based colors accurately.</p>
+
+        <h3>How the Online Color Picker Works</h3>
+        <p>You don't need to know the exact code to use this tool. You can utilize the visual <strong>HTML color picker</strong> to select a color visually from the spectrum. As you drag the selector, the tool dynamically generates the precise HEX, RGB, and HSL values in real-time. You can then copy these CSS-ready strings to your clipboard with a single click.</p>
+
+        <h3>Designing Accessible Color Palettes</h3>
+        <p>A crucial part of web development is ensuring your text is readable against its background, satisfying WCAG (Web Content Accessibility Guidelines) contrast ratios. By using our <strong>color code generator</strong> to translate your brand's HEX colors into HSL, you can easily tweak the lightness variable to find a shade that provides sufficient contrast for visually impaired users.</p>
+
+        <h3>100% Client-Side Color Translation</h3>
+        <p>Like all utilities on DevSuite, our <strong>CSS color converter</strong> runs entirely in your browser using optimized JavaScript algorithms. There are no server delays, no API limits, and no tracking. You get instantaneous, mathematically perfect color translations the millisecond you alter an input.</p>
+      </section>
+    </div>
+
+    <!-- Right Ad Sidebar -->
+    <aside class="ad-sidebar right-ad">
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+     data-ad-slot="SIDEBAR_SLOT_ID"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </aside>
+  </div>
+</MainLayout>
+
+<script>
+  window.copyCSS = function(elementId) {
+    const el = document.getElementById(elementId);
+    if (!el) return;
+    navigator.clipboard.writeText(el.textContent.trim()).then(() => {
+      if (typeof window.showToast === 'function') window.showToast('Copied to clipboard!');
+    });
+  };
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const hexInput = document.getElementById('hex-input');
+    const rgbR = document.getElementById('rgb-r');
+    const rgbG = document.getElementById('rgb-g');
+    const rgbB = document.getElementById('rgb-b');
+    const hslH = document.getElementById('hsl-h');
+    const hslS = document.getElementById('hsl-s');
+    const hslL = document.getElementById('hsl-l');
+    const alphaSlider = document.getElementById('alpha-slider');
+    const alphaVal = document.getElementById('alpha-val');
+    const nativePicker = document.getElementById('native-picker');
+    const colorPreview = document.getElementById('color-preview');
+    const colorLayout = document.getElementById('color-layout');
+
+    const outHex = document.getElementById('out-hex');
+    const outRgb = document.getElementById('out-rgb');
+    const outHsl = document.getElementById('out-hsl');
+    const outRgba = document.getElementById('out-rgba');
+
+    let currentR = 255, currentG = 87, currentB = 51, currentA = 1.0;
+
+    // --- Math ---
+    function rgbToHex(r, g, b) {
+      return "#" + (1 << 24 | r << 16 | g << 8 | b).toString(16).slice(1).toLowerCase();
+    }
+
+    function hexToRgb(hex) {
+      hex = hex.replace(/^#/, '');
+      if (hex.length === 3) {
+        hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+      }
+      if (hex.length !== 6) return null;
+      const num = parseInt(hex, 16);
+      if (isNaN(num)) return null;
+      return [(num >> 16) & 255, (num >> 8) & 255, num & 255];
+    }
+
+    function rgbToHsl(r, g, b) {
+      r /= 255; g /= 255; b /= 255;
+      let max = Math.max(r, g, b), min = Math.min(r, g, b);
+      let h, s, l = (max + min) / 2;
+
+      if(max === min) {
+          h = s = 0; // achromatic
+      } else {
+          let d = max - min;
+          s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+          switch(max) {
+              case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+              case g: h = (b - r) / d + 2; break;
+              case b: h = (r - g) / d + 4; break;
+          }
+          h /= 6;
+      }
+      return [Math.round(h * 360), Math.round(s * 100), Math.round(l * 100)];
+    }
+
+    function hslToRgb(h, s, l) {
+      h /= 360; s /= 100; l /= 100;
+      let r, g, b;
+      if (s === 0) {
+          r = g = b = l; // achromatic
+      } else {
+          function hue2rgb(p, q, t){
+              if(t < 0) t += 1;
+              if(t > 1) t -= 1;
+              if(t < 1/6) return p + (q - p) * 6 * t;
+              if(t < 1/2) return q;
+              if(t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+              return p;
+          }
+          let q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+          let p = 2 * l - q;
+          r = hue2rgb(p, q, h + 1/3);
+          g = hue2rgb(p, q, h);
+          b = hue2rgb(p, q, h - 1/3);
+      }
+      return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
+    }
+
+    // --- Updates ---
+    function updateAllFromRGB(r, g, b) {
+      currentR = Math.min(255, Math.max(0, parseInt(r) || 0));
+      currentG = Math.min(255, Math.max(0, parseInt(g) || 0));
+      currentB = Math.min(255, Math.max(0, parseInt(b) || 0));
+
+      const hex = rgbToHex(currentR, currentG, currentB);
+      const [h, s, l] = rgbToHsl(currentR, currentG, currentB);
+
+      // Update Inputs 
+      if (document.activeElement !== hexInput) hexInput.value = hex;
+      if (document.activeElement !== rgbR) rgbR.value = currentR;
+      if (document.activeElement !== rgbG) rgbG.value = currentG;
+      if (document.activeElement !== rgbB) rgbB.value = currentB;
+      if (document.activeElement !== hslH) hslH.value = h;
+      if (document.activeElement !== hslS) hslS.value = s;
+      if (document.activeElement !== hslL) hslL.value = l;
+      if (document.activeElement !== nativePicker) nativePicker.value = hex;
+
+      updateDisplays(hex, h, s, l);
+    }
+
+    function updateDisplays(hex, h, s, l) {
+      const rgbaStr = `rgba(${currentR}, ${currentG}, ${currentB}, ${currentA})`;
+      
+      // Visuals
+      if (colorPreview) {
+         colorPreview.style.backgroundColor = rgbaStr;
+      }
+      if (alphaVal) alphaVal.textContent = currentA;
+
+      // Outputs
+      if (outHex) outHex.textContent = hex;
+      if (outRgb) outRgb.textContent = `rgb(${currentR}, ${currentG}, ${currentB})`;
+      if (outHsl) outHsl.textContent = `hsl(${h}, ${s}%, ${l}%)`;
+      if (outRgba) outRgba.textContent = rgbaStr;
+    }
+
+    // --- Event Handlers ---
+    hexInput?.addEventListener('input', (e) => {
+      const rgb = hexToRgb(e.target.value);
+      if (rgb) updateAllFromRGB(rgb[0], rgb[1], rgb[2]);
+    });
+
+    [rgbR, rgbG, rgbB].forEach(el => {
+      el?.addEventListener('input', () => updateAllFromRGB(rgbR.value, rgbG.value, rgbB.value));
+    });
+
+    [hslH, hslS, hslL].forEach(el => {
+      el?.addEventListener('input', () => {
+        let h = Math.min(360, Math.max(0, parseInt(hslH.value) || 0));
+        let s = Math.min(100, Math.max(0, parseInt(hslS.value) || 0));
+        let l = Math.min(100, Math.max(0, parseInt(hslL.value) || 0));
+        const rgb = hslToRgb(h, s, l);
+        updateAllFromRGB(rgb[0], rgb[1], rgb[2]);
+      });
+    });
+
+    alphaSlider?.addEventListener('input', (e) => {
+      currentA = parseFloat(e.target.value);
+      updateAllFromRGB(currentR, currentG, currentB);
+    });
+
+    nativePicker?.addEventListener('input', (e) => {
+      const rgb = hexToRgb(e.target.value);
+      if (rgb) updateAllFromRGB(rgb[0], rgb[1], rgb[2]);
+    });
+
+    // Mobile layout adjustment
+    const mq = window.matchMedia('(max-width: 768px)');
+    function handleResize(e) {
+      if (colorLayout) {
+        if (e.matches) {
+          colorLayout.style.gridTemplateColumns = '1fr';
+        } else {
+          colorLayout.style.gridTemplateColumns = 'minmax(auto, 200px) 1fr';
+        }
+      }
+    }
+    mq.addListener(handleResize);
+    handleResize(mq);
+
+    // Initial render
+    updateAllFromRGB(currentR, currentG, currentB);
+  });
+</script>

@@ -1,0 +1,418 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<MainLayout
+  title="DevSuite — Free Online Developer Tools & Utilities"
+  description="A collection of 16 free, secure, and fast developer tools. Includes JSON formatter, Base64 encoder, UUID generator, regex tester, password generator, and more."
+>
+  <style>
+    /* Inline specific tweaks if needed, but mostly relying on global.css */
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+    }
+  
+    #tool-search:focus {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px var(--color-accent-light);
+    }
+  
+.seo-expand-wrapper {
+  position: relative;
+}
+.seo-prose-collapsed {
+  max-height: 0px;
+  overflow: hidden;
+  transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.seo-prose-collapsed.is-expanded {
+  max-height: 99999px;
+}
+.seo-fade {
+  position: absolute;
+  bottom: 52px;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: linear-gradient(to bottom, transparent, var(--color-bg));
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.seo-fade.is-hidden {
+  opacity: 0;
+}
+.seo-expand-btn {
+  display: block;
+  margin: 0 auto 80px;
+  padding: 10px 24px;
+  font-size: 14px;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+.seo-expand-btn:hover {
+  color: var(--color-text);
+  border-color: var(--color-border-hover);
+}
+.seo-expand-btn.is-hidden {
+  display: none;
+}
+</style>
+
+
+  <div class="hero-section">
+    <h1 class="hero-title">Developer tools,<br/>without the friction.</h1>
+    <p class="hero-subtitle">16 incredibly fast, secure, client-side utilities designed for modern web developers. Zero server roundtrips, absolute data privacy.</p>
+    <div class="hero-stats">
+      <div class="hero-stat-item">
+        <span class="hero-stat-value">16</span>
+        <span class="hero-stat-label">Free Tools</span>
+      </div>
+      <div class="hero-stat-item">
+        <span class="hero-stat-value">0ms</span>
+        <span class="hero-stat-label">Latency</span>
+      </div>
+      <div class="hero-stat-item">
+        <span class="hero-stat-value">100%</span>
+        <span class="hero-stat-label">Client-Side</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="max-width: 480px; margin: 0 auto 48px; padding: 0 24px; position: relative;">
+  <input 
+    type="search"
+    id="tool-search"
+    placeholder="Search 16 tools… (Press / to focus)"
+    style="width: 100%; padding: 12px 16px 12px 40px; font-size: 15px; border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-surface); color: var(--color-text); font-family: var(--font-sans); outline: none; transition: border-color 200ms ease; box-shadow: var(--shadow-sm);"
+    aria-label="Search tools"
+    autocomplete="off"
+    spellcheck="false"
+  />
+  <svg style="position:absolute;left:40px;top:50%;transform:translate(-100%,-50%);pointer-events:none;opacity:0.4;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+</div>
+
+
+  <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 24px 80px;">
+    
+    <h2 class="category-header">📝 Text & Content</h2>
+    <div class="grid-container">
+      <a href="/case-converter" class="card premium-card" style="text-decoration: none;">
+        <div class="card-icon">Aa</div>
+        <h3>Case Converter</h3>
+        <p>Instantly convert text to UPPERCASE, lowercase, Title Case, or Sentence case.</p>
+        <div class="card-arrow">Open Tool →</div>
+      </a>
+      <a href="/lorem-ipsum" class="card premium-card" style="text-decoration: none;">
+        <div class="card-icon">LI</div>
+        <h3>Lorem Ipsum</h3>
+        <p>Generate professional placeholder text by paragraph, sentence, or word.</p>
+        <div class="card-arrow">Open Tool →</div>
+      </a>
+      <a href="/word-counter" class="card premium-card" style="text-decoration: none;">
+        <div class="card-icon">123</div>
+        <h3>Word Counter</h3>
+        <p>Real-time analytics for words, characters, reading time, and keyword density.</p>
+        <div class="card-arrow">Open Tool →</div>
+      </a>
+      <a href="/markdown-preview" class="card premium-card" style="text-decoration: none;">
+        <div class="card-icon">M↓</div>
+        <h3>Markdown Previewer</h3>
+        <p>Write Markdown and see the rendered HTML preview instantly.</p>
+        <div class="card-arrow">Open Tool →</div>
+      </a>
+    </div>
+
+    <h2 class="category-header">⚙️ Code & Data</h2>
+    <div class="grid-container">
+      <a href="/json-formatter" class="card premium-card" style="text-decoration: none;">
+        <div class="card-icon">{ }</div>
+        <h3>JSON Formatter</h3>
+        <p>Format, validate, beautify, and minify JSON data instantly.</p>
+        <div class="card-arrow">Open Tool →</div>
+      </a>
+      <a href="/base64" class="card premium-card" style="text-decoration: none;">
+        <div class="card-icon">64</div>
+        <h3>Base64 Encoder</h3>
+        <p>Encode text to Base64 or decode Base64 strings safely in your browser.</p>
+        <div class="card-arrow">Open Tool →</div>
+      </a>
+      <a href="/uuid-generator" class="card premium-card" style="text-decoration: none;">
+        <div class="card-icon">ID</div>
+        <h3>UUID Generator</h3>
+        <p>Generate secure, random Version 4 UUIDs (GUIDs) individually or in bulk.</p>
+        <div class="card-arrow">Open Tool →</div>
+      </a>
+      <a href="/regex-tester" class="card premium-card" style="text-decoration: none;">
+        <div class="card-icon">/.*/</div>
+        <h3>Regex Tester</h3>
+        <p>Test and debug regular expressions with live visual match highlighting.</p>
+        <div class="card-arrow">Open Tool →</div>
+      </a>
+    </div>
+
+    <h2 class="category-header">🎨 CSS & Design</h2>
+    <div class="grid-container">
+      <a href="/px-to-rem" class="card premium-card" style="text-decoration: none;">
+        <div class="card-icon">px</div>
+        <h3>PX to REM</h3>
+        <p>Convert pixels to REM or EM units for accessible responsive design.</p>
+        <div class="card-arrow">Open Tool →</div>
+      </a>
+      <a href="/color-converter" class="card premium-card" style="text-decoration: none;">
+        <div class="card-icon">🎨</div>
+        <h3>Color Converter</h3>
+        <p>Convert seamlessly between HEX, RGB, HSL, and select colors visually.</p>
+        <div class="card-arrow">Open Tool →</div>
+      </a>
+      <a href="/css-gradient" class="card premium-card" style="text-decoration: none;">
+        <div class="card-icon">🌈</div>
+        <h3>CSS Gradient</h3>
+        <p>Visually create beautiful linear and radial CSS backgrounds.</p>
+        <div class="card-arrow">Open Tool →</div>
+      </a>
+      <a href="/box-shadow" class="card premium-card" style="text-decoration: none;">
+        <div class="card-icon">⬛</div>
+        <h3>Box Shadow</h3>
+        <p>Generate perfect CSS drop shadows with multiple layer support.</p>
+        <div class="card-arrow">Open Tool →</div>
+      </a>
+    </div>
+
+    <h2 class="category-header">🔒 Security & Cryptography</h2>
+    <div class="grid-container">
+      <a href="/jwt-decoder" class="card premium-card" style="text-decoration: none;">
+        <div class="card-icon">JWT</div>
+        <h3>JWT Decoder</h3>
+        <p>Decode JSON Web Tokens and inspect header, payload, and claims locally.</p>
+        <div class="card-arrow">Open Tool →</div>
+      </a>
+      <a href="/hash-generator" class="card premium-card" style="text-decoration: none;">
+        <div class="card-icon">#</div>
+        <h3>Hash Generator</h3>
+        <p>Generate MD5, SHA-1, SHA-256, and SHA-512 cryptographic hashes.</p>
+        <div class="card-arrow">Open Tool →</div>
+      </a>
+      <a href="/password-generator" class="card premium-card" style="text-decoration: none;">
+        <div class="card-icon">🔑</div>
+        <h3>Password Generator</h3>
+        <p>Create cryptographically strong, random passwords with a strength meter.</p>
+        <div class="card-arrow">Open Tool →</div>
+      </a>
+      <a href="/text-encrypt" class="card premium-card" style="text-decoration: none;">
+        <div class="card-icon">🔒</div>
+        <h3>Text Encryptor</h3>
+        <p>Encrypt and decrypt messages using AES-256-GCM and the Web Crypto API.</p>
+        <div class="card-arrow">Open Tool →</div>
+      </a>
+    </div>
+
+    <!-- MASSIVE INDEX SEO ENCYCLOPEDIA -->
+<div class="seo-expand-wrapper">
+  <section class="prose seo-prose-collapsed" id="seo-prose" style="margin-top: 100px; border-top: 1px solid var(--color-border); padding-top: 64px;">
+
+  <h2>DevSuite: The Ultimate Developer Toolkit Encyclopedia</h2>
+  <p>Welcome to DevSuite — the definitive, all-in-one hub for essential web development utilities, text processing tools, security primitives, and CSS design generators. Modern software development is inherently fragmented: a front-end engineer might switch between a JSON formatter, a UUID generator, a regex tester, a Base64 encoder, and a password generator dozens of times in a single afternoon. DevSuite was architected to eliminate that context-switching friction. Every single tool on this platform processes data completely inside your browser — no server roundtrips, no data logging, no subscriptions, no sign-ups. Just open the tool and work.</p>
+
+  <h3>Why DevSuite Exists: The Problem With Other Developer Tool Sites</h3>
+  <p>The internet is littered with "free online developer tools." A simple Google search for "online JSON formatter" returns hundreds of results. But the overwhelming majority of these platforms share three fundamental, unacceptable flaws that make them unsuitable for professional use:</p>
+  <ol>
+    <li><strong>Privacy Violations at Scale:</strong> The most widely-used online developer tools silently transmit your data to remote servers for processing. When you paste a minified API response into a JSON formatter that sends it server-side, you may be exposing proprietary business logic, user PII, authentication tokens, or financial data. For developers working in healthcare (HIPAA), finance (PCI-DSS), or enterprise SaaS environments, this is not just a bad practice — it's a compliance violation. DevSuite executes every transformation, every cryptographic operation, and every string manipulation entirely within the browser's JavaScript engine (V8 on Chrome, SpiderMonkey on Firefox). The bytes you type never leave your machine.</li>
+    <li><strong>Catastrophic User Experience:</strong> Most legacy developer tool sites were built in the mid-2000s and have never been meaningfully redesigned. They rely on intrusive interstitial ads, auto-playing video advertisements, modal popups demanding newsletter sign-ups, and slow server-side round trips that interrupt your flow state. DevSuite is a single-page static application with zero external API calls, instantaneous DOM updates, and a clean, distraction-free interface designed around the Vercel design philosophy.</li>
+    <li><strong>Performance Degradation:</strong> Sending a Base64 string to a server, waiting for a network round trip, and receiving the response is objectively slower than executing the btoa() function locally in 0.01 milliseconds. For data-intensive tasks like hashing a long string or formatting a multi-megabyte JSON payload, server-side tools add seconds of latency. DevSuite tools complete in microseconds.</li>
+  </ol>
+
+  <h3>The Technical Architecture: Why Client-Side Matters</h3>
+  <p>DevSuite is built on Astro, a modern static site generator that produces zero JavaScript by default. Pages are pre-rendered at build time into pure HTML, meaning there is no client-side framework to hydrate, no virtual DOM to reconcile, and no JavaScript bundle to parse before the page becomes interactive. The result is near-instantaneous Time to Interactive (TTI) scores and exceptional Core Web Vitals performance — factors that directly influence Google Search ranking.</p>
+  <p>The interactive portions of DevSuite tools rely exclusively on native Web APIs that are available in every modern browser without any third-party dependencies: the <code>Web Crypto API</code> for hash generation, AES encryption, and random value generation; the <code>Clipboard API</code> for one-click copy functionality; the <code>TextEncoder</code> and <code>TextDecoder</code> APIs for proper UTF-8 handling in Base64 operations; and standard DOM manipulation for real-time UI updates.</p>
+  <p>The styling system uses Tailwind CSS v4 with a comprehensive CSS custom property design system, supporting both light and dark modes via the <code>prefers-color-scheme</code> media query and a manual toggle that persists preference to localStorage. The dark mode system respects user system preferences on first visit and overrides them only when explicitly toggled — a UX pattern that follows WCAG 2.1 accessibility guidelines.</p>
+
+  <h3>Deep Dive: The Text and Content Suite</h3>
+  <p>String manipulation and content generation are foundational daily tasks for every software developer, content writer, digital marketer, and data analyst. The Text and Content suite within DevSuite provides surgical-precision tools for these repetitive tasks, eliminating the need to write throwaway utility scripts or remember regex syntax under deadline pressure.</p>
+
+  <h4>Case Converter: Comprehensive Text Case Transformation</h4>
+  <p>Text case conversion is deceptively common. Consider a backend developer who receives raw CSV data from a legacy system with inconsistent capitalization in user names — some entries in ALL CAPS, others in lowercase, others in mixed case. Manually correcting thousands of rows is impractical. Our Case Converter handles this problem instantly. Supported transformation modes include: UPPERCASE (all characters converted to capital letters, useful for constants, SQL keywords, and emphasis), lowercase (all characters converted to small letters, the standard for URL slugs, email addresses, and CSS class names), Title Case (first letter of every word capitalized, following standard English title capitalization rules used in headings, book titles, and product names), and Sentence case (only the first letter of each sentence capitalized, appropriate for natural-language content, blog post bodies, and form placeholder text). The engine correctly handles edge cases including pre-existing mixed capitalization, apostrophes in contractions, and hyphenated compound words.</p>
+  <p>Common use cases for the Case Converter tool include: normalizing user-input form data before database insertion, converting programming variable names between camelCase and snake_case conventions, preparing content for CMS systems that require specific capitalization formats, standardizing product names and categories in e-commerce databases, and converting SQL column names to human-readable display labels in admin dashboards.</p>
+
+  <h4>Lorem Ipsum Generator: Professional Placeholder Content</h4>
+  <p>Lorem Ipsum, the standard placeholder text derived from Cicero's "de Finibus Bonorum et Malorum," has been used in typesetting and design since the 1500s. In modern web development, placeholder text is essential during wireframing, prototype building, design system documentation, CMS template testing, and front-end development when backend content is not yet available. Our Lorem Ipsum Generator produces authentic Latin-derived placeholder text with configurable output — by paragraph, by sentence count, or by specific word count. This flexibility serves multiple professional contexts: a UI designer needs exactly 3 short sentences to fit a card component, while a front-end developer needs 5 full paragraphs to test the scroll behavior of a news feed component. The generator produces text that mimics the natural word-length distribution of English prose, making layouts feel realistic during stakeholder presentations.</p>
+  <p>Specific developer use cases include: populating database seed files with realistic content for staging environments, filling in Storybook component documentation with readable placeholder content, testing responsive typography across breakpoints with variable-length text, validating CMS character limits and excerpt truncation behavior, and generating mock data for automated UI testing suites.</p>
+
+  <h4>Word Counter: Advanced Text Analytics</h4>
+  <p>The Word Counter is far more than a simple counter. It is a real-time text analytics engine that provides actionable metrics for writers, SEO specialists, content marketers, and developers. Core metrics include: word count (critical for meeting minimum content requirements for SEO articles, academic papers, and contract deliverables), character count both with and without spaces (essential for social media character limits: Twitter/X 280 characters, LinkedIn 700 for posts, Meta Ads 125 characters for primary text, Google Ads 30 characters for headlines), sentence count, paragraph count, and estimated reading time calculated using the standard 200 words-per-minute reading speed baseline. Advanced features include keyword frequency analysis — the tool identifies the most frequently occurring content words (excluding stop words like "the," "and," "is"), which enables basic on-page keyword density analysis without exporting to a separate SEO tool. This is particularly useful for bloggers and content writers who want to confirm that their primary focus keyword appears at the recommended 1-2% density throughout their article.</p>
+  <p>Additional professional applications of the Word Counter include: verifying minimum word counts for long-form SEO content (generally 1,500+ words for competitive topics), checking character counts for email subject lines (50-60 characters for optimal mobile display), measuring text complexity for readability, and validating database varchar field constraints during data entry workflow design.</p>
+
+  <h4>Markdown Previewer: Live Documentation Editor</h4>
+  <p>Markdown has become the universal language of developer documentation. GitHub READMEs, GitLab wikis, Confluence pages, Notion documents, static site blog posts (Jekyll, Hugo, Gatsby, Astro), Discord and Slack messages, and countless other platforms use Markdown as their native text format. Despite its ubiquity, writing Markdown without a live preview is error-prone — mismatched asterisks, incorrect heading levels, broken link syntax, and improperly formatted code blocks are common mistakes that only become visible after committing to a repository or publishing to production. DevSuite's Markdown Previewer renders live HTML output as you type, giving you immediate visual feedback on your formatting decisions. Supported Markdown syntax includes: headings (H1 through H6), bold and italic emphasis, inline code and fenced code blocks with language syntax hinting, ordered and unordered lists (with nested list support), blockquotes, horizontal rules, inline hyperlinks, reference-style links, and tables (GitHub Flavored Markdown extension). The preview panel uses the same typography and prose styles as the rest of DevSuite, providing a realistic approximation of how your content will look in a styled web context.</p>
+
+  <h3>Deep Dive: Code and Data Serialization Tools</h3>
+  <p>Modern application development revolves around three universal data interchange formats and identifier systems: JSON for API communication, Base64 for binary-to-text encoding, UUIDs for distributed system identifiers, and regular expressions for pattern matching. When any of these tools behave unexpectedly, the entire development workflow grinds to a halt. DevSuite's Code and Data suite provides a comprehensive debugging and transformation toolkit for these critical formats.</p>
+
+  <h4>JSON Formatter & Validator: The Developer's Debugging Cornerstone</h4>
+  <p>JSON (JavaScript Object Notation) has displaced XML as the de-facto standard for web API communication, configuration file formats, and data storage. However, production JSON — whether returned from a REST API, stored in a NoSQL database, or emitted by a microservice — is typically minified to reduce payload size. A minified JSON response is essentially unreadable to human eyes: thousands of characters on a single line with no whitespace, indentation, or visual hierarchy. Our JSON Formatter transforms this raw, minified JSON into properly indented, human-readable output with configurable indentation depth (2 spaces for most style guides, 4 spaces for Python conventions, tabs for Go). Beyond formatting, the tool performs strict syntax validation against RFC 8259, the official JSON specification. Common JSON syntax errors that the validator catches include: trailing commas after the last element in an array or object (illegal in JSON, though valid in JavaScript), using single quotes instead of double quotes for string literals, including JavaScript comments (not permitted in JSON), unescaped special characters within strings, and numeric values with leading zeros. When a syntax error is found, the validator reports the exact character position of the failure, allowing instant pinpointing of the problematic token even in a 10,000-character payload. The tool also supports minification — collapsing a beautifully formatted JSON file back down to its smallest possible form for production deployment, where every kilobyte of API payload size impacts end-user load time and server egress costs.</p>
+  <p>Advanced use cases include: comparing two API response payloads by formatting both and using a text diff tool, validating configuration files (package.json, tsconfig.json, eslintrc.json, .prettierrc) before committing, debugging webhook payloads from third-party services like Stripe, GitHub, or Twilio, preparing sample JSON for OpenAPI/Swagger API documentation, and formatting JSON stored in database JSONB columns for ad-hoc data inspection.</p>
+
+  <h4>Base64 Encoder & Decoder: Binary-Safe Text Encoding</h4>
+  <p>Base64 encoding is one of the most misunderstood yet universally necessary encoding schemes in software engineering. At its core, Base64 solves a fundamental problem: many communication protocols and storage systems were designed to handle only 7-bit ASCII text, but modern applications need to transmit arbitrary binary data — images, audio files, PDF documents, compiled binaries — through these text-only channels. Base64 converts binary data into a subset of 64 printable ASCII characters, making it safe for transmission in email bodies (MIME encoding), HTTP headers (Basic Authentication credentials are Base64-encoded as "username:password"), CSS data URIs (embedding small images directly in stylesheets), JSON payloads (embedding binary attachments), URL parameters (though Base64URL variant is used here), and HTML src attributes.</p>
+  <p>A subtle but critical technical distinction that DevSuite's Base64 tool handles correctly: the native JavaScript <code>btoa()</code> function only supports Latin-1 (ISO 8859-1) character encoding. Attempting to encode a string containing any Unicode character outside the Latin-1 range — including Chinese characters, Arabic script, emoji, or any character with a code point above 255 — throws a <code>DOMException: InvalidCharacterError</code>. Our encoder uses the <code>TextEncoder</code> API to first convert the string to UTF-8 bytes, then encodes those bytes to Base64, correctly handling the full Unicode character set. Similarly, decoding passes through <code>TextDecoder</code> for proper UTF-8 reconstruction.</p>
+  <p>Common professional applications include: decoding Basic Auth headers during API debugging, inspecting JWT token payloads (the middle segment is Base64Url-encoded JSON), embedding small SVG icons as data URIs in CSS, encoding binary data for transmission in JSON API bodies, inspecting email MIME parts, and Base64-encoding SSH public keys for deployment to authorized_keys files.</p>
+
+  <h4>UUID Generator: Cryptographically Secure Identifier Generation</h4>
+  <p>UUID (Universally Unique Identifier), also known as GUID (Globally Unique Identifier), is a 128-bit identifier standardized in RFC 4122 that provides probabilistic uniqueness without requiring a central coordinating authority. This property makes UUIDs invaluable in distributed systems where multiple services, databases, or clients need to independently generate unique identifiers without risking collision. DevSuite generates Version 4 UUIDs, which are produced using cryptographically random bytes from the browser's <code>crypto.getRandomValues()</code> API (the same source used for cryptographic key generation), making them suitable for use as database primary keys, session tokens, API keys, idempotency keys, file names for uploaded assets, and correlation IDs for distributed tracing systems like Jaeger or Zipkin.</p>
+  <p>A key advantage of UUID v4 over auto-incrementing integer IDs: UUIDs cannot be guessed or enumerated. An attacker who discovers that a resource is accessible at <code>/api/users/1042</code> can trivially attempt <code>/api/users/1043</code>, <code>/api/users/1041</code>, and so on. A UUID-keyed resource at <code>/api/users/550e8400-e29b-41d4-a716-446655440000</code> is effectively impossible to enumerate. Our UUID generator supports bulk generation (up to 100 UUIDs at once) and one-click clipboard copying, making it practical for seeding database test fixtures, generating multiple API keys simultaneously for a new client, or populating migration scripts with deterministic GUIDs.</p>
+
+  <h4>Regex Tester: Live Regular Expression Debugging</h4>
+  <p>Regular expressions (regex, or regexp) are a formal language for describing patterns in strings. They are one of the most powerful text-processing tools available to developers, yet also one of the most notoriously difficult to write correctly. A misplaced quantifier, incorrect character class, or forgotten escape character can produce regex patterns that silently match the wrong strings, miss valid matches, or exhibit catastrophic backtracking that locks up a CPU at 100% utilization when processing certain inputs. DevSuite's Regex Tester provides a live interactive environment for writing, testing, and debugging JavaScript-compatible (ECMA-262) regular expressions against sample strings in real time. As you type, the tool highlights all matching substrings in the test string, extracts and displays all capture groups, and reports the total match count. Supported features include global, case-insensitive, multiline, sticky, and dotAll flags.</p>
+  <p>Common regex patterns that developers test in our tool include: email address validation (though true RFC 5322 compliance requires a surprisingly complex regex), URL parsing and component extraction, phone number format normalization, HTML tag stripping (for sanitizing user-generated content), semantic versioning version string parsing, log file entry extraction (parsing timestamps, severity levels, and message bodies), CSV row parsing, IP address validation, and password complexity rule enforcement (minimum length, at least one uppercase, one number, one special character).</p>
+  <p>The real-time match highlighting is particularly valuable for understanding quantifier behavior: the difference between greedy (<code>.*</code>) and non-greedy (<code>.*?</code>) matching becomes immediately obvious when you can see exactly which characters each pattern consumes in the test string. Similarly, the difference between <code>\b</code> word boundaries and lookahead/lookbehind assertions is much easier to grasp visually than abstractly.</p>
+
+  <h3>Deep Dive: CSS and UI Design Generators</h3>
+  <p>Translating a designer's intent from a Figma file into pixel-perfect, cross-browser compatible CSS requires both mathematical precision and intimate knowledge of CSS syntax that many developers, particularly those who primarily work on back-end systems, do not have memorized. DevSuite's CSS and Design suite provides visual, interactive generators that produce production-ready CSS without requiring deep expertise in CSS syntax.</p>
+
+  <h4>PX to REM Converter: Accessibility-First Typography</h4>
+  <p>Pixel (px) values in CSS are absolute units — they do not scale with the user's browser font size preference. This creates a critical accessibility problem: users with low vision who have configured their browser to display text at 150% or 200% of the default size will not benefit from this setting when websites hardcode font sizes in pixels. The rem unit (root em) is relative to the root element's (<code>&lt;html&gt;</code>) font size, which defaults to 16px in all browsers but respects the user's browser preference when not overridden. A font size of <code>1.5rem</code> will render as 24px for a user with default settings, but as 36px for a user who has configured a 150% base font size — giving the user control over their reading experience. WCAG 2.1 Success Criterion 1.4.4 (Resize Text, Level AA) requires that text can be resized up to 200% without loss of content or functionality — a requirement that pixel-locked typography fails. Our PX to REM converter lets you enter a pixel value and optionally configure the root font size (default 16px, but commonly changed to 10px in design systems that prefer a 1rem = 10px convention for easier mental math), and instantly outputs the correct rem and em values with a conversion table for common sizes.</p>
+  <p>The tool is particularly useful when working with design systems that specify spacing in pixels (most Figma designs use pixel values) and codebases that require rem units (most modern CSS frameworks and accessibility guidelines). Developers can quickly convert entire typography scales, spacing systems, and breakpoint values from pixel-based Figma specifications to accessible rem-based CSS values.</p>
+
+  <h4>Color Converter: The Bridge Between Design and Code</h4>
+  <p>Color is specified in multiple incompatible formats across design tools, CSS, image editors, and browsers: HEX (#FF5733), RGB (rgb(255, 87, 51)), RGBA with transparency (rgba(255, 87, 51, 0.8)), HSL (hsl(11, 100%, 60%)), HSLA, named colors (tomato, cornflowerblue), and newer formats like oklch() for wide-gamut displays. A designer in Figma typically works with HEX codes; a developer implementing a dark mode may prefer HSL for its intuitive hue/saturation/lightness model that makes programmatic color manipulation straightforward; a CSS preprocessor like SASS may require specific color format inputs; a Canvas or WebGL implementation may need normalized RGB floats (0.0–1.0). DevSuite's Color Converter is the universal translator between all of these formats. Enter a color in any format — type a HEX code, input RGB values with sliders, or use the native color picker — and instantly see all equivalent representations updated simultaneously.</p>
+  <p>Practical applications for professional developers include: extracting HSL values from a brand HEX code to build a CSS custom property color system with programmatic lightness variants, converting Figma HEX colors to Tailwind CSS configuration values, generating RGBA versions of brand colors with transparency for overlay effects and glassmorphism UI patterns, and verifying color contrast ratios (WCAG requires 4.5:1 for normal text, 3:1 for large text) by converting colors to their luminance values.</p>
+
+  <h4>CSS Gradient Generator: Visual Gradient Design Tool</h4>
+  <p>CSS gradients — the <code>linear-gradient()</code>, <code>radial-gradient()</code>, and <code>conic-gradient()</code> functions — are among the most powerful CSS features for creating visual depth, texture, and brand identity without image assets. A gradient background eliminates an HTTP request for an image file, reduces page weight, scales perfectly to any resolution, and can be animated with CSS transitions. However, the syntax for complex multi-stop, angled gradients with precise color positions is verbose and unintuitive to write by hand. The angle syntax (<code>135deg</code>, <code>to bottom right</code>, <code>in oklab</code>), the percentage-based color stop positions, the distinction between hard stops and soft transitions, and the browser prefix requirements for older WebKit browsers all add complexity that a visual generator eliminates entirely. Our CSS Gradient Generator provides a live preview canvas that updates as you adjust the gradient angle dial, add and position color stops on the gradient track, switch between linear and radial modes, and toggle between color space interpolation methods. The generated CSS output is production-ready, cross-browser compatible, and copyable with a single click.</p>
+  <p>Design patterns achievable with the gradient generator include: subtle background gradients for hero sections (the current trend of very slight, nearly-invisible gradients that add depth without distraction), vibrant gradient text effects using <code>-webkit-background-clip: text</code>, gradient borders via the <code>background-image</code> + <code>border-image</code> technique, gradient button hover states, mesh gradient approximations using layered radial gradients, and duotone image overlay effects using CSS <code>mix-blend-mode</code>.</p>
+
+  <h4>Box Shadow Generator: CSS Shadow and Depth System</h4>
+  <p>The CSS <code>box-shadow</code> property is the primary mechanism for creating visual elevation, depth, and dimensionality in flat UI design. Material Design, Apple's Human Interface Guidelines, and virtually every major design system use layered shadow systems to communicate element hierarchy — a floating action button casts a deeper shadow than a regular button; a modal dialog sits higher than a dropdown; an inline card appears closer to the user than the page background. The <code>box-shadow</code> syntax accepts up to six values: horizontal offset, vertical offset, blur radius, spread radius, color (including RGBA for transparency), and the <code>inset</code> keyword for inner shadows. Multiple shadow layers can be comma-separated to create realistic, physically-inspired soft shadows that are composed of two or more overlapping layers with different blur and offset values.</p>
+  <p>DevSuite's Box Shadow Generator provides individual sliders for each shadow parameter across multiple shadow layers, a live preview box that shows the shadow exactly as it will appear in the browser, and instant CSS output. Pre-built shadow presets for common elevation levels (subtle lift, card shadow, modal shadow, floating element shadow) are included as starting points. The generator supports the neumorphism (soft UI) design trend, which requires precisely tuned dual shadows in opposite directions (one light, one dark) to create the illusion of elements extruding from or being pressed into the page surface.</p>
+
+  <h3>Deep Dive: Security and Cryptography Tools</h3>
+  <p>Security is not an optional feature — it is a foundational requirement of every production software system. Understanding and correctly implementing cryptographic primitives, authentication protocols, and secure token formats is a non-negotiable skill for any developer who works on systems that handle user data, financial transactions, or access control. DevSuite's Security suite demystifies these concepts by providing transparent, educational tools that let you see exactly what is happening inside these cryptographic systems.</p>
+
+  <h4>JWT Decoder: JSON Web Token Inspection Tool</h4>
+  <p>JSON Web Tokens (JWT, pronounced "jot") have become the de-facto standard for stateless authentication and authorization in modern web APIs, mobile applications, and microservice architectures. A JWT consists of three Base64Url-encoded sections separated by dots: the header (specifying the signing algorithm — HS256, RS256, ES256, etc.), the payload (containing claims — standardized fields like <code>sub</code> for subject/user ID, <code>iat</code> for issued-at timestamp, <code>exp</code> for expiration timestamp, <code>iss</code> for issuer, and custom claims like <code>role</code>, <code>permissions</code>, or <code>tenant_id</code>), and the signature (a cryptographic hash of the header + payload using the secret or private key). When an API returns a 401 Unauthorized or 403 Forbidden error, the JWT is almost always the root cause: the token may have expired (check the <code>exp</code> claim), been issued for the wrong audience (check the <code>aud</code> claim), contain incorrect role claims, or be signed with an incorrect key. DevSuite's JWT Decoder instantly decodes and displays both the header and payload sections in formatted JSON, and automatically converts epoch timestamps to human-readable dates and times, so you can immediately determine if a token is expired without mentally converting Unix timestamps.</p>
+  <p>Important security note: JWT decoding (reading the payload) does not require the signing secret. The payload is simply Base64Url-encoded, not encrypted. Our decoder reads the payload without any secret key, which is the correct and expected behavior for debugging purposes. JWT <em>validation</em> (verifying the signature to confirm authenticity) requires the server-side secret or public key and should only be performed server-side. Never send your JWT signing secrets to any online tool — DevSuite's decoder works entirely in your browser without any server communication.</p>
+
+  <h4>Hash Generator: Cryptographic Digest Functions</h4>
+  <p>Cryptographic hash functions take an input of arbitrary length and produce a fixed-length, deterministic output (the hash or digest) with two critical properties: it is computationally infeasible to reverse the operation (find the input from the hash), and any change to the input — even a single bit — produces a completely different hash output (the avalanche effect). These properties make hash functions essential for: file integrity verification (comparing a downloaded file's hash to a known-good hash confirms the file was not corrupted or tampered with), password storage (production systems store bcrypt/Argon2 hashes of passwords, never plaintext), digital signatures (the signature is computed over the hash of the document, not the document itself), data deduplication (comparing hashes is faster than comparing large files), version control systems (Git identifies every commit, file, and tree by its SHA-1 hash), and content-addressable storage systems.</p>
+  <p>DevSuite's Hash Generator computes MD5, SHA-1, SHA-256, and SHA-512 hashes simultaneously using the browser's native <code>SubtleCrypto</code> API (note: MD5 is implemented in pure JavaScript as it is not supported by the SubtleCrypto specification, due to its cryptographic weaknesses). <strong>Important context:</strong> MD5 and SHA-1 are considered cryptographically broken for security purposes — collisions (two different inputs producing the same hash) have been demonstrated for both algorithms. They should not be used for security-critical applications like digital signatures or certificate fingerprints. However, MD5 remains widely used for non-security purposes like file checksums, cache keys, and ETags, so the ability to compute it remains useful for debugging and compatibility purposes. SHA-256 and SHA-512 remain cryptographically secure for all practical purposes.</p>
+
+  <h4>Password Generator: Entropy-Based Secure Password Creation</h4>
+  <p>Password security is fundamentally a question of entropy — the amount of randomness in the password. A password's entropy determines how many guesses an attacker must make to brute-force it, assuming they know the character set and length. An 8-character password using only lowercase letters has approximately 37.6 bits of entropy (26^8 combinations), which a modern GPU can brute-force in seconds using hashcat or John the Ripper. A 20-character password using all character classes (uppercase, lowercase, digits, symbols) from a 95-character set has approximately 131 bits of entropy — the number of guesses required exceeds the estimated number of atoms in the observable universe, making brute force attacks computationally infeasible with any current or foreseeable technology.</p>
+  <p>DevSuite's Password Generator uses <code>crypto.getRandomValues()</code> — the same API used to generate cryptographic keys — to source its randomness from the operating system's entropy pool (typically a combination of hardware interrupt timing, mouse movement, disk I/O timing, and other environmental noise). This is categorically more secure than <code>Math.random()</code>, which is a deterministic pseudorandom number generator seeded with the current timestamp and is not suitable for security applications. Configurable parameters include: password length (8–128 characters), inclusion of uppercase letters (A-Z), lowercase letters (a-z), digits (0-9), and symbols (!@#$%^&*), and exclusion of visually ambiguous characters (l, 1, I, O, 0) for passwords that may need to be typed or read aloud. The integrated strength meter calculates approximate entropy bits in real time, giving you a precise numerical measure of your password's security level rather than a vague "weak/medium/strong" label.</p>
+
+  <h4>Text Encryptor: Zero-Knowledge AES-256-GCM Encryption</h4>
+  <p>End-to-end encryption (E2EE) is the gold standard for secure communication: the encryption and decryption happen on the endpoints (the sender's and recipient's devices), with the ciphertext — the encrypted message — being unintelligible to any intermediate party, including the service provider. DevSuite's Text Encryptor implements a genuine zero-knowledge encryption system using AES-256-GCM (Advanced Encryption Standard with Galois/Counter Mode), one of the most widely deployed and thoroughly analyzed symmetric encryption algorithms in existence. AES-256 uses a 256-bit key, providing 2^256 possible keys — a number so large that a brute-force attack is thermodynamically infeasible. The GCM (Galois/Counter Mode) operation mode provides both confidentiality (the message cannot be read without the key) and authenticity (the message cannot be modified without the key, detected via the authentication tag). The encryption workflow uses PBKDF2 (Password-Based Key Derivation Function 2) with 100,000 iterations of SHA-256 to derive a strong 256-bit AES key from a user-provided password, combined with a randomly generated 16-byte salt to prevent rainbow table attacks. A unique 12-byte initialization vector (IV) is generated for each encryption operation to ensure that encrypting the same message with the same password twice produces different ciphertext. The salt, IV, and ciphertext are packaged together and Base64-encoded for easy copy-paste sharing.</p>
+  <p>All cryptographic operations use the browser's native <code>SubtleCrypto</code> API, which is implemented in C++ directly in the browser engine — not JavaScript — providing hardware-optimized performance and an implementation that has been reviewed and audited by security researchers worldwide. The decryption process extracts the salt and IV from the Base64 payload, re-derives the AES key from the provided password and extracted salt, and uses the extracted IV to authenticate and decrypt the ciphertext. If the password is incorrect or the ciphertext has been modified, the GCM authentication check fails and decryption is rejected — you cannot silently receive garbled plaintext from incorrect input.</p>
+
+  <h3>DevSuite Keyboard Shortcuts and Accessibility Features</h3>
+  <p>DevSuite is designed to be usable without a mouse. Professional developers frequently work in environments where switching between keyboard and mouse interrupts their flow state — modal overlays, tool switching, and settings adjustments should all be achievable via keyboard. Implemented keyboard shortcuts include: <kbd>D</kbd> to toggle between light and dark color themes (without leaving the keyboard), <kbd>?</kbd> to open the keyboard shortcut reference overlay, <kbd>G</kbd> then <kbd>H</kbd> to navigate to the homepage (a Vim-inspired two-key sequence that avoids single-key conflicts), <kbd>Escape</kbd> to close all overlays and modals, <kbd>/</kbd> or <kbd>Ctrl+K</kbd> to focus the tool search bar from anywhere on the homepage, and standard <kbd>Tab</kbd> navigation through all interactive elements with visible focus indicators compliant with WCAG 2.1 AA standards. The skip-to-content link at the top of each page allows keyboard and screen reader users to bypass the navigation header and jump directly to the main tool interface.</p>
+  <p>Screen reader compatibility is implemented through semantic HTML structure: tools use proper <code>&lt;main&gt;</code>, <code>&lt;header&gt;</code>, <code>&lt;footer&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;section&gt;</code>, and <code>&lt;article&gt;</code> landmarks. All interactive elements have descriptive <code>aria-label</code> attributes. All images have appropriate <code>alt</code> text. Color is never the sole means of conveying information — error states use both color and iconography/text labels. The noscript banner provides a meaningful fallback message for users who have JavaScript disabled.</p>
+
+  <h3>DevSuite vs. Alternative Developer Tool Platforms: A Detailed Comparison</h3>
+  <p>The developer tools market is crowded with competing offerings. Understanding where DevSuite differentiates is useful context:</p>
+  <p><strong>DevSuite vs. JSON Formatter / JSONLint:</strong> Traditional JSON formatters send your data to servers for processing. DevSuite formats and validates entirely in the browser. DevSuite also includes integrated minification, character count statistics, and a clean copy-to-clipboard workflow — features missing from legacy formatters.</p>
+  <p><strong>DevSuite vs. CyberChef (GCHQ):</strong> CyberChef is a powerful but complex tool with a steep learning curve designed for security analysts. DevSuite is intentionally focused and opinionated — one well-designed tool per task, not a Swiss Army knife of hundreds of obscure operations. For developers who need specifically the 16 tools DevSuite offers, the simplified UX is significantly faster.</p>
+  <p><strong>DevSuite vs. Lorem Ipsum generators:</strong> Most Lorem Ipsum generators are decade-old websites with intrusive ads and server-side generation. DevSuite generates text instantly in the browser, offers word/sentence/paragraph count configuration, and copies output to the clipboard immediately.</p>
+  <p><strong>DevSuite vs. Regex101:</strong> Regex101 is an excellent, feature-rich regex debugger with support for PCRE, Python, JavaScript, and Golang flavors, plus a community library of regex patterns. For pure JavaScript regex testing — the most common use case for web developers — DevSuite's simpler interface is faster to open and use. Regex101 is the better choice for complex multi-line regex development; DevSuite is faster for quick pattern verification during normal development.</p>
+  <p><strong>DevSuite vs. Password managers' built-in generators:</strong> Password manager generators (Bitwarden, 1Password, etc.) are excellent for generating and immediately saving passwords. DevSuite's generator is for situations where you need a random string for an API key, a database seed, a JWT secret, or a test account password that you'll copy into a config file — use cases where saving to a password manager is not the immediate goal.</p>
+
+  <h3>Browser Support and Technical Compatibility</h3>
+  <p>DevSuite targets modern browsers that support the ES2020 JavaScript specification and the Web Crypto API, which covers all Chrome 80+, Firefox 78+, Safari 14+, and Edge 80+ users — effectively 97%+ of the global browser market as of 2026. Internet Explorer is not supported (it reached end of life in June 2022). The following specific APIs are required and their browser support is verified before use: <code>crypto.getRandomValues()</code> (available since Chrome 11, Firefox 26, Safari 7), <code>SubtleCrypto</code> (available since Chrome 37, Firefox 34, Safari 11), <code>Clipboard.writeText()</code> (Chrome 66, Firefox 63, Safari 13.1 — requires HTTPS context, satisfied by production deployment), <code>TextEncoder</code>/<code>TextDecoder</code> (Chrome 38, Firefox 19, Safari 10.1), and CSS Custom Properties / CSS Variables (Chrome 49, Firefox 31, Safari 9.1). The progressive enhancement approach means that users on older browsers will see the static HTML content and basic tool interfaces even if some JavaScript-dependent features are unavailable.</p>
+
+  <h3>Privacy Policy Summary: What DevSense Collects (And What It Doesn't)</h3>
+  <p>DevSuite collects no user account data (no registration required), stores no tool input data (all processing is client-side), and transmits no content you type into the tools to any server. First-party data collected is limited to: your theme preference (light/dark), stored in localStorage — this never leaves your browser. Third-party services used include Google AdSense for advertising (which sets its own cookies per Google's privacy policies — see the full Privacy Policy for details) and Google Fonts for typography (which may log font requests per Google's policies). We do not use any analytics platform, session recording tool, or behavioral tracking system. DevSuite is one of the most privacy-respecting developer tool platforms on the internet.</p>
+
+  <h3>How to Get the Most From DevSuite</h3>
+  <p>Tips for maximizing your productivity with DevSuite: Bookmark the specific tool pages you use most frequently (e.g., bookmark <code>/json-formatter</code> directly rather than the homepage) for single-click access. Use keyboard shortcut <kbd>D</kbd> to switch to dark mode when coding late at night. Use the tool search bar (press <kbd>/</kbd>) on the homepage to quickly navigate to the right tool without scrolling. On Chrome, DevSuite can be installed as a Progressive Web App (PWA) using the "Add to Home Screen" option in the browser menu, creating a native app-like experience with its own icon on your desktop or mobile home screen. In Firefox, you can pin DevSuite as a tab that persists across browser restarts. The keyboard shortcut reference overlay (<kbd>?</kbd>) is always one keypress away if you forget a shortcut.</p>
+
+  <h3>Upcoming Tools and Platform Roadmap</h3>
+  <p>DevSuite is actively maintained and expanded. Planned additions to the platform based on developer community feedback include: a Unix timestamp converter (convert epoch timestamps to human-readable dates and vice versa, with timezone support), a diff viewer (compare two text blocks side-by-side with highlighted changes), a URL parser/encoder/decoder, and an HTML entity encoder/decoder. We are committed to making DevSuite the most comprehensive, secure, and privacy-respecting developer toolkit available.</p>
+  </section>
+  <div class="seo-fade" id="seo-fade" aria-hidden="true"></div>
+  <button class="seo-expand-btn" id="seo-expand-btn" aria-expanded="false" aria-controls="seo-prose">
+    DevSuite: The Ultimate Developer Toolkit ↓
+  </button>
+</div>
+  </div>
+
+  <script>
+  const expandBtn = document.getElementById('seo-expand-btn');
+  const seoProse = document.getElementById('seo-prose');
+  const seoFade = document.getElementById('seo-fade');
+  if (expandBtn) {
+    expandBtn.addEventListener('click', () => {
+      if (seoProse) seoProse.classList.add('is-expanded');
+      if (seoFade) seoFade.classList.add('is-hidden');
+      expandBtn.classList.add('is-hidden');
+    });
+  }
+
+  const searchInput = document.getElementById('tool-search');
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      const q = e.target.value.toLowerCase().trim();
+
+      // Show/hide individual cards
+      const cards = document.querySelectorAll('.card.premium-card');
+      cards.forEach(card => {
+        const text = card.textContent.toLowerCase();
+        const matches = q === '' || text.includes(q);
+        card.style.display = matches ? '' : 'none';
+      });
+
+      // Show/hide category headers + their grid containers
+      document.querySelectorAll('.category-header').forEach(header => {
+        const grid = header.nextElementSibling;
+        if (!grid) return;
+        const hasVisible = Array.from(grid.querySelectorAll('.card.premium-card'))
+          .some(c => c.style.display !== 'none');
+        header.style.display = (q === '' || hasVisible) ? '' : 'none';
+        grid.style.display = (q === '' || hasVisible) ? '' : 'none';
+      });
+
+      // Show no-results message
+      let noResults = document.getElementById('no-results-msg');
+      const allHidden = Array.from(cards).every(c => c.style.display === 'none');
+      if (q !== '' && allHidden) {
+        if (!noResults) {
+          noResults = document.createElement('p');
+          noResults.id = 'no-results-msg';
+          noResults.style.cssText = 'text-align:center;color:var(--color-text-muted);font-size:15px;padding:32px 0;';
+          noResults.textContent = 'No tools match your search.';
+          searchInput.closest('div').insertAdjacentElement('afterend', noResults);
+        }
+        noResults.style.display = '';
+      } else if (noResults) {
+        noResults.style.display = 'none';
+      }
+    });
+
+    // Focus on Ctrl+K or /
+    document.addEventListener('keydown', (e) => {
+      const tag = e.target.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+      if ((e.ctrlKey && e.key === 'k') || e.key === '/') {
+        e.preventDefault();
+        searchInput.focus();
+        searchInput.select();
+      }
+    });
+
+    // Clear on Escape when focused
+    searchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        searchInput.value = '';
+        searchInput.dispatchEvent(new Event('input'));
+        searchInput.blur();
+      }
+    });
+  }
+</script>
+</MainLayout>

@@ -1,0 +1,362 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<MainLayout
+  title="Markdown Previewer — Live Markdown to HTML Preview Online | DevSuite"
+  description="Free online Markdown previewer. Write Markdown and see a live HTML preview instantly. Supports headings, bold, italic, lists, code blocks, links, and more. No data sent to servers."
+  canonicalPath="/markdown-preview"
+
+  toolName="Markdown Previewer"
+  toolDescription="Write Markdown and see the rendered HTML preview instantly."
+>
+  <style>
+    .split-pane {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    @media (min-width: 768px) {
+      .split-pane {
+        flex-direction: row;
+        height: 600px;
+      }
+    }
+    .pane {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: var(--color-surface);
+    }
+    .pane-header {
+      background: var(--color-surface-hover);
+      padding: 8px 16px;
+      border-bottom: 1px solid var(--color-border);
+      font-weight: 600;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .pane-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+    }
+    #md-input {
+      width: 100%;
+      height: 100%;
+      border: none;
+      resize: none;
+      background: transparent;
+      color: var(--color-text);
+      font-family: var(--font-mono);
+      font-size: 14px;
+      line-height: 1.6;
+      outline: none;
+    }
+    
+    /* Markdown Render Styles */
+    .md-render {
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      color: var(--color-text);
+    }
+    .md-render h1, .md-render h2, .md-render h3, .md-render h4 {
+      margin-top: 1.5em;
+      margin-bottom: 0.5em;
+      font-weight: 700;
+    }
+    .md-render h1 { font-size: 2em; border-bottom: 1px solid var(--color-border); padding-bottom: 0.3em; }
+    .md-render h2 { font-size: 1.5em; border-bottom: 1px solid var(--color-border); padding-bottom: 0.3em; }
+    .md-render h3 { font-size: 1.25em; }
+    .md-render p { margin-bottom: 1em; }
+    .md-render a { color: var(--color-accent); text-decoration: none; }
+    .md-render a:hover { text-decoration: underline; }
+    .md-render ul, .md-render ol { margin-bottom: 1em; padding-left: 2em; }
+    .md-render code {
+      background: var(--color-surface-hover);
+      padding: 0.2em 0.4em;
+      border-radius: 3px;
+      font-family: var(--font-mono);
+      font-size: 0.9em;
+    }
+    .md-render pre {
+      background: var(--color-surface-hover);
+      padding: 16px;
+      border-radius: var(--radius-sm);
+      overflow-x: auto;
+      margin-bottom: 1em;
+    }
+    .md-render pre code {
+      background: none;
+      padding: 0;
+    }
+    .md-render blockquote {
+      border-left: 4px solid var(--color-border);
+      margin: 0 0 1em 0;
+      padding-left: 1em;
+      color: var(--color-text-muted);
+    }
+    .md-render hr {
+      border: 0;
+      border-top: 2px solid var(--color-border);
+      margin: 2em 0;
+    }
+    .md-render img {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+
+  <div class="ad-layout">
+    <aside class="ad-sidebar left-ad">
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+     data-ad-slot="SIDEBAR_SLOT_ID"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </aside>
+
+    <div class="ad-workspace">
+      <header class="workspace-header">
+        <h1>Markdown Previewer</h1>
+        <p>Write Markdown on the left and see the rendered HTML preview on the right instantly. Perfect for drafting README files and blog posts.</p>
+      </header>
+
+      <section class="workspace-section">
+        <div class="split-pane">
+          <div class="pane">
+            <div class="pane-header">
+              <span>Editor</span>
+              <button id="btn-clear" class="btn" style="padding: 2px 8px; font-size: 11px;">Clear</button>
+            </div>
+            <div class="pane-content">
+              <textarea id="md-input" spellcheck="false"># Welcome to the Markdown Previewer!
+
+Write your markdown here and see it rendered instantly. 
+
+## Headings
+Use `#` for headings.
+### H3
+#### H4
+
+## Text Formatting
+You can make text **bold**, *italic*, or ***both***.
+Use `backticks` for inline code.
+
+## Lists
+### Unordered
+- Item 1
+- Item 2
+  - Subitem A
+
+### Ordered
+1. First item
+2. Second item
+
+## Blockquotes
+> This is a blockquote. It's great for highlighting important information or quoting someone.
+
+## Code Blocks
+```javascript
+function helloWorld() &#123;
+  console.log("Hello, DevSuite!");
+&#125;
+```
+
+## Links and Images
+[DevSuite Homepage](/)
+![Placeholder Image](https://via.placeholder.com/400x150?text=Sample+Image)
+
+## Horizontal Rules
+---
+Start typing to replace this content!
+</textarea>
+            </div>
+          </div>
+          
+          <div class="pane">
+            <div class="pane-header">
+              <span>Preview</span>
+              <button id="btn-copy-html" class="btn" style="padding: 2px 8px; font-size: 11px;">Copy HTML</button>
+            </div>
+            <div class="pane-content md-render" id="md-preview">
+              <!-- Rendered content will appear here -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MASSIVE SEO PROSE SECTION -->
+      <section class="prose" style="margin-top: 4rem; border-top: 1px solid var(--color-border); padding-top: 2rem;">
+        <h2>The Ultimate Live Markdown Previewer and Editor</h2>
+        <p>Markdown has become the de facto standard for writing technical documentation, readme files, blog posts, and notes. Our <strong>free online Markdown previewer</strong> is designed to give you an instant, side-by-side view of your formatting as you type. Whether you are creating a <code>README.md</code> for a GitHub repository or writing an article for a static site generator like Astro, Next.js, or Gatsby, a live <strong>markdown editor</strong> is an indispensable tool.</p>
+
+        <h3>What is Markdown?</h3>
+        <p>Markdown is a lightweight markup language with plain-text-formatting syntax. Created by John Gruber in 2004, its primary goal is to be readable as-is, without looking like it has been marked up with tags or formatting instructions. Unlike HTML, which requires opening and closing tags (like <code>&lt;strong&gt;bold text&lt;/strong&gt;</code>), Markdown allows you to write <code>**bold text**</code> which is much faster to type and easier to read. Our <strong>markdown to HTML converter</strong> processes this syntax instantly in your browser.</p>
+
+        <h3>Why Use a Live Markdown Editor?</h3>
+        <p>Writing raw Markdown can sometimes be tricky if you are unsure how specific elements will render—especially complex structures like nested lists, code blocks, or tables. A <strong>live markdown viewer</strong> provides immediate visual feedback. You don't need to save a file, run a local server, or push to GitHub just to see if your headings are correct. You write on the left pane, and the fully styled HTML appears on the right pane in real-time.</p>
+
+        <h3>Markdown Syntax Cheat Sheet</h3>
+        <p>If you are new to Markdown, our <strong>markdown tester</strong> is the perfect sandbox to learn. Here are the most common elements you can use in our editor:</p>
+        
+        <h4>Headings</h4>
+        <p>To create a heading, add one to six hash marks (<code>#</code>) in front of your word or phrase. The number of hashes corresponds to the heading level.</p>
+        <ul>
+          <li><code># Heading 1</code> renders as an <code>&lt;h1&gt;</code> tag.</li>
+          <li><code>## Heading 2</code> renders as an <code>&lt;h2&gt;</code> tag.</li>
+          <li><code>### Heading 3</code> renders as an <code>&lt;h3&gt;</code> tag.</li>
+        </ul>
+
+        <h4>Emphasis (Bold and Italic)</h4>
+        <p>Add emphasis to your text using asterisks or underscores.</p>
+        <ul>
+          <li><strong>Bold:</strong> Wrap text in double asterisks <code>**like this**</code>.</li>
+          <li><em>Italic:</em> Wrap text in single asterisks <code>*like this*</code>.</li>
+          <li><strong><em>Bold and Italic:</em></strong> Wrap text in triple asterisks <code>***like this***</code>.</li>
+        </ul>
+
+        <h4>Lists</h4>
+        <p>You can create unordered (bulleted) lists by starting a line with a dash (<code>-</code>), an asterisk (<code>*</code>), or a plus sign (<code>+</code>). For ordered (numbered) lists, start the line with a number followed by a period (<code>1. </code>). Indenting a list item creates a nested list, which is perfectly rendered by our <strong>markdown interpreter</strong>.</p>
+
+        <h4>Links and Images</h4>
+        <p>Creating hyperlinks is simple. Wrap the link text in brackets and the URL in parentheses: <code>[DevSuite](https://devsuite.tools)</code>. To insert an image, use the exact same syntax but prepend it with an exclamation mark: <code>![Alt Text](image-url.jpg)</code>.</p>
+
+        <h4>Code Blocks and Inline Code</h4>
+        <p>For developers, formatting code is critical. To format a single word or phrase as code, enclose it in backticks (<code>`</code>). To format an entire block of code, enclose it in triple backticks (<code>```</code>). Our <strong>developer markdown viewer</strong> preserves whitespace and applies a monospace font for readability.</p>
+
+        <h4>Blockquotes and Horizontal Rules</h4>
+        <p>To create a blockquote, start a line with a greater-than sign (<code>&gt;</code>). To create a horizontal rule (a visible line separating content), place three or more dashes (<code>---</code>) on a line by themselves.</p>
+
+        <h3>Client-Side Processing for Total Privacy</h3>
+        <p>Like all DevSuite tools, this <strong>browser-based markdown editor</strong> runs entirely on your device. The parsing logic is executed by vanilla JavaScript within your browser. Your text is never sent to a server, ensuring that your drafts, proprietary code documentation, and private notes remain completely secure. Because there are no server round-trips, the preview updates with zero latency.</p>
+
+        <h3>Convert Markdown to HTML Instantly</h3>
+        <p>A common use case for our tool is acting as a <strong>markdown to HTML generator</strong>. Once you have perfected your Markdown document, you can click the "Copy HTML" button. This takes the rendered preview and copies the raw HTML source code to your clipboard. You can then paste this HTML directly into email clients, legacy CMS platforms (like WordPress or Drupal), or web applications that don't natively support Markdown input.</p>
+      </section>
+    </div>
+
+    <aside class="ad-sidebar right-ad">
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+     data-ad-slot="SIDEBAR_SLOT_ID"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </aside>
+  </div>
+</MainLayout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const mdInput = document.getElementById('md-input');
+    const mdPreview = document.getElementById('md-preview');
+    const btnClear = document.getElementById('btn-clear');
+    const btnCopyHtml = document.getElementById('btn-copy-html');
+
+    // A simple, vanilla JS markdown parser
+    function parseMarkdown(md) {
+      let html = md;
+      
+      // Escape HTML tags to prevent XSS (basic)
+      html = html.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+      // Code blocks ```code```
+      html = html.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
+      
+      // Inline code `code`
+      html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+
+      // Images ![alt](url)
+      html = html.replace(/!\[([^\]]+)\]\(([^)]+)\)/g, '<img src="$2" alt="$1">');
+      
+      // Links [text](url)
+      html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+
+      // Bold + Italic ***text***
+      html = html.replace(/\*\*\*([^*]+)\*\*\*/g, '<strong><em>$1</em></strong>');
+      
+      // Bold **text**
+      html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+      
+      // Italic *text*
+      html = html.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+
+      // Headings
+      html = html.replace(/^###### (.*$)/gim, '<h6>$1</h6>');
+      html = html.replace(/^##### (.*$)/gim, '<h5>$1</h5>');
+      html = html.replace(/^#### (.*$)/gim, '<h4>$1</h4>');
+      html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
+      html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
+      html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>');
+
+      // Blockquotes
+      html = html.replace(/^\> (.*$)/gim, '<blockquote>$1</blockquote>');
+
+      // Horizontal Rules
+      html = html.replace(/^---$/gim, '<hr>');
+
+      // Lists (Basic implementation)
+      // Unordered
+      html = html.replace(/^\s*[-*+] (.*$)/gim, '<ul><li>$1</li></ul>');
+      html = html.replace(/<\/ul>\n<ul>/gim, '');
+      
+      // Ordered
+      html = html.replace(/^\s*\d+\. (.*$)/gim, '<ol><li>$1</li></ol>');
+      html = html.replace(/<\/ol>\n<ol>/gim, '');
+
+      // Paragraphs
+      // Split by double newline, wrap in <p> if not already wrapped in a block element
+      const blocks = html.split(/\n\n+/);
+      const processedBlocks = blocks.map(block => {
+        if (block.trim() === '') return '';
+        if (block.match(/^(<h|<pre|<ul|<ol|<blockquote|<hr)/)) {
+          return block; // Already a block element
+        }
+        // Replace single newlines with <br> inside paragraphs
+        const content = block.replace(/\n/g, '<br>');
+        return `<p>${content}</p>`;
+      });
+
+      return processedBlocks.join('\n');
+    }
+
+    function updatePreview() {
+      const markdownText = mdInput.value;
+      const renderedHtml = parseMarkdown(markdownText);
+      mdPreview.innerHTML = renderedHtml;
+    }
+
+    // Initial render
+    updatePreview();
+
+    // Event listeners
+    mdInput.addEventListener('input', updatePreview);
+
+    btnClear.addEventListener('click', () => {
+      mdInput.value = '';
+      updatePreview();
+      mdInput.focus();
+    });
+
+    btnCopyHtml.addEventListener('click', () => {
+      const htmlOutput = mdPreview.innerHTML;
+      navigator.clipboard.writeText(htmlOutput).then(() => {
+        if(typeof window.showToast === 'function') {
+          window.showToast('HTML copied to clipboard!');
+        }
+      });
+    });
+  });
+</script>

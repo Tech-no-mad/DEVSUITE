@@ -1,0 +1,333 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalPath?: string;
+  ogImage?: string;
+  toolName?: string;
+  toolDescription?: string;
+}
+
+const { title, description, canonicalPath = '/', ogImage = '/og-image.png', toolName, toolDescription } = Astro.props;
+const siteUrl = 'https://devsuite.tools';
+const fullCanonical = `${siteUrl}${canonicalPath}`;
+const currentPath = Astro.url.pathname;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href={fullCanonical} />
+
+  <title>{title}</title>
+
+  <!-- OpenGraph Tags -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={`${siteUrl}${ogImage}`} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:url" content={fullCanonical} />
+  <meta property="og:site_name" content="DevSuite" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={`${siteUrl}${ogImage}`} />
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json" set:html={JSON.stringify(toolName ? {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": toolName,
+    "url": fullCanonical,
+    "description": toolDescription || description,
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  } : {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "DevSuite",
+    "url": siteUrl,
+    "description": "All-in-one developer and creator utility hub.",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": `${siteUrl}/?q={search_term_string}`,
+      "query-input": "required name=search_term_string"
+    }
+  })} />
+
+  {toolName && (
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": siteUrl },
+      { "@type": "ListItem", "position": 2, "name": toolName, "item": fullCanonical }
+    ]
+  })} />
+)}
+
+  <!-- Favicon & Manifest -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.svg" />
+    <meta name="msapplication-TileColor" content="#171717" />
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#000000" />
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Google AdSense Auto-Ads Core Script Tag Goes Here -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+</head>
+<body>
+  <noscript>
+    <div class="noscript-banner">
+      JavaScript is required for DevSuite tools to function. Please enable JavaScript in your browser.
+    </div>
+  </noscript>
+
+  <!-- Skip to Content -->
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="logo">
+        <span class="logo-icon">D</span>
+        <span>DevSuite</span>
+      </a>
+
+      <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+
+      <nav class="header-nav" id="header-nav">
+        <a href="/" class:list={[{ active: currentPath === '/' }]}>Home</a>
+        <div class="dropdown">
+          <button class="dropdown-btn">Tools ▼</button>
+          <div class="dropdown-content">
+            <div class="dropdown-group">Text & Content</div>
+            <a href="/case-converter" class:list={[{ active: currentPath === '/case-converter/' || currentPath === '/case-converter' }]}>Case Converter</a>
+            <a href="/lorem-ipsum" class:list={[{ active: currentPath === '/lorem-ipsum/' || currentPath === '/lorem-ipsum' }]}>Lorem Ipsum Generator</a>
+            <a href="/word-counter" class:list={[{ active: currentPath === '/word-counter/' || currentPath === '/word-counter' }]}>Word Counter</a>
+            <a href="/markdown-preview" class:list={[{ active: currentPath === '/markdown-preview/' || currentPath === '/markdown-preview' }]}>Markdown Previewer</a>
+            
+            <div class="dropdown-group">Code & Data</div>
+            <a href="/json-formatter" class:list={[{ active: currentPath === '/json-formatter/' || currentPath === '/json-formatter' }]}>JSON Formatter</a>
+            <a href="/base64" class:list={[{ active: currentPath === '/base64/' || currentPath === '/base64' }]}>Base64 Encoder</a>
+            <a href="/uuid-generator" class:list={[{ active: currentPath === '/uuid-generator/' || currentPath === '/uuid-generator' }]}>UUID Generator</a>
+            <a href="/regex-tester" class:list={[{ active: currentPath === '/regex-tester/' || currentPath === '/regex-tester' }]}>Regex Tester</a>
+            
+            <div class="dropdown-group">CSS & Design</div>
+            <a href="/px-to-rem" class:list={[{ active: currentPath === '/px-to-rem/' || currentPath === '/px-to-rem' }]}>PX to REM</a>
+            <a href="/color-converter" class:list={[{ active: currentPath === '/color-converter/' || currentPath === '/color-converter' }]}>Color Converter</a>
+            <a href="/css-gradient" class:list={[{ active: currentPath === '/css-gradient/' || currentPath === '/css-gradient' }]}>CSS Gradient</a>
+            <a href="/box-shadow" class:list={[{ active: currentPath === '/box-shadow/' || currentPath === '/box-shadow' }]}>Box Shadow Generator</a>
+            
+            <div class="dropdown-group">Security</div>
+            <a href="/jwt-decoder" class:list={[{ active: currentPath === '/jwt-decoder/' || currentPath === '/jwt-decoder' }]}>JWT Decoder</a>
+            <a href="/hash-generator" class:list={[{ active: currentPath === '/hash-generator/' || currentPath === '/hash-generator' }]}>Hash Generator</a>
+            <a href="/password-generator" class:list={[{ active: currentPath === '/password-generator/' || currentPath === '/password-generator' }]}>Password Generator</a>
+            <a href="/text-encrypt" class:list={[{ active: currentPath === '/text-encrypt/' || currentPath === '/text-encrypt' }]}>Text Encryptor</a>
+          </div>
+        </div>
+        <a href="/about" class:list={[{ active: currentPath === '/about/' || currentPath === '/about' }]}>About</a>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode (D)">☀</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main id="main-content">
+    <slot />
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-brand-name">DevSuite</div>
+        <div class="footer-brand-desc">Free, fast, and open developer & creator utilities. No sign-up required.</div>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Tools</h4>
+          <ul>
+            <li><a href="/case-converter">Case Converter</a></li>
+            <li><a href="/lorem-ipsum">Lorem Ipsum Generator</a></li>
+            <li><a href="/word-counter">Word Counter</a></li>
+            <li><a href="/markdown-preview">Markdown Previewer</a></li>
+            <li><a href="/json-formatter">JSON Formatter</a></li>
+            <li><a href="/base64">Base64 Encoder</a></li>
+            <li><a href="/uuid-generator">UUID Generator</a></li>
+            <li><a href="/regex-tester">Regex Tester</a></li>
+            <li><a href="/px-to-rem">PX to REM</a></li>
+            <li><a href="/color-converter">Color Converter</a></li>
+            <li><a href="/css-gradient">CSS Gradient</a></li>
+            <li><a href="/box-shadow">Box Shadow</a></li>
+            <li><a href="/jwt-decoder">JWT Decoder</a></li>
+            <li><a href="/hash-generator">Hash Generator</a></li>
+            <li><a href="/password-generator">Password Generator</a></li>
+            <li><a href="/text-encrypt">Text Encryptor</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/privacy">Privacy Policy</a></li>
+            <li><a href="/terms">Terms & Conditions</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">&copy; {new Date().getFullYear()} DevSuite. All rights reserved.</span>
+      <span class="footer-shortcut-hint">Press <kbd>?</kbd> for keyboard shortcuts</span>
+    </div>
+  </footer>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Keyboard Shortcuts Overlay -->
+  <div class="shortcuts-overlay" id="shortcuts-overlay">
+    <div class="shortcuts-modal">
+      <h2>Keyboard Shortcuts</h2>
+      <div class="shortcut-row"><span>Toggle dark mode</span><kbd>D</kbd></div>
+      <div class="shortcut-row"><span>Show shortcuts</span><kbd>?</kbd></div>
+      <div class="shortcut-row"><span>Go to Home</span><kbd>G</kbd> then <kbd>H</kbd></div>
+      <div class="shortcut-row"><span>Focus search</span><kbd>/</kbd></div>
+      <div class="shortcut-row"><span>Close this overlay</span><kbd>Esc</kbd></div>
+    </div>
+  </div>
+
+  <script>
+    // ========== Dark Mode ==========
+    function initTheme() {
+      const saved = localStorage.getItem('devsuite-theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = saved || (prefersDark ? 'dark' : 'light');
+      applyTheme(theme);
+    }
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('devsuite-theme', theme);
+      const btn = document.getElementById('theme-toggle');
+      if (btn) btn.textContent = theme === 'dark' ? '☾' : '☀';
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      applyTheme(current === 'dark' ? 'light' : 'dark');
+    }
+
+    initTheme();
+    document.getElementById('theme-toggle')?.addEventListener('click', toggleTheme);
+
+    // ========== Mobile Menu ==========
+    document.getElementById('mobile-menu-btn')?.addEventListener('click', () => {
+      document.getElementById('header-nav')?.classList.toggle('is-open');
+    });
+
+    // ========== Toast System ==========
+    window.showToast = function(message, duration = 2500) {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.innerHTML = `<span>✓</span> ${message}`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.classList.add('toast-out');
+        setTimeout(() => toast.remove(), 200);
+      }, duration);
+    }
+
+    // ========== Keyboard Shortcuts ==========
+    let gPressed = false;
+    let gTimeout = null;
+
+    document.addEventListener('keydown', (e) => {
+      const tag = e.target.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+
+      const overlay = document.getElementById('shortcuts-overlay');
+
+      if (e.key === 'Escape') {
+        overlay?.classList.remove('is-open');
+        return;
+      }
+
+      if (e.key === '?') {
+        e.preventDefault();
+        overlay?.classList.toggle('is-open');
+        return;
+      }
+
+      if (e.key === 'd' || e.key === 'D') {
+        if (!e.ctrlKey && !e.metaKey && !e.altKey) {
+          toggleTheme();
+          return;
+        }
+      }
+
+      // G + key navigation
+      if (e.key === 'g' || e.key === 'G') {
+        if (!gPressed) {
+          gPressed = true;
+          clearTimeout(gTimeout);
+          gTimeout = setTimeout(() => { gPressed = false; }, 1000);
+          return;
+        }
+      }
+
+      if (gPressed) {
+        gPressed = false;
+        clearTimeout(gTimeout);
+        const routes = { h: '/' };
+        const route = routes[e.key.toLowerCase()];
+        if (route) {
+          e.preventDefault();
+          window.location.href = route;
+        }
+      }
+    });
+
+    // Close overlay on backdrop click
+    document.getElementById('shortcuts-overlay')?.addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) {
+        e.currentTarget.classList.remove('is-open');
+      }
+    });
+  
+    // ========== Mobile Dropdown ==========
+    const dropdownBtn = document.querySelector('.dropdown-btn');
+    const dropdownContent = document.querySelector('.dropdown-content');
+
+    dropdownBtn?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = dropdownContent?.classList.contains('is-open');
+      dropdownContent?.classList.toggle('is-open', !isOpen);
+    });
+
+    document.addEventListener('click', () => {
+      dropdownContent?.classList.remove('is-open');
+    });
+
+  </script>
+</body>
+</html>

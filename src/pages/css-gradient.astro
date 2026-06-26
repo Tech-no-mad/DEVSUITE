@@ -1,0 +1,581 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<MainLayout
+  title="CSS Gradient Generator — Create Linear & Radial Gradients | DevSuite"
+  description="Free CSS gradient generator. Create beautiful linear and radial gradients with a visual editor. Copy CSS code instantly. Includes preset gradient library."
+  canonicalPath="/css-gradient"
+
+  toolName="CSS Gradient Generator"
+  toolDescription="Visually create beautiful linear and radial CSS backgrounds."
+>
+  <style>
+    .gradient-preview {
+      width: 100%;
+      height: 250px;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+      position: relative;
+      transition: all 0.3s ease;
+      border: 1px solid var(--color-border);
+      background-image: repeating-linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc), repeating-linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc);
+      background-position: 0 0, 10px 10px;
+      background-size: 20px 20px;
+    }
+    .gradient-preview-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 8px;
+    }
+    .gradient-preview.fullscreen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 9999;
+      border-radius: 0;
+      margin: 0;
+      border: none;
+    }
+    .gradient-preview.fullscreen .gradient-preview-inner {
+      border-radius: 0;
+    }
+    .btn-fullscreen {
+      position: absolute;
+      bottom: 1rem;
+      right: 1rem;
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 0.5rem 0.75rem;
+      cursor: pointer;
+      font-size: 0.875rem;
+      backdrop-filter: blur(4px);
+    }
+    .btn-fullscreen:hover {
+      background: rgba(0, 0, 0, 0.8);
+    }
+    
+    .stop-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.75rem;
+      background: var(--color-surface-hover);
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+      border: 1px solid var(--color-border);
+    }
+    .stop-row input[type="color"] {
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      background: none;
+    }
+    .stop-row input[type="color"]::-webkit-color-swatch-wrapper {
+      padding: 0;
+    }
+    .stop-row input[type="color"]::-webkit-color-swatch {
+      border: 1px solid var(--color-border);
+      border-radius: 4px;
+    }
+    .stop-row input[type="range"] {
+      flex: 1;
+      cursor: pointer;
+    }
+    .stop-row input[type="number"] {
+      width: 70px;
+    }
+
+    .preset-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+      gap: 1rem;
+    }
+    .preset-swatch {
+      height: 60px;
+      border-radius: 8px;
+      cursor: pointer;
+      border: 1px solid var(--color-border);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .preset-swatch:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    }
+    .preset-name {
+      font-size: 0.75rem;
+      text-align: center;
+      margin-top: 0.25rem;
+      color: var(--color-text-muted);
+    }
+
+    .controls-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    @media (max-width: 640px) {
+      .controls-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+
+  <div class="ad-layout">
+    <aside class="ad-sidebar left-ad">
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+     data-ad-slot="SIDEBAR_SLOT_ID"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </aside>
+
+    <div class="ad-workspace">
+      <header class="workspace-header">
+        <h1>CSS Gradient Generator</h1>
+        <p>Create stunning CSS gradients with a visual editor. Adjust colors, angles, and stops. Copy production-ready CSS with one click.</p>
+      </header>
+
+      <section class="workspace-section">
+        <!-- Preview -->
+        <div id="preview-container" class="gradient-preview">
+          <div id="preview-inner" class="gradient-preview-inner"></div>
+          <button id="btn-fullscreen" class="btn-fullscreen">Fullscreen (Esc to exit)</button>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls-grid">
+          <div>
+            <label class="section-label">Type</label>
+            <select id="type-select" class="input">
+              <option value="linear">Linear</option>
+              <option value="radial">Radial</option>
+            </select>
+          </div>
+          
+          <!-- Linear Controls -->
+          <div id="linear-controls" style="display: flex; gap: 1rem;">
+            <div style="flex: 1;">
+              <label class="section-label">Angle (<span id="angle-val">135</span>°)</label>
+              <input type="range" id="angle-slider" min="0" max="360" value="135" style="width: 100%; cursor: pointer;" />
+            </div>
+          </div>
+          
+          <!-- Radial Controls -->
+          <div id="radial-controls" style="display: none; gap: 1rem;">
+            <div style="flex: 1;">
+              <label class="section-label">Shape</label>
+              <select id="radial-shape" class="input">
+                <option value="circle">Circle</option>
+                <option value="ellipse">Ellipse</option>
+              </select>
+            </div>
+            <div style="flex: 1;">
+              <label class="section-label">Position</label>
+              <select id="radial-position" class="input">
+                <option value="center">Center</option>
+                <option value="top">Top</option>
+                <option value="bottom">Bottom</option>
+                <option value="left">Left</option>
+                <option value="right">Right</option>
+                <option value="top left">Top Left</option>
+                <option value="top right">Top Right</option>
+                <option value="bottom left">Bottom Left</option>
+                <option value="bottom right">Bottom Right</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Color Stops -->
+        <div style="margin-bottom: 2rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <label class="section-label" style="margin: 0;">Color Stops</label>
+            <button id="btn-add-stop" class="btn btn-accent" style="padding: 0.25rem 0.75rem; font-size: 0.875rem;">+ Add Color Stop</button>
+          </div>
+          <div id="stops-container">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+
+        <!-- CSS Output -->
+        <div style="margin-bottom: 2rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <label class="section-label" style="margin: 0;">CSS Output</label>
+            <button id="btn-copy-css" class="btn btn-primary" style="padding: 0.25rem 0.75rem; font-size: 0.875rem;">Copy CSS</button>
+          </div>
+          <textarea id="css-output" class="input" rows="4" readonly style="font-family: monospace; line-height: 1.5; resize: none;"></textarea>
+        </div>
+
+        <!-- Presets -->
+        <div>
+          <label class="section-label">Preset Gradients</label>
+          <div id="presets-container" class="preset-grid">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- SEO Content Section -->
+      <section class="prose" style="margin-top: 3rem;">
+        <h2>How to Use CSS Gradients</h2>
+        <p>
+          CSS gradients let you display smooth transitions between two or more specified colors. By utilizing a <strong>css gradient generator</strong>, you can design these beautiful backgrounds visually without having to memorize complex CSS syntax.
+        </p>
+        <h3>Linear Gradients</h3>
+        <p>
+          To create a linear gradient, you must define at least two color stops. You can also declare an angle or a direction. The syntax looks like this:
+          <code>background: linear-gradient(direction, color-stop1, color-stop2, ...);</code>. In our <strong>linear gradient generator</strong>, you can use the angle slider to fine-tune the exact direction of the color flow.
+        </p>
+        <h3>Radial Gradients</h3>
+        <p>
+          A radial gradient transitions radially from its center. You can define its shape (circle or ellipse) and its position. The syntax is:
+          <code>background: radial-gradient(shape size at position, start-color, ..., last-color);</code>. Switch our tool to Radial mode to act as a <strong>radial gradient generator</strong> and experiment with placing the center point at different edges or corners.
+        </p>
+        <h3>Using Gradients Beyond Backgrounds</h3>
+        <p>
+          While primarily used for backgrounds, you can also use gradients for text! By using <code>background-clip: text</code> and making the text transparent, you can create gorgeous text gradients.
+        </p>
+        <pre is:raw><code>.gradient-text {
+  background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}</code></pre>
+        <h3>Performance Considerations</h3>
+        <p>
+          CSS gradients are generated by the browser, meaning they don't require an HTTP request like an image would. This makes them extremely fast to load and scalable to any size without losing quality. However, complex radial gradients on large surfaces can occasionally cause repainting performance hits on low-end mobile devices, so use them thoughtfully.
+        </p>
+      </section>
+    
+      <!-- MASSIVE SEO PROSE SECTION -->
+      <section class="prose" style="margin-top: 4rem; border-top: 1px solid var(--color-border); padding-top: 2rem;">
+        <h2>The Ultimate CSS Gradient Generator</h2>
+        <p>Gradients have made a massive comeback in modern web design, adding depth, vibrancy, and a premium aesthetic to user interfaces. However, writing the complex CSS syntax for cross-browser gradients manually is a frustrating and error-prone process. Our <strong>free CSS gradient generator</strong> provides a highly visual, interactive editor that allows you to craft stunning linear and radial gradients effortlessly, outputting perfectly formatted CSS code instantly.</p>
+
+        <h3>Why Use a Visual Gradient Editor?</h3>
+        <p>A simple CSS gradient requires specifying a type (linear or radial), an angle or position, and multiple color stops with specific percentage points. When you start adding three, four, or five colors, the CSS string becomes incredibly difficult to read and manage. An <strong>online CSS background generator</strong> removes the guesswork. You can visually add color stops, drag them to adjust their positions, and see the gradient update on a large preview canvas in real-time.</p>
+
+        <h3>Linear vs. Radial Gradients</h3>
+        <p>Our <strong>CSS gradient tool</strong> supports the two primary types of web gradients:</p>
+        <ul>
+          <li><strong>Linear Gradients:</strong> Colors transition in a straight line. You can control the direction using an angle (e.g., 90deg for left-to-right, 180deg for top-to-bottom) or keywords (e.g., 'to bottom right'). Linear gradients are incredibly popular for button backgrounds, hero section overlays, and modern text-gradient effects.</li>
+          <li><strong>Radial Gradients:</strong> Colors transition outward from a central point in a circular or elliptical pattern. Radial gradients are excellent for creating subtle background glows, highlighting a central product image, or simulating a 3D light source.</li>
+        </ul>
+
+        <h3>How to Create the Perfect Gradient</h3>
+        <p>To create a professional-looking gradient, follow these tips using our <strong>color gradient maker</strong>:</p>
+        <ol>
+          <li><strong>Stay Analogous:</strong> The most pleasing gradients usually transition between colors that are next to each other on the color wheel (e.g., blue to purple, or orange to red). Transitioning between contrasting colors (like red to green) often creates a muddy, ugly brownish color in the middle (the "muddy middle").</li>
+          <li><strong>Use the Angle Dial:</strong> A standard top-to-bottom (180deg) gradient can look dated. Using an angle like 135deg or 45deg creates a more dynamic, diagonal flow of color that feels distinctly modern.</li>
+          <li><strong>Control the Color Stops:</strong> You don't have to space colors evenly. By dragging a color stop closer to another, you can create sharper transitions. You can even stack two different colors at the exact same percentage (e.g., 50%) to create a hard, unblurred line, which is useful for creating striped backgrounds.</li>
+        </ol>
+
+        <h3>Copy-Paste CSS for Cross-Browser Compatibility</h3>
+        <p>While the standard <code>linear-gradient()</code> function is widely supported today, legacy browsers require vendor prefixes. When you use our <strong>CSS code generator</strong>, we provide the cleanest, most modern syntax by default, utilizing the standard W3C specification. Simply click the "Copy CSS" button to get a ready-to-use <code>background: linear-gradient(...)</code> string that you can paste directly into your stylesheet, Tailwind config, or styled-components.</p>
+        
+        <h3>Beautiful Gradient Presets</h3>
+        <p>If you are suffering from designer's block, our tool includes a library of curated, premium gradient presets. Ranging from subtle pastel fades to aggressive neon cyberpunk themes, these presets serve as excellent starting points. Click any preset to load it into the editor, tweak the colors or angle to match your brand, and export the resulting CSS.</p>
+      </section>
+    </div>
+
+    <aside class="ad-sidebar right-ad">
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+     data-ad-slot="SIDEBAR_SLOT_ID"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </aside>
+  </div>
+</MainLayout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // State
+    let type = 'linear';
+    let linearAngle = 135;
+    let radialShape = 'circle';
+    let radialPosition = 'center';
+    let stops = [
+      { id: 1, color: '#ff6b6b', position: 0 },
+      { id: 2, color: '#4ecdc4', position: 100 }
+    ];
+    let nextId = 3;
+
+    const PRESETS = [
+      { name: 'Sunset', type: 'linear', angle: 135, stops: [{color:'#fd5e0f', position:0}, {color:'#ff0055', position:100}] },
+      { name: 'Ocean', type: 'linear', angle: 135, stops: [{color:'#2b5876', position:0}, {color:'#4e4376', position:100}] },
+      { name: 'Forest', type: 'linear', angle: 135, stops: [{color:'#134e5e', position:0}, {color:'#71b280', position:100}] },
+      { name: 'Midnight', type: 'linear', angle: 135, stops: [{color:'#232526', position:0}, {color:'#414345', position:100}] },
+      { name: 'Flamingo', type: 'linear', angle: 135, stops: [{color:'#fe8c00', position:0}, {color:'#f83600', position:100}] },
+      { name: 'Arctic', type: 'linear', angle: 135, stops: [{color:'#00c6ff', position:0}, {color:'#0072ff', position:100}] },
+      { name: 'Peach', type: 'linear', angle: 135, stops: [{color:'#ed4264', position:0}, {color:'#ffedbc', position:100}] },
+      { name: 'Sublime', type: 'linear', angle: 135, stops: [{color:'#fc4a1a', position:0}, {color:'#f7b733', position:100}] },
+      { name: 'Lush', type: 'linear', angle: 135, stops: [{color:'#56ab2f', position:0}, {color:'#a8e063', position:100}] },
+      { name: 'Royal', type: 'linear', angle: 135, stops: [{color:'#141e30', position:0}, {color:'#243b55', position:100}] },
+      { name: 'Candy', type: 'linear', angle: 135, stops: [{color:'#d38312', position:0}, {color:'#a83279', position:100}] },
+      { name: 'Deep Space', type: 'linear', angle: 135, stops: [{color:'#000000', position:0}, {color:'#434343', position:100}] }
+    ];
+
+    // Elements
+    const previewContainer = document.getElementById('preview-container');
+    const previewInner = document.getElementById('preview-inner');
+    const btnFullscreen = document.getElementById('btn-fullscreen');
+    
+    const typeSelect = document.getElementById('type-select');
+    const linearControls = document.getElementById('linear-controls');
+    const radialControls = document.getElementById('radial-controls');
+    
+    const angleSlider = document.getElementById('angle-slider');
+    const angleVal = document.getElementById('angle-val');
+    
+    const radialShapeSelect = document.getElementById('radial-shape');
+    const radialPositionSelect = document.getElementById('radial-position');
+    
+    const stopsContainer = document.getElementById('stops-container');
+    const btnAddStop = document.getElementById('btn-add-stop');
+    const cssOutput = document.getElementById('css-output');
+    const btnCopyCss = document.getElementById('btn-copy-css');
+    
+    const presetsContainer = document.getElementById('presets-container');
+
+    // Generate CSS
+    function generateCSS() {
+      // Sort stops by position
+      const sortedStops = [...stops].sort((a, b) => a.position - b.position);
+      const stopsString = sortedStops.map(s => `${s.color} ${s.position}%`).join(', ');
+      
+      let cssValue = '';
+      if (type === 'linear') {
+        cssValue = `linear-gradient(${linearAngle}deg, ${stopsString})`;
+      } else {
+        cssValue = `radial-gradient(${radialShape} at ${radialPosition}, ${stopsString})`;
+      }
+      
+      return cssValue;
+    }
+
+    // Update UI
+    function updateUI() {
+      // Toggle controls
+      if (type === 'linear') {
+        linearControls.style.display = 'flex';
+        radialControls.style.display = 'none';
+      } else {
+        linearControls.style.display = 'none';
+        radialControls.style.display = 'flex';
+      }
+
+      // Update values
+      typeSelect.value = type;
+      angleSlider.value = linearAngle;
+      angleVal.textContent = linearAngle;
+      radialShapeSelect.value = radialShape;
+      radialPositionSelect.value = radialPosition;
+
+      const cssValue = generateCSS();
+      
+      // Update preview
+      previewInner.style.background = cssValue;
+      
+      // Update output
+      const fullCSS = `background: ${sortedStops()[0].color}; /* fallback */\nbackground: -webkit-${cssValue};\nbackground: ${cssValue};`;
+      cssOutput.value = fullCSS;
+      
+      // Render stops
+      renderStops();
+    }
+
+    function sortedStops() {
+      return [...stops].sort((a, b) => a.position - b.position);
+    }
+
+    // Render Stops
+    function renderStops() {
+      stopsContainer.innerHTML = '';
+      stops.forEach((stop, idx) => {
+        const row = document.createElement('div');
+        row.className = 'stop-row';
+        
+        row.innerHTML = `
+          <input type="color" data-id="${stop.id}" class="stop-color" value="${stop.color}" />
+          <input type="range" data-id="${stop.id}" class="stop-range" min="0" max="100" value="${stop.position}" />
+          <input type="number" data-id="${stop.id}" class="input stop-number" min="0" max="100" value="${stop.position}" style="padding: 0.25rem;" />
+          <span>%</span>
+          <button data-id="${stop.id}" class="btn btn-accent btn-del-stop" style="padding: 0.25rem 0.5rem; font-size: 0.75rem; color: #e74c3c; ${stops.length <= 2 ? 'visibility: hidden;' : ''}">✕</button>
+        `;
+        
+        stopsContainer.appendChild(row);
+      });
+
+      btnAddStop.disabled = stops.length >= 6;
+      if(stops.length >= 6) {
+         btnAddStop.style.opacity = '0.5';
+         btnAddStop.style.cursor = 'not-allowed';
+      } else {
+         btnAddStop.style.opacity = '1';
+         btnAddStop.style.cursor = 'pointer';
+      }
+
+      // Attach events to new elements
+      document.querySelectorAll('.stop-color').forEach(el => {
+        el.addEventListener('input', (e) => {
+          const id = parseInt(e.target.getAttribute('data-id'));
+          const s = stops.find(s => s.id === id);
+          if (s) s.color = e.target.value;
+          
+          // Fast update of preview and CSS only
+          const cssValue = generateCSS();
+          previewInner.style.background = cssValue;
+          cssOutput.value = `background: ${sortedStops()[0].color}; /* fallback */\nbackground: -webkit-${cssValue};\nbackground: ${cssValue};`;
+        });
+        // Full update on change to re-render potentially (though not strictly needed)
+        el.addEventListener('change', updateUI);
+      });
+
+      document.querySelectorAll('.stop-range').forEach(el => {
+        el.addEventListener('input', (e) => {
+          const id = parseInt(e.target.getAttribute('data-id'));
+          const s = stops.find(s => s.id === id);
+          if (s) s.position = parseInt(e.target.value);
+          // Sync number input visually
+          const numInput = e.target.parentElement.querySelector('.stop-number');
+          if (numInput) numInput.value = s.position;
+
+          const cssValue = generateCSS();
+          previewInner.style.background = cssValue;
+          cssOutput.value = `background: ${sortedStops()[0].color}; /* fallback */\nbackground: -webkit-${cssValue};\nbackground: ${cssValue};`;
+        });
+        el.addEventListener('change', updateUI);
+      });
+
+      document.querySelectorAll('.stop-number').forEach(el => {
+        el.addEventListener('change', (e) => {
+          const id = parseInt(e.target.getAttribute('data-id'));
+          const s = stops.find(s => s.id === id);
+          let val = parseInt(e.target.value);
+          if (isNaN(val)) val = 0;
+          if (val < 0) val = 0;
+          if (val > 100) val = 100;
+          if (s) s.position = val;
+          updateUI();
+        });
+      });
+
+      document.querySelectorAll('.btn-del-stop').forEach(el => {
+        el.addEventListener('click', (e) => {
+          if (stops.length <= 2) return;
+          const id = parseInt(e.target.getAttribute('data-id'));
+          stops = stops.filter(s => s.id !== id);
+          updateUI();
+        });
+      });
+    }
+
+    // Render Presets
+    function renderPresets() {
+      PRESETS.forEach(preset => {
+        const sorted = [...preset.stops].sort((a,b) => a.position - b.position);
+        const stopsStr = sorted.map(s => `${s.color} ${s.position}%`).join(', ');
+        let bg = '';
+        if (preset.type === 'linear') {
+          bg = `linear-gradient(${preset.angle}deg, ${stopsStr})`;
+        }
+        
+        const wrapper = document.createElement('div');
+        wrapper.innerHTML = `
+          <div class="preset-swatch" style="background: ${bg};" title="${preset.name}"></div>
+          <div class="preset-name">${preset.name}</div>
+        `;
+        
+        wrapper.querySelector('.preset-swatch').addEventListener('click', () => {
+          type = preset.type;
+          if (preset.type === 'linear') linearAngle = preset.angle;
+          
+          // Deep copy stops
+          stops = preset.stops.map((s, idx) => ({
+            id: nextId++,
+            color: s.color,
+            position: s.position
+          }));
+          
+          updateUI();
+        });
+        
+        presetsContainer.appendChild(wrapper);
+      });
+    }
+
+    // Event Listeners for main controls
+    typeSelect.addEventListener('change', (e) => {
+      type = e.target.value;
+      updateUI();
+    });
+
+    angleSlider.addEventListener('input', (e) => {
+      linearAngle = parseInt(e.target.value);
+      angleVal.textContent = linearAngle;
+      
+      const cssValue = generateCSS();
+      previewInner.style.background = cssValue;
+      cssOutput.value = `background: ${sortedStops()[0].color}; /* fallback */\nbackground: -webkit-${cssValue};\nbackground: ${cssValue};`;
+    });
+    angleSlider.addEventListener('change', updateUI);
+
+    radialShapeSelect.addEventListener('change', (e) => {
+      radialShape = e.target.value;
+      updateUI();
+    });
+
+    radialPositionSelect.addEventListener('change', (e) => {
+      radialPosition = e.target.value;
+      updateUI();
+    });
+
+    btnAddStop.addEventListener('click', () => {
+      if (stops.length >= 6) return;
+      // Figure out a good position
+      let lastPos = stops[stops.length - 1].position;
+      let newPos = lastPos < 80 ? lastPos + 20 : 100;
+      
+      stops.push({
+        id: nextId++,
+        color: '#ffffff',
+        position: newPos
+      });
+      updateUI();
+    });
+
+    btnCopyCss.addEventListener('click', () => {
+      navigator.clipboard.writeText(cssOutput.value).then(() => {
+        if (typeof window.showToast === 'function') window.showToast('Copied CSS!');
+      });
+    });
+
+    // Fullscreen logic
+    btnFullscreen.addEventListener('click', () => {
+      previewContainer.classList.add('fullscreen');
+      btnFullscreen.style.display = 'none'; // hide button in fullscreen
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && previewContainer.classList.contains('fullscreen')) {
+        previewContainer.classList.remove('fullscreen');
+        btnFullscreen.style.display = 'block';
+      }
+    });
+
+    // Init
+    renderPresets();
+    updateUI();
+  });
+</script>
