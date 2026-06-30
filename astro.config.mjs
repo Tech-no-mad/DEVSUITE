@@ -8,7 +8,7 @@ import cloudflare from '@astrojs/cloudflare';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://devsuite.tools',
+  site: 'https://devsuite.tech',
 
   vite: {
     plugins: [tailwindcss()],
